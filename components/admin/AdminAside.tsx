@@ -24,7 +24,7 @@ const Ulist:React.FC<ulistinterfacedata>=(props) => {
     return (
         
         <div className='p-5 bg-[#EEEEEE]'>
-            <p className='font-sans font-bold text-black'>{props.title}</p>
+            <p className='font-inter text-lg font-bold text-lightorange'>{props.title}</p>
             <ul className='text-left text-sm' style={{listStyle:'inside'}}>
                 {datalist.map((item, index) => (
                     <li key={item.title}>
