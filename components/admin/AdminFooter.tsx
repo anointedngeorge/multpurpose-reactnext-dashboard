@@ -35,64 +35,66 @@ const Icondata:React.FC<IconInterface> = (prop) => {
 
 const AdminFooter = () => {
   return (
-    <footer className='flex flex-row z-50 place-content-center items-center space-x-20 rounded-tr-lg rounded-tl-lg text-white fixed bottom-0 p-5 h-20 bg-lightblack w-full'>
-        <div>
-            <Icondata 
-              Icon={GoHomeFill} 
-              iconclassname='size-8' 
-              title='Home'
-              link='/admin'
-              hovertitle='Home'
-              showicon={true}
-            />
-        </div>
-        <div><Icondata 
-              Icon={RiAlignItemBottomFill}
-              link='/admin/products'
-              iconclassname='size-8' 
-              title='Products'
-              hovertitle='Products'
-              showicon={true}
-             />
-        </div>
-        <div>
-          <Icondata 
-            Icon={LuHistory} 
-            iconclassname='size-8' 
-            title='History'
-            hovertitle='History'
-            showicon={true}
-          />
-        </div>
-        <div>
-          <Icondata 
-            Icon={PiCurrencyNgnFill} 
-            iconclassname='size-8' 
-            title='Revenue'
-            hovertitle='Revenue'
-            showicon={true}
-          />
-        </div>
-        <div>
-          <Icondata 
-              Icon={FcSalesPerformance} 
-              iconclassname='size-8' 
-              title='Sales'
-              hovertitle='Sales'
-              showicon={true}
-             />
+    <div className='w-full max-w-full' >
+        <footer className='flex flex-row z-50 lg:place-content-center items-center space-x-20 max-sm:space-x-10 rounded-tr-lg rounded-tl-lg text-white lg:fixed lg:bottom-0 p-5 lg:h-20 bg-lightblack w-full max-sm:overflow-auto'>
+            <div>
+                <Icondata 
+                  Icon={GoHomeFill} 
+                  iconclassname='size-8' 
+                  title='Home'
+                  link='/admin'
+                  hovertitle='Home'
+                  showicon={true}
+                />
             </div>
-        <div>
-          <Icondata 
-              Icon={HiMiniUserGroup} 
-              iconclassname='size-8' 
-              title='Accounts'
-              hovertitle='Accounts'
-              showicon={true}
-              link='/admin/accounts/staff'
+            <div><Icondata 
+                  Icon={RiAlignItemBottomFill}
+                  link='/admin/products'
+                  iconclassname='size-8' 
+                  title='Products'
+                  hovertitle='Products'
+                  showicon={true}
+                />
+            </div>
+            <div>
+              <Icondata 
+                Icon={LuHistory} 
+                iconclassname='size-8' 
+                title='History'
+                hovertitle='History'
+                showicon={true}
               />
             </div>
-    </footer>
+            <div>
+              <Icondata 
+                Icon={PiCurrencyNgnFill} 
+                iconclassname='size-8' 
+                title='Revenue'
+                hovertitle='Revenue'
+                showicon={true}
+              />
+            </div>
+            <div>
+              <Icondata 
+                  Icon={FcSalesPerformance} 
+                  iconclassname='size-8' 
+                  title='Sales'
+                  hovertitle='Sales'
+                  showicon={true}
+                />
+                </div>
+            <div>
+              <Icondata 
+                  Icon={HiMiniUserGroup} 
+                  iconclassname='size-8' 
+                  title='Accounts'
+                  hovertitle='Accounts'
+                  showicon={true}
+                  link='/admin/accounts/staff'
+                  />
+                </div>
+        </footer>
+    </div>
   )
 }
 

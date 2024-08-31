@@ -6,7 +6,9 @@ Chart.register(...registerables);
 
 const Chartjs = () => {
   const canvasRef = useRef<any>(null);
-  const chartRef = useRef<any>(null); // To hold the Chart.js instance
+  const chartRef = useRef<any>(null);
+  // const [chartstate, setChartState] = use
+
 
   useEffect(() => {
     if (canvasRef.current) {

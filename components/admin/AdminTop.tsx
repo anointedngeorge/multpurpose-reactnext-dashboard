@@ -4,6 +4,7 @@ import { CiSearch } from 'react-icons/ci'
 import { IconType } from 'react-icons'
 import { FaBell, FaCartArrowDown, FaRegBell } from 'react-icons/fa'
 import { LuShoppingCart } from 'react-icons/lu'
+import Image from 'next/image'
 
 interface NotificationInterface {
     Icon:IconType,
@@ -25,7 +26,7 @@ const Notification:React.FC<NotificationInterface> = (props) => {
 const Searchbar = () => {
   return (
       <form action="">
-        <div className="flex w-96 h-10 bg-white border-2 rounded-full place-content-center items-center space-x-3">
+        <div className="flex w-96 h-10 max-sm:w-auto bg-white border-2 rounded-full place-content-center items-center space-x-3">
           <div className='w-72' >
               <input 
                   type="text"
@@ -44,9 +45,10 @@ const Profile = () => {
     return (
       <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
-          <img
+        <div className="w-10 rounded-full relative">
+          <Image
             alt="Tailwind CSS Navbar component"
+            fill={true}
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
         </div>
       </div>
@@ -56,13 +58,13 @@ const Profile = () => {
           <li><strong className='text-center'>Cameron Williamson</strong></li>
         <li></li>
         <li>
-          <Link href={``} className="justify-between">
+          <Link href={`#`} className="justify-between">
             Profile
             <span className="badge">New</span>
           </Link>
         </li>
-        <li><Link href={``}>Settings</Link></li>
-        <li><Link href={``}>Logout</Link></li>
+        <li><Link href={`#`}>Settings</Link></li>
+        <li><Link href={`#`}>Logout</Link></li>
       </ul>
     </div>
     )
@@ -70,11 +72,11 @@ const Profile = () => {
 
 const AdminTop = () => {
   return (
-    <div className='grid grid-flow-col space-x-48 w-full py-2 px-8  place-content-between'>
+    <div className='grid grid-flow-col max-sm:grid-flow-row lg:space-x-48 w-full py-3 px-8 max-sm:p-1 place-content-between'>
         <div><Searchbar /> </div>
       
         <div>
-          <div className="flex flex-row space-x-10">
+          <div className="flex flex-row space-x-10 ">
               <div><Notification Icon={LuShoppingCart} val='0' /></div>
               <div><Notification Icon={FaRegBell} val='0' /></div>
               <div><Profile /> </div>

@@ -37,9 +37,13 @@ export const SingleModelForm:React.FC<modelform_interface> = (props) => {
 
 export const SelectTag = (props:{
   name:string,
+  label?:string,
   content:{title:any, val:any}[]}) => {
     return (
       <div className="w-full">
+        {props.label? (
+            <label>{`${props.label}`}</label>
+        ) : ""}
       <select 
             className="w-full p-3  border-2 text-lightorange font-inter font-bold  px-10 rounded-3xl drop-shadow-sm "
             name={`${props.name}`}
@@ -55,17 +59,29 @@ export const SelectTag = (props:{
 
 
 export const InputTag = (props:{
+  label?:string,
   name:string,
   placeholder?:string
   type:string,}) => {
     return (
       <div className="w-full">
+        {props.label? (
+            <label>{`${props.label}`}</label>
+        ) : ""}
+       
+      {props.placeholder? (
       <input 
             placeholder={`${props.placeholder}`} 
             type={`${props.type}`} 
-            className="w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-3xl drop-shadow-sm "
+            className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-3xl drop-shadow-sm "
             name={`${props.name}`}
+
        />
+      ) : (<input 
+        type={`${props.type}`} 
+        className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-3xl drop-shadow-sm "
+        name={`${props.name}`}
+   />)}
   </div>
     )
 }

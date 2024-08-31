@@ -1,0 +1,40 @@
+* {
+    margin:0;
+    padding: 0;
+}
+
+div.container {
+    background-color: #BB5FB2;
+    width: 100%;
+    height: 450px;
+    min-height: 450px;
+    padding:100px;
+    
+}
+
+div.inner-container {
+    
+    width:50%;
+    height: 250px;
+    padding: 30px;
+    background-color: #fff;
+}
+
+div.inner-container div.form-group {
+    margin:0 auto;
+    width:80%;
+    padding: 20px;
+}
+
+div.inner-container div.form-group div {
+    display: inline-flex;
+    margin:0 0 0 20px;
+    
+}
+
+div.inner-container div.form-group div input {
+    width: 100%;
+    padding:10px;
+    border-radius: 10px;
+
+}

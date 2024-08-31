@@ -15,7 +15,6 @@ import { windowOpenPromise } from "window-open-promise";
 
 
 interface actioninterface {
-    add:string,
     edit:string,
     view:string,
     delete?:string
@@ -23,6 +22,7 @@ interface actioninterface {
 
 interface datalistinterface {
     title:string,
+    image?:string,
     content:actioninterface
     popMenuwindow?:(event:any) => void
 }
@@ -35,7 +35,7 @@ const SearchBar = (
     isviewswitched:string
   }) => {
   return (
-      <div className="flex flex-row max-sm:flex-col place-content-between px-3 items-center ">
+      <div className="flex flex-row place-content-between px-3 items-center ">
           <div>
               <input 
                 type="text" 
@@ -71,14 +71,11 @@ const Tiles = ({data, popMenuwindow}:{
             popMenuwindow?:(event:any) => void
       }) => {
     return (
-        <div className="flex flex-row shrink-0">
-            <div>
-                <Link className="btn btn-ghost btn-circle" onClick={popMenuwindow}  href={`${data.add}`}><MdOutlineAddCircle size={25} /></Link>
-            </div>
-            <div><Link className="btn btn-ghost btn-circle"  onClick={popMenuwindow} href={`${data.view}`}><BsFillEyeFill size={25} /></Link></div>
-            <div><Link className="btn btn-ghost btn-circle" onClick={popMenuwindow} href={`${data.edit}`}><FiEdit size={25} /></Link></div>
+        <div className="flex flex-row space-x-2">
             
-            <div><Link className="btn btn-ghost btn-circle" onClick={popMenuwindow} href={`${data.delete}`}><MdDelete size={25} /></Link></div>
+            <div><Link onClick={popMenuwindow} href={`${data.edit}`}><FiEdit size={25} /></Link></div>
+            <div><Link onClick={popMenuwindow} href={`${data.view}`}><BsFillEyeFill size={25} /></Link></div>
+            <div><Link onClick={popMenuwindow} href={`${data.delete}`}><MdDelete size={25} /></Link></div>
         </div>
     )
 }
@@ -86,55 +83,49 @@ const Tiles = ({data, popMenuwindow}:{
 
 const Card:React.FC<datalistinterface> = (props) => {
     return (
-        <div className="rounded-2xl border w-56 h-36 max-sm:w-full  p-3 bg-lightblack text-white font-inter font-bold">
-            <div className="flex flex-col first-letter: space-y-8 place-content-center items-center">
-                <div className="mt-3">
-                    <p className="text-center">
+        <div 
+        className=" rounded-2xl relative border w-72 h-48 p-2 text-white font-inter font-bold">
+          <div className="mt-1">
+                    <p className="text-lef text-white shadow">
                         {`${props.title}`}
                     </p>
                 </div>
+            
+            <div className="mt-10  flex flex-col pb-6 h-full place-content-center items-center">
                 <div>
                     <Tiles data={props.content} popMenuwindow={props.popMenuwindow} />
                 </div>
             </div>
+            <Image src={`${props.image}`} fill={true} className="-z-20 rounded-2xl brightness-75" alt={"s"}></Image>
         </div>
     )
 }
 
 
 const GridView = ({gridData, popMenuwindow}:{
-        gridData:datalistinterface[][], 
+        gridData:datalistinterface[], 
         popMenuwindow?:(event:any) => void,
     }) => {
   return (
     <>
-        {gridData.map((item: any[]) => (
-            <div key={`div_${item}`} className="flex flex-row gap-3 mt-4 max-sm:flex-col">
-                {item.map((itemdata: { title: Key | null | undefined; content: actioninterface; }) => (
-                    <Card 
-                      key={itemdata.title} 
-                      title={`${itemdata.title}`} 
-                      popMenuwindow={popMenuwindow}
-                      content={itemdata.content} />
-                    ))}
-                </div>
-          ))} 
+        <div className="grid grid-cols-4 gap-3 mt-4">
+          {gridData.map(itemdata => (
+               <Card 
+               key={itemdata.title} 
+               title={`${itemdata.title}`}
+               image={itemdata.image}
+               popMenuwindow={popMenuwindow}
+               content={itemdata.content}
+             />
+          ) )}
+        </div> 
     </>
   )
 }
 
 
-const TableView = () => {
-  return (
-      <>  
-        table view
-      </>
-  )
-}
-
-
 export default function Home() {
-  const [listdata, setlistdata] = useState<datalistinterface[][]>([]);
+  const [listdata, setlistdata] = useState<datalistinterface[]>([]);
   const [switchview, setSwitchView] = useState<string>('grid');
 
   const windowOpen = windowOpenPromise(globalThis);
@@ -145,8 +136,6 @@ export default function Home() {
       url: `${event.currentTarget.href}`, // URL is not required, you can open a blank window
       top: 10,
       left: 10,
-      menuBar:false,
-      toolBar:false,
     })
       .then(newWindow => {
         console.log("This will log in the new window.");
@@ -160,24 +149,28 @@ export default function Home() {
   }
 
   useEffect(() => {
-      const perloaddatalist:datalistinterface[][] = [
-          [
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/', view: '/admin/products/productlisting' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }}
-          ],
-
-          [
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }}
-          ],
-
-          [
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }}
-          ]
+      const perloaddatalist:datalistinterface[] = [
+          {
+            title:'Shoe Content',
+            image:'/images/12.jpg',
+            content: { edit: '/admin', view: '/admin' }
+          },
+          {
+            title:'Shoe Content1',
+            image:'/images/e1.png',
+            content: { edit: '/admin', view: '/admin' }
+          },
+          {
+            title:'Shoe Content2',
+            image:'/images/e11.jpg',
+            content: { edit: '/admin', view: '/admin' }
+          },
+          {
+            title:'Shoe Content4',
+            image:'/images/e3.jpg',
+            content: { edit: '/admin', view: '/admin' }
+          },
+         
       ];
 
       setlistdata(perloaddatalist)
@@ -191,28 +184,27 @@ export default function Home() {
   }
 
   
+
   return (
-      <LayoutAdmin>
-        <main className="p-2">
-            <LineTitle heading="Products" content={[{title:'products',link:'products'}]} />
-            <div className="flex flex-row mt-5 lg:space-x-10 max-sm:flex-col">
+
+        <main className="p-10">
+            <LineTitle heading="Product Listing" linkpath="admin/produc/listing" />
+            <div className="flex flex-row mt-5 r space-x-8">
               {/* section */}
-              <div className="w-2/3 max-sm:w-full">
-                  
+              <div className="w-full">
+              <h3 className="text-2xl text-lightorange font-medium">Balciaga shoe</h3>
                   <div className="flex flex-col space-y-10">
-                      <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div>
-                      <div className="px-3 ">
-                        {switchview == 'grid'? <GridView  gridData={listdata} /> : <TableView />}
+                    
+                      {/* <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div> */}
+                      <div>
+                          <GridView popMenuwindow={popMenuwindow} gridData={listdata} />
                       </div>
                   </div>
-                  {listdata.length > 0 ? "" : "loading..."}
               </div>
               {/* aside */}
-              <div className="w-1/3 max-sm:w-full">
-                <AdminAside />
-              </div>
+             
             </div>
         </main>
-      </LayoutAdmin>
+
   );
 }

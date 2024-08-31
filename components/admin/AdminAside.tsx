@@ -39,7 +39,7 @@ const Ulist:React.FC<ulistinterfacedata>=(props) => {
 
 const AdminAside = () => {
   return (
-    <div className='flex flex-col space-y-3'>
+    <div className='flex flex-col space-y-3 mt-5'>
         <Ulist data={[
                 {title: 'Nike Shoe sold'},
                 {title: 'Nike Shoe sold'},

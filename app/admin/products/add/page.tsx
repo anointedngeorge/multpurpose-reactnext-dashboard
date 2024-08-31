@@ -23,9 +23,9 @@ export default function Home() {
       <LayoutAdmin>
         <main className="p-2">
             <LineTitle heading="Product Section" linkpath="admin/products/New" />
-            <div className="flex flex-row mt-5 r space-x-8">
+            <div className="flex flex-row mt-5 lg:space-x-8 max-sm:flex-col">
               {/* section */}
-              <div className="w-2/3">
+              <div className="w-2/3 max-sm:w-full">
                   <div className="flex flex-col space-y-5">
                       <div><SingleModelForm 
                               title={"Brand"} 
@@ -89,7 +89,7 @@ export default function Home() {
                   </div>
               </div>
               {/* aside */}
-              <div className="w-1/3">
+              <div className="w-1/3 max-sm:w-full">
                 <AdminAside />
               </div>
             </div>

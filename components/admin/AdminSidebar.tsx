@@ -95,8 +95,9 @@ const Sidebar = () => {
               </div>
 
               <div className='mt-32 text-white'>
-              <SidebarLinks 
-                      Icon={LuLogOut} 
+              <SidebarLinks   
+                      link='/'  
+                      Icon={LuLogOut}
                       showicon={true}
                       hovertitle='Logout'
                       title='Logout'

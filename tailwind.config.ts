@@ -13,10 +13,12 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      
       colors: {
           'lightblack':'#0F0F0F',
           'graywhite':'#EEEEEE',
           'lightorange':'#F5AC62',
+          'darkorage':'#D69656',
           'black':'#000000',
           'white':'#ffffff'
       },
@@ -28,5 +30,14 @@ const config: Config = {
   plugins: [
     require('daisyui'),
   ],
+  daisyui : {
+    styled: true,
+    themes: true,
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+    prefix: ""
+  }
 };
 export default config;
