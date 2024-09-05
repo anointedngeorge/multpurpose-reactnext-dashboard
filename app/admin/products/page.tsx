@@ -10,9 +10,9 @@ import { MdDelete, MdOpenWith, MdOutlineAddCircle } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { BsFillEyeFill } from "react-icons/bs";
 import { ChangeEvent, Key, useEffect, useState } from "react";
-import { windowOpenPromise } from "window-open-promise";
-
-
+import { v4 as uuidv4 } from 'uuid';
+import { APIBASEURl, Token, externalurls } from "@/app/interface";
+import { useCustomSSR } from "@/app/custom_hooks";
 
 interface actioninterface {
     add:string,
@@ -22,9 +22,15 @@ interface actioninterface {
 }
 
 interface datalistinterface {
-    title:string,
-    content:actioninterface
-    popMenuwindow?:(event:any) => void
+    id?:string,
+    name:string,
+    brands?:any,
+    brand_type?:any,
+    quantity?:Number,
+    content?:actioninterface
+    popMenuwindow?:(event:any) => void,
+    additem?:(event:any) => void,
+    edititem?:(event:any) => void,
 }
 
 
@@ -65,36 +71,56 @@ const SearchBar = (
   )
 }
 
+const ftapi = async (url:any) => {
+    const ft = await fetch(url);
+    if (ft.ok) {
+      const fp = await ft.json();
+      return fp;
+    } else {
+        return {content:`<h3>${ft.statusText}</h3>`}
+    }
+    
+}
 
-const Tiles = ({data, popMenuwindow}:{
-            data:actioninterface,
-            popMenuwindow?:(event:any) => void
-      }) => {
+
+
+
+
+interface TilesInterface {
+  data?:any,
+  popMenuwindow?:(event:any) => void,
+  additem?:(event:any) => void,
+  edititem?:(event:any) => void,
+}
+
+const Tiles:React.FC<TilesInterface> = (prop) => {
+
     return (
         <div className="flex flex-row shrink-0">
             <div>
-                <Link className="btn btn-ghost btn-circle" onClick={popMenuwindow}  href={`${data.add}`}><MdOutlineAddCircle size={25} /></Link>
+                <Link className="btn btn-ghost btn-circle" onClick={prop?.additem}  href={`${APIBASEURl}/api/v1/products/add/product/item/${prop?.data?.id}/`}><MdOutlineAddCircle size={25} /></Link>
             </div>
-            <div><Link className="btn btn-ghost btn-circle"  onClick={popMenuwindow} href={`${data.view}`}><BsFillEyeFill size={25} /></Link></div>
-            <div><Link className="btn btn-ghost btn-circle" onClick={popMenuwindow} href={`${data.edit}`}><FiEdit size={25} /></Link></div>
+            <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.popMenuwindow} href={{pathname:'/admin/products/productlisting/', query:{id:`${prop?.data?.id}`, name:`${prop?.data?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
+            <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div>
             
-            <div><Link className="btn btn-ghost btn-circle" onClick={popMenuwindow} href={`${data.delete}`}><MdDelete size={25} /></Link></div>
+            <div><Link className="btn btn-ghost btn-circle" onClick={prop?.popMenuwindow} href={`delete/?id=${prop?.data?.id}`}><MdDelete size={25} /></Link></div>
         </div>
     )
 }
 
 
 const Card:React.FC<datalistinterface> = (props) => {
+
     return (
         <div className="rounded-2xl border w-56 h-36 max-sm:w-full  p-3 bg-lightblack text-white font-inter font-bold">
-            <div className="flex flex-col first-letter: space-y-8 place-content-center items-center">
+            <div className="flex flex-col place-content-center items-center">
                 <div className="mt-3">
                     <p className="text-center">
-                        {`${props.title}`}
+                        {`${props.name}`}
                     </p>
                 </div>
                 <div>
-                    <Tiles data={props.content} popMenuwindow={props.popMenuwindow} />
+                    <Tiles additem={props.additem} edititem={props.edititem} data={props} popMenuwindow={props.popMenuwindow} />
                 </div>
             </div>
         </div>
@@ -102,20 +128,28 @@ const Card:React.FC<datalistinterface> = (props) => {
 }
 
 
-const GridView = ({gridData, popMenuwindow}:{
-        gridData:datalistinterface[][], 
-        popMenuwindow?:(event:any) => void,
-    }) => {
+interface gridInterface {
+  gridData:datalistinterface[][], 
+  popMenuwindow?:(event:any) => void,
+  additem?:(event:any) => void,
+  edititem?:(event:any) => void,
+}
+
+const GridView:React.FC<gridInterface>= (prop) => {
   return (
     <>
-        {gridData.map((item: any[]) => (
-            <div key={`div_${item}`} className="flex flex-row gap-3 mt-4 max-sm:flex-col">
-                {item.map((itemdata: { title: Key | null | undefined; content: actioninterface; }) => (
-                    <Card 
-                      key={itemdata.title} 
-                      title={`${itemdata.title}`} 
-                      popMenuwindow={popMenuwindow}
-                      content={itemdata.content} />
+        {prop.gridData?.map((item: any[]) => (
+            <div key={`${uuidv4()}_${item}`} className="flex flex-row gap-3 mt-4 max-sm:flex-col">
+                {item?.map((itemdata:any) => (
+                        <Card
+                          id={itemdata?.id}
+                          key={`${uuidv4()}_${itemdata?.name}`} 
+                          name={`${itemdata?.name}`} 
+                          popMenuwindow={prop.popMenuwindow}
+                          content={itemdata?.content}
+                          additem={prop.additem}
+                          edititem={prop.edititem}
+                          />
                     ))}
                 </div>
           ))} 
@@ -136,58 +170,38 @@ const TableView = () => {
 export default function Home() {
   const [listdata, setlistdata] = useState<datalistinterface[][]>([]);
   const [switchview, setSwitchView] = useState<string>('grid');
+  const [iframesrc, setIframesrc] = useState<string>('');
 
-  const windowOpen = windowOpenPromise(globalThis);
+  const {ssrdata:productsrlist, ssrerror:productsrerror, ssrstatus:productsrtatus} = useCustomSSR({url:`${externalurls.productlist}`, headers:{
+    "Authorization":`Bearer ${Token} `
+  }});
 
-  async function popMenuwindow(event?:any) {
-    event.preventDefault();
-    await windowOpen({
-      url: `${event.currentTarget.href}`, // URL is not required, you can open a blank window
-      top: 10,
-      left: 10,
-      menuBar:false,
-      toolBar:false,
-    })
-      .then(newWindow => {
-        console.log("This will log in the new window.");
-        newWindow.addEventListener("beforeunload", _event => {
-          console.log("This will log when the new window is closed.");
-        });
-      })
-      .catch(_error => {
-        console.error("This will log if the new window can't be opened.");
-      });
-  }
-
+  
+    
   useEffect(() => {
-      const perloaddatalist:datalistinterface[][] = [
-          [
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/', view: '/admin/products/productlisting' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }}
-          ],
-
-          [
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }}
-          ],
-
-          [
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }},
-            {title:'Shoe Content', content: { add: '/admin/products/additem', edit: '/admin', view: '/admin' }}
-          ]
-      ];
-
+      const perloaddatalist:datalistinterface[][] = productsrlist;
       setlistdata(perloaddatalist)
-  }, [])
+  }, [productsrlist])
 
   function changeDataDisplayView(event:any) {
     setSwitchView('table')
   }
  function changeDataReverseView(event:any) {
   setSwitchView('grid')
+  }
+
+
+  const addItem = async (event:any) => {
+    event.preventDefault();
+    const href:string =  event.currentTarget.href;
+    setIframesrc(href);
+  }
+  
+  
+  const editItem = async (event:any) => {
+    event.preventDefault();
+    const href:string =  event.currentTarget.href;
+    setIframesrc(href);
   }
 
   
@@ -198,18 +212,18 @@ export default function Home() {
             <div className="flex flex-row mt-5 lg:space-x-10 max-sm:flex-col">
               {/* section */}
               <div className="w-2/3 max-sm:w-full">
-                  
                   <div className="flex flex-col space-y-10">
                       <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div>
                       <div className="px-3 ">
-                        {switchview == 'grid'? <GridView  gridData={listdata} /> : <TableView />}
+                        {switchview == 'grid'? <GridView  additem={addItem} edititem={editItem} gridData={listdata} /> : <TableView />}
                       </div>
                   </div>
-                  {listdata.length > 0 ? "" : "loading..."}
+                  {listdata?.length > 0 ? "" : "loading..., please wait."}
               </div>
               {/* aside */}
-              <div className="w-1/3 max-sm:w-full">
-                <AdminAside />
+              <div className="w-1/2 max-sm:w-full">
+                {/* <AdminAside /> */}
+                <iframe className="w-full h-[500px]" allowFullScreen={true} src={iframesrc} id="iframepageloader"></iframe>
               </div>
             </div>
         </main>

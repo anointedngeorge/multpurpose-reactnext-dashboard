@@ -3,6 +3,8 @@ import Router from "next/router";
 
 const LoadingWidget = () => {
   const [loading, setLoading] = useState(false);
+  
+  
 
   useEffect(() => {
     const handleRouteChangeStart = () => setLoading(true);
@@ -16,6 +18,9 @@ const LoadingWidget = () => {
       Router.events.off("routeChangeComplete", handleRouteChangeComplete);
     };
   }, []);
+
+  console.log(loading);
+  console.log("Monitoring route changes")
 
   return loading ? 
           <div className="flex place-content-center items-center">

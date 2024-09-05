@@ -1,10 +1,14 @@
+"use client"
+import { useCustomSSR } from '@/app/custom_hooks';
+import { ThemeContext, externalurls } from '@/app/interface';
 import Link from 'next/link'
-import React from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { IconType } from 'react-icons';
 import { BiHome } from 'react-icons/bi';
-import { FaListUl } from 'react-icons/fa';
+import { FaListUl, FaShopify } from 'react-icons/fa';
 import { LiaStoreAltSolid } from 'react-icons/lia';
 import { LuLogOut } from 'react-icons/lu';
+import { MdOutlineLocationCity } from 'react-icons/md';
 import { TbPhotoFilled } from 'react-icons/tb';
 
 interface IconInterface {
@@ -19,7 +23,7 @@ interface IconInterface {
   iconstyle?:React.CSSProperties;
 }
 
-const Profile = () => {
+const Profile = ({data}:{data?:any}) => {
   return (
       <div className="flex flex-col place-content-center items-center">
           <div>
@@ -34,7 +38,7 @@ const Profile = () => {
             ></div>
           </div>
           <div className='text-center mt-3'>
-            <h3 className='font-inter text-lightorange font-semibold'>Cameron Williamson</h3>
+            <h3 className='font-inter text-lightorange font-semibold'>{`${data?.username}` || 'Cameron Williamson'}</h3>
               <p className='text-graywhite text-xs'>Administrator</p>
           </div>
       </div>
@@ -43,72 +47,89 @@ const Profile = () => {
 
 const SidebarLinks:React.FC<IconInterface> = (prop) => {
   return (
-    <Link href={`${prop.link}`} className={`${prop.linkclassname}`} title={`${prop.hovertitle}`}>
-        <div className='flex flex-row space-x-2 place-items-center'>
-          {prop.showicon? <div><prop.Icon className={`${prop.iconclassname}`} style={prop.iconstyle} /></div> : ''}
-          <div><span className={`${prop.textclassname}`}>{`${prop.title}`}</span></div>
-        </div>
-    </Link>
+    <div className='text-white'>
+      <Link href={`${prop.link}`} className={`${prop.linkclassname}`} title={`${prop.hovertitle}`}>
+          <div className='flex flex-row space-x-2 place-items-center'>
+            {prop.showicon? <div><prop.Icon className={`${prop.iconclassname}`} style={prop.iconstyle} /></div> : ''}
+            <div><span className={`${prop.textclassname}`}>{`${prop.title}`}</span></div>
+          </div>
+      </Link>
+    </div>
 )
 }
 
-
 const Sidebar = () => {
+  const context = useContext(ThemeContext);
+
+  const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.profile}`, headers:{
+    "Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJzdWIiOnRydWUsImV4cCI6MTcyNTg0MDM3OX0.Tr0nWZMaxDmxB5GxLxvI1AeIaZyWMnUxhzehHfZtzFA `
+  }});
+
+
+
+
   return (
-    <div>
+    <div >
         <div className='flex flex-col space-y-10'>
             <div>
-                <Profile />
+                <Profile data={ssrdata} />
             </div>
 
-            <div>
-
-              <div className="flex flex-col space-y-10">
-                <div><SidebarLinks 
+            <div className="flex flex-col space-y-5">
+               <SidebarLinks 
                       Icon={LiaStoreAltSolid} 
                       showicon={true}
                       hovertitle='Warehouse'
                       title='Warehouse'
+                      link='/admin/warehouse/'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
-                /></div>
-
-                {/*  */}
-                <div><SidebarLinks 
+                />
+               <SidebarLinks 
                       Icon={TbPhotoFilled} 
                       showicon={true} 
                       title='Gallery'
                       hovertitle='Gallery'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
-                /></div>
-                {/*  */}
+                />
 
-                <div><SidebarLinks 
-                      Icon={FaListUl} 
-                      showicon={true}
-                      hovertitle='Product Listing'
-                      title='Product Listing'
+              <SidebarLinks 
+                      Icon={MdOutlineLocationCity} 
+                      showicon={true} 
+                      title='Branch'
+                      hovertitle='Branch'
+                      link='admin/branch'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
-                /></div>
-              </div>
+                />
 
-              <div className='mt-32 text-white'>
-              <SidebarLinks   
-                      link='/'  
-                      Icon={LuLogOut}
-                      showicon={true}
-                      hovertitle='Logout'
-                      title='Logout'
-                      iconclassname='text-lightorange size-6'
+              <SidebarLinks 
+                      Icon={FaShopify} 
+                      showicon={true} 
+                      title='Shop'
+                      hovertitle='Shop'
+                      link='/admin/shop'
+                      iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
                 />
-              </div>
+
             </div>
 
-            {/*  */}
-           
+        </div>
+
+
+        {/*  */}
+        <div className=''>
+        <SidebarLinks   
+                  link='/'  
+                  Icon={LuLogOut}
+                  showicon={true}
+                  hovertitle='Logout'
+                  title='Logout'
+                  iconclassname='text-lightorange size-6'
+                  textclassname='text-white text-md hover:text-lightorange'
+            />
         </div>
     </div>
   )

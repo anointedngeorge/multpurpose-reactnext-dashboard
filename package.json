@@ -12,6 +12,7 @@
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "chart.js": "^4.4.4",
+    "iron-session": "^8.0.3",
     "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
@@ -19,13 +20,16 @@
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
     "swr": "^2.2.5",
-    "window-open-promise": "^1.1.32"
+    "uuid": "^10.0.0",
+    "window-open-promise": "^1.1.32",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@iconify/react": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
     "daisyui": "^4.12.10",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",

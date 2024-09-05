@@ -1,7 +1,13 @@
+// "use client"
+
 import Image from "next/image";
 import { MdEmail } from "react-icons/md";
 import { IconType } from "react-icons";
 import { RiLockPasswordFill } from "react-icons/ri";
+
+import  {signup}  from "@/app/actions/auth";
+import { useActionState, useState } from "react";
+import { useCustomActionState } from "@/app/custom_hooks";
 
 
 interface dataprops {
@@ -13,8 +19,12 @@ interface dataprops {
     Icon?:IconType
 }
 
+interface LoginFuncInterface {
+    submitFunction: (event:any) => void
+}
 
-const FormComp:React.FC<dataprops>  = (props) => {
+
+const FormInput:React.FC<dataprops>  = (props) => {
   const Icon:any = props.Icon
   return (
       <div className="w-auto p-3 rounded-badge bg-white">
@@ -42,7 +52,13 @@ const FormComp:React.FC<dataprops>  = (props) => {
   )
 }
 
-export default function Login1() {
+const testfunc = () => {
+
+}
+
+const Login1 = () => {
+    const {state, action, status, EnumMessage} = useCustomActionState({fn:signup})
+
   return (
     <main className="p-32 flex place-content-center">
         <div className="w-1/2 max-sm:w-auto drop-shadow-lg lg:bg-gray-100 rounded-lg p-8">
@@ -52,34 +68,62 @@ export default function Login1() {
                     <p><strong><b>Administrator</b></strong></p>
                 </div>
                 <div >
-                    <div className="flex flex-col space-y-5">
-                        <div>
-                          <FormComp 
-                              name={"username"} 
-                              type={"email"} 
-                              placeholder="username"
-                              label="Username"
-                              required={true}
-                              Icon={MdEmail}
-                            />
+                    <form action={action} >
+                        <div className="flex flex-col space-y-5">
+                            <div>
+                                <FormInput 
+                                    name={"username"} 
+                                    type={"text"} 
+                                    placeholder="username"
+                                    label="Username"
+                                    required={true}
+                                    Icon={MdEmail}
+                                />
+                                {state?.errors?.username && <p>{state.errors.username}</p>}
+                            </div>
+                            <div>
+                                <FormInput 
+                                    name={"password"} 
+                                    type={"password"} 
+                                    placeholder="**********"
+                                    label="Password"
+                                    required={true}
+                                    Icon={RiLockPasswordFill}
+                                />
+                                {state?.errors?.password}
+                                {state?.errors?.password && (
+                                    <div>
+                                    <p>Password must:</p>
+                                    
+                                    <ul>
+                                        {state.errors.password.map((error:any) => (
+                                        <li key={error}>- {error}</li>
+                                        ))}
+                                    </ul>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="text-center">
+                            <button 
+                                className="btn border-none bg-darkorage text-white px-14 text-lg font-inter" 
+                                type="submit"
+                                // disabled={status === EnumMessage.LOADING}
+                            >
+                                {status === EnumMessage.LOADING && "Loading..."}
+                                {status === EnumMessage.SUCCESS && "Success!"}
+                                {status === EnumMessage.ERROR && "Error"}
+                                {!status && "Sign In"}
+                            </button>
+                            </div>
                         </div>
-                        <div>
-                        <FormComp 
-                              name={"password"} 
-                              type={"password"} 
-                              placeholder="**********"
-                              label="Password"
-                              required={true}
-                              Icon={RiLockPasswordFill}
-                            />
-                        </div>
-                        <div className="text-center">
-                            <button className="btn border-none bg-darkorage text-white px-14 text-lg font-inter" type="submit">Sign In</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </main>
   );
 }
+
+export default Login1;
+
+

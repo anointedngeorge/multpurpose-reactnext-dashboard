@@ -5,6 +5,8 @@ import { IconType } from 'react-icons'
 import { FaBell, FaCartArrowDown, FaRegBell } from 'react-icons/fa'
 import { LuShoppingCart } from 'react-icons/lu'
 import Image from 'next/image'
+import { useCustomSSR } from '@/app/custom_hooks'
+import { externalurls } from '@/app/interface'
 
 interface NotificationInterface {
     Icon:IconType,
@@ -42,6 +44,12 @@ const Searchbar = () => {
 
 
 const Profile = () => {
+    
+  const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.profile}`, headers:{
+    "Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJzdWIiOnRydWUsImV4cCI6MTcyNTg0MDM3OX0.Tr0nWZMaxDmxB5GxLxvI1AeIaZyWMnUxhzehHfZtzFA `
+  }});
+
+
     return (
       <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -49,13 +57,14 @@ const Profile = () => {
           <Image
             alt="Tailwind CSS Navbar component"
             fill={true}
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+           />
         </div>
       </div>
       <ul
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-          <li><strong className='text-center'>Cameron Williamson</strong></li>
+          <li><strong className='text-center'>{`${ssrdata?.username}` || "Cameron Williamson"}</strong></li>
         <li></li>
         <li>
           <Link href={`#`} className="justify-between">

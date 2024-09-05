@@ -5,7 +5,7 @@ import Link  from 'next/link'
 import { Calendar } from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import CalendarView from './CalendarView'
-
+import { v4 as uuidv4 } from 'uuid';
 
 
 interface  ulistInterface {
@@ -27,7 +27,7 @@ const Ulist:React.FC<ulistinterfacedata>=(props) => {
             <p className='font-inter text-lg font-bold text-lightorange'>{props.title}</p>
             <ul className='text-left text-sm' style={{listStyle:'inside'}}>
                 {datalist.map((item, index) => (
-                    <li key={item.title}>
+                    <li key={`${item.title}_${index}`}>
                         <Link href={`${item.link}`} >{`${item.title}`}</Link>
                     </li>
                 ))}
