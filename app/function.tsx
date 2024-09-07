@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { cookieInterface, getInterface, postInterface, toastify } from "./interface";
+import { cookieInterface, customssrgetInterface, postInterface, postInterfaceWithImage, toastify } from "./interface";
 
 
 
@@ -20,7 +20,21 @@ export const postdata = async (props:postInterface) => {
     } catch(err : any) {}
 }
 
-export const getdata = async (props:getInterface) => {
+
+export const postdataWithImage = async (props:postInterfaceWithImage) => {
+    try{
+        const ft = await fetch(props.url, {
+            method:'POST',
+            headers:props.headers,
+            body:props.body
+        });
+
+        return ft;
+
+    } catch(err : any) {}
+}
+
+export const getdata = async (props:customssrgetInterface) => {
     try{
         const ft = await fetch(props.url, {
             headers:props.headers,

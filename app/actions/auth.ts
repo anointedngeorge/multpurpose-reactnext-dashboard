@@ -1,8 +1,9 @@
 import { SignupFormSchema, FormState } from '@/app/lib/definitions'
 import { useRouter } from 'next/router';
-import { notify, postdata, setupsessiondb } from '../function';
+import { notify, postdata, postdataWithImage, setupsessiondb } from '../function';
 import {Token, externalurls, postInterface} from "../interface"
 import { getIronSession } from 'iron-session';
+import { FaMdb } from 'react-icons/fa';
 
 
 
@@ -153,3 +154,73 @@ export const product_add = async (state: FormState, formData: FormData) => {
   
 }
 
+
+
+export const photoform = async (state: FormState, formData: FormData) => {
+  console.log(formData.get('image'))
+
+  const postRequest:postInterface =  {
+    url:`${externalurls.photoaddnewfile}`,
+    headers:{
+      "Authorization": `Bearer ${Token}`
+    },
+    body:formData
+  }
+
+  const req = await postdataWithImage(postRequest);
+
+  if (req?.ok) {
+    notify({message:'Created!'});
+  } else {
+
+    notify({message:`${req?.statusText}`});
+  }
+  
+}
+
+
+export const createbranch = async (state: FormState, formData: FormData) => {
+  const data:any = formprops(formData);
+
+  const postRequest:postInterface =  {
+    url:`${externalurls.branchadd}`,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${Token}`
+    },
+    body:data
+  }
+
+  const req = await postdata(postRequest);
+
+  if (req?.ok) {
+    notify({message:'Created!'});
+  } else {
+
+    notify({message:`${req?.statusText}`});
+  }
+  
+}
+
+export const createWarehouse = async (state: FormState, formData: FormData) => {
+  const data:any = formprops(formData);
+
+  const postRequest:postInterface =  {
+    url:`${externalurls.warehouseadd}`,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${Token}`
+    },
+    body:data
+  }
+
+  const req = await postdata(postRequest);
+
+  if (req?.ok) {
+    notify({message:'Created!'});
+  } else {
+
+    notify({message:`${req?.statusText}`});
+  }
+  
+}

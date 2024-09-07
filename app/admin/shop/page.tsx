@@ -14,6 +14,7 @@ import { IoMdArrowDropright } from "react-icons/io";
 import { MdOpenWith } from "react-icons/md";
 import { HiMiniBars3 } from "react-icons/hi2";
 import { FaSearch } from "react-icons/fa";
+import { InputTag } from "@/components/admin/FormElements";
 
 
 interface sidebarinterface {
@@ -108,20 +109,23 @@ export default function Home() {
               content={[{title:'Products', link:'products/'}]}
               
           />
+          <div>
+              <InputTag name="search" type="search" placeholder="Search" />
+          </div>
             <div className="flex flex-row mt-5 lg:space-x-8 max-sm:flex-col">
               {/* section */}
               <div className="w-full max-sm:w-full mb-20">
-                  <div className="flex flex-col space-y-10">
-                      <div className="flex flex-row">
-                            <div className="w-1/4 p-3 overflow-auto shrink-0 border-4 border-black">
-                              <div className="flex flex-col space-y-3">
+                  <div className="flex flex-col space-y-10 max-sm:flex-row">
+                      <div className="flex flex-row max-sm:flex-col">
+                            <div className="w-1/4 max-sm:w-full p-3 drop-shadow-md overflow-auto shrink-0 border-4 border-neutral-400">
+                              <div className="flex flex-col space-y-3 max-sm:flex-row max-sm:items-baseline max-sm:w-full">
                                 {dataset?.length > 0? "" : <LoaderSpinner  />}
                                   {dataset?.map((item:any, index:Number) => (
                                       <Sidebar pageloader={pageload} index={index} name={`${item?.name}`} listtypes={item?.listtypes} key={`${item}_${index}`} />
                                   ))}
                               </div>
                             </div>
-                            <div className="w-3/4 border-4 border-black shrink-0">
+                            <div className="w-3/4 max-sm:w-full max-sm:h-full border-4 border-neutral-200 shrink-0">
                               {pagehref ? (
                                   <iframe src={`${pagehref}`} className="border-none w-full h-full"></iframe>
                               ) : <ShowEmptyPage />}
@@ -132,6 +136,9 @@ export default function Home() {
               </div>
       
             </div>
+
+            
+
         </main>
       </LayoutAdmin>
   );

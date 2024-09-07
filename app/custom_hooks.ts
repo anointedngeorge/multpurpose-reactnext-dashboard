@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { FormState } from "./lib/definitions";
 import { EnumLike } from "zod";
-import { getInterface } from "./interface";
+import { customTableInterface, customssrgetInterface } from "./interface";
 
 
 interface propsData {
@@ -24,22 +24,17 @@ export const useCustomActionState = ({fn}: propsData) => {
     
     const action = async (formData: FormData) => {
         try {
-
             setStatus(EnumMessage.LOADING)
             setState(null);
 
             const fdata = await fn(state, formData);
 
             if(fdata.errors) {
-
                 setState(fdata);
                 setStatus(EnumMessage.ERROR)
-
             } else {
-
                 setStatus(EnumMessage.SUCCESS)
             }
-            
             return fdata;
 
         } catch(err:any) {
@@ -57,34 +52,50 @@ export const useCustomActionState = ({fn}: propsData) => {
 }
 
 
-export const useCustomSSR = (props:getInterface) => {
+export const useCustomSSR = (props: customssrgetInterface) => {
     const [ssrdata, setSSRData] = useState<any>(null);
     const [ssrstatus, setStatus] = useState<boolean>(false);
     const [ssrerror, setError] = useState<any>(null);
-    
-    useEffect(() => {
-        try{
-            const e = async () => {
-                const ft = await fetch(props.url, {
-                    headers:props.headers,
-                });
-                if (ft.ok) {
-                    const result = await ft.json();
-                    setSSRData(result)
-                } else {
-                    setStatus(true)
-                }
-                
-            }
-            e();
-        } catch(err : any) {
-            setError(err)
+  
+    const timer = props.mutatetime || 60000;
+  
+    const fetchData = async () => {
+      try {
+        const response = await fetch(props.url, {
+          headers: props.headers,
+        });
+        if (response.ok) {
+          const result = await response.json();
+          setSSRData(result);
+          setStatus(false); 
+        } else {
+          setStatus(true);
         }
-    }, []);
+      } catch (err: any) {
+        setError(err);
+        setStatus(true);
+      }
+    };
+  
+    useEffect(() => {
+      fetchData();
+    }, []); 
+    
 
+    const cssrmutate = () => {
+      const intervalId = setInterval(() => {
+        fetchData();
+      }, timer);
+      return () => clearInterval(intervalId); 
+    };
+  
     return {
-        ssrdata,
-        ssrstatus,
-        ssrerror
-    }
-}
+      ssrdata,
+      ssrstatus,
+      ssrerror,
+      cssrmutate,
+    };
+  }
+  
+ 
+

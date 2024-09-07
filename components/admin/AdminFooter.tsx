@@ -78,8 +78,8 @@ const AdminFooter = () => {
               <Icondata 
                   Icon={FcSalesPerformance} 
                   iconclassname='size-8' 
-                  title='Sales'
-                  hovertitle='Sales'
+                  title='Reports'
+                  hovertitle='Reports'
                   showicon={true}
                 />
                 </div>

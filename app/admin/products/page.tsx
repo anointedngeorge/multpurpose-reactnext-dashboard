@@ -23,9 +23,7 @@ interface actioninterface {
 
 interface datalistinterface {
     id?:string,
-    name:string,
-    brands?:any,
-    brand_type?:any,
+    data:any,
     quantity?:Number,
     content?:actioninterface
     popMenuwindow?:(event:any) => void,
@@ -71,19 +69,6 @@ const SearchBar = (
   )
 }
 
-const ftapi = async (url:any) => {
-    const ft = await fetch(url);
-    if (ft.ok) {
-      const fp = await ft.json();
-      return fp;
-    } else {
-        return {content:`<h3>${ft.statusText}</h3>`}
-    }
-    
-}
-
-
-
 
 
 interface TilesInterface {
@@ -110,15 +95,19 @@ const Tiles:React.FC<TilesInterface> = (prop) => {
 
 
 const Card:React.FC<datalistinterface> = (props) => {
-
+    // alert(JSON.stringify())
     return (
         <div className="rounded-2xl border w-56 h-36 max-sm:w-full  p-3 bg-lightblack text-white font-inter font-bold">
             <div className="flex flex-col place-content-center items-center">
                 <div className="mt-3">
                     <p className="text-center">
-                        {`${props.name}`}
+                        {`${props.data?.name}`}
+                      
                     </p>
                 </div>
+                <p className="text-center">
+                        {`${props?.data?.brand_type?.name}`}
+                    </p>
                 <div>
                     <Tiles additem={props.additem} edititem={props.edititem} data={props} popMenuwindow={props.popMenuwindow} />
                 </div>
@@ -140,11 +129,11 @@ const GridView:React.FC<gridInterface>= (prop) => {
     <>
         {prop.gridData?.map((item: any[]) => (
             <div key={`${uuidv4()}_${item}`} className="flex flex-row gap-3 mt-4 max-sm:flex-col">
-                {item?.map((itemdata:any) => (
+                {item?.map((itemdata) => (
                         <Card
                           id={itemdata?.id}
                           key={`${uuidv4()}_${itemdata?.name}`} 
-                          name={`${itemdata?.name}`} 
+                          data={itemdata} 
                           popMenuwindow={prop.popMenuwindow}
                           content={itemdata?.content}
                           additem={prop.additem}

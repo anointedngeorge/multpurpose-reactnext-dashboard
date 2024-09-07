@@ -28,19 +28,34 @@ export const externalurls = {
     'productlisting':`${APIBASEURl}/api/v1/products/productlisting/list`,
 
     'productbrandslist':`${APIBASEURl}/api/v1/products/productbrands/list/`,
+    'productbrandlisting':`${APIBASEURl}/api/v1/products/productbrandlisting/list`,
+    'photolist':`${APIBASEURl}/api/v1/products/photo/list`,
+    'photoaddnewfile':`${APIBASEURl}/api/v1/products/photo/create/`,
+
+    'branchadd':`${APIBASEURl}/api/v1/utility/branch/create`,
+    'branchlist':`${APIBASEURl}/api/v1/utility/branch/list`,
+    'warehouseadd':`${APIBASEURl}/api/v1/utility/warehouse/create`,
+    'warehouselist':`${APIBASEURl}/api/v1/utility/warehouse/list`,
+    
 }
 
 
 export interface postInterface {
     url:string,
     headers:{ [key:string]:any},
-    body:{ [key:string]:any},
+    body:{ [key:string]:any} ,
 }
 
-
-export interface getInterface {
+export interface postInterfaceWithImage {
     url:string,
     headers:{ [key:string]:any},
+    body:any ,
+}
+
+export interface customssrgetInterface {
+    url:string,
+    headers:{ [key:string]:any},
+    mutatetime?:number,
 }
 
 
@@ -50,4 +65,14 @@ export interface cookieInterface {
     path?:string,
     maxtime?:number
     
+}
+
+
+export interface customTableInterface {
+    thead?:any[] | undefined,
+    tbody?:any[],
+    mapper?:any[],
+    data?:[{[key:string]: any}]
+    show_thead?:boolean,
+    title?:string,
 }

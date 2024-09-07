@@ -79,14 +79,15 @@ const Sidebar = () => {
                <SidebarLinks 
                       Icon={LiaStoreAltSolid} 
                       showicon={true}
-                      hovertitle='Warehouse'
-                      title='Warehouse'
-                      link='/admin/warehouse/'
+                      hovertitle='Stores'
+                      title='Stores'
+                      link='/admin/store/'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
                 />
                <SidebarLinks 
-                      Icon={TbPhotoFilled} 
+                      Icon={TbPhotoFilled}
+                      link='/admin/gallery/'
                       showicon={true} 
                       title='Gallery'
                       hovertitle='Gallery'
@@ -99,7 +100,7 @@ const Sidebar = () => {
                       showicon={true} 
                       title='Branch'
                       hovertitle='Branch'
-                      link='admin/branch'
+                      link='/admin/branch/'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
                 />
@@ -120,7 +121,7 @@ const Sidebar = () => {
 
 
         {/*  */}
-        <div className=''>
+        <div className='mt-32'>
         <SidebarLinks   
                   link='/'  
                   Icon={LuLogOut}
