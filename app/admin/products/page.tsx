@@ -13,6 +13,7 @@ import { ChangeEvent, Key, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { APIBASEURl, Token, externalurls } from "@/app/interface";
 import { useCustomSSR } from "@/app/custom_hooks";
+import { ModalProductPopover } from "@/components/globalComponents";
 
 interface actioninterface {
     add:string,
@@ -184,6 +185,11 @@ export default function Home() {
     event.preventDefault();
     const href:string =  event.currentTarget.href;
     setIframesrc(href);
+    const modal:any =  document.getElementById("my_modal_5");
+        if (modal) {
+            modal.showModal();
+        }
+
   }
   
   
@@ -212,7 +218,8 @@ export default function Home() {
               {/* aside */}
               <div className="w-1/2 max-sm:w-full">
                 {/* <AdminAside /> */}
-                <iframe className="w-full h-[500px]" allowFullScreen={true} src={iframesrc} id="iframepageloader"></iframe>
+                <ModalProductPopover src={iframesrc} />
+                {/* <iframe className="w-full h-[500px]" allowFullScreen={true} src={iframesrc} id="iframepageloader"></iframe> */}
               </div>
             </div>
         </main>

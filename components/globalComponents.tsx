@@ -120,3 +120,25 @@ export const ModalGalleryPopOver = (prop:{data?:any, formaction?:any}) => {
             </dialog>
     )
 }
+
+
+
+export const ModalProductPopover = (prop:{src?:any}) => {
+    const [preview, setPreview] = useState<string>('');
+
+    return (
+        <dialog id="my_modal_5" className="modal modal-top sm:modal-middle">
+                <div className="modal-box  bg-slate-100">
+                
+                <iframe className="w-full h-[500px]"  src={prop?.src} id="iframepageloader"></iframe>
+                
+                <div className="modal-action">
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+    )
+}

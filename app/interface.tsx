@@ -36,6 +36,7 @@ export const externalurls = {
     'branchlist':`${APIBASEURl}/api/v1/utility/branch/list`,
     'warehouseadd':`${APIBASEURl}/api/v1/utility/warehouse/create`,
     'warehouselist':`${APIBASEURl}/api/v1/utility/warehouse/list`,
+    'salesreportlist':`${APIBASEURl}/api/v1/reports/report/list`,
     
 }
 

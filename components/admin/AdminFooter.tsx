@@ -80,6 +80,7 @@ const AdminFooter = () => {
                   iconclassname='size-8' 
                   title='Reports'
                   hovertitle='Reports'
+                  link='/admin/reports/'
                   showicon={true}
                 />
                 </div>
