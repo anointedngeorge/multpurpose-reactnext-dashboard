@@ -6,7 +6,9 @@ const nextConfig = {
             hostname: 'media.istockphoto.com',
           },
           {hostname: "img.daisyui.com"},
-          {hostname: "127.0.0.1"}
+          {hostname: "127.0.0.1"},
+          {hostname: "europeshop.mydigitaltrader.com"},
+
         ],
       },
 };
