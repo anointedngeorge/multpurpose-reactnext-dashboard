@@ -125,7 +125,7 @@ export const ModalGalleryPopOver = (prop:{data?:any, formaction?:any}) => {
 
 export const ModalProductPopover = (prop:{src?:any}) => {
     const [preview, setPreview] = useState<string>('');
-
+    
     return (
         <dialog id="my_modal_5" className="modal modal-top sm:modal-middle">
                 <div className="modal-box  bg-slate-100">

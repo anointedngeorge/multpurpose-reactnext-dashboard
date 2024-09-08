@@ -10,7 +10,6 @@ import { useCustomActionState, useCustomSSR } from "@/app/custom_hooks";
 import { createWarehouse, createbranch, photoform } from "@/app/actions/auth";
 import { Token, externalurls } from "@/app/interface";
 import { useEffect, useState } from "react";
-import { Html } from "next/document";
 import CustomTable from "@/components/customTable";
 
 

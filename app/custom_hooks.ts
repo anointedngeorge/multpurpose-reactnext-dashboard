@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { FormState } from "./lib/definitions";
 import { EnumLike } from "zod";
 import { customTableInterface, customssrgetInterface } from "./interface";
@@ -59,27 +59,28 @@ export const useCustomSSR = (props: customssrgetInterface) => {
   
     const timer = props.mutatetime || 60000;
   
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
       try {
         const response = await fetch(props.url, {
           headers: props.headers,
         });
+    
         if (response.ok) {
           const result = await response.json();
-          setSSRData(result);
-          setStatus(false); 
+          setSSRData(result); 
+          setStatus(false);    
         } else {
-          setStatus(true);
+          setStatus(true);     
         }
-      } catch (err: any) {
-        setError(err);
-        setStatus(true);
+      } catch (err) {
+        setError(err);    
+        setStatus(true);    
       }
-    };
+    }, [props.url, props.headers, setSSRData, setStatus, setError]);
   
     useEffect(() => {
       fetchData();
-    }, []); 
+    }, [fetchData]); 
     
 
     const cssrmutate = () => {

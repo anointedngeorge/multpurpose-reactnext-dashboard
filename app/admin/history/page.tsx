@@ -1,5 +1,6 @@
+import LayoutAdmin from "@/components/admin/AdminLayout";
 import Image from "next/image";
-import LayoutAdmin from "../../components/admin/AdminLayout";
+
 
 
 
