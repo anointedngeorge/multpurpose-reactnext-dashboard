@@ -148,7 +148,7 @@ const ProductListLink = () => {
 }
 
 
-function ProductList() {
+function Home() {
   const [listdata, setlistdata] = useState<datalistinterface[][]>([]);
   const [switchview, setSwitchView] = useState<string>('grid');
   const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
@@ -207,49 +207,6 @@ function ProductList() {
             </div>
             ) : swtichComponent}
         </main>
-      </LayoutAdmin>
-  );
-}
-
-
-
-export default function Home() {
-  const [listdata, setlistdata] = useState<datalistinterface[][]>([]);
-  const [switchview, setSwitchView] = useState<string>('grid');
-  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
-
-  const router = useSearchParams();
-  const id = router.get('id');
-  const name = router.get('name');
-
-  const {ssrdata:productsrlist, 
-    ssrerror:productsrerror, 
-    ssrstatus:productsrtatus} = useCustomSSR({url:`${externalurls.productlisting}/${id}/`, headers:{
-    "Authorization":`Bearer ${Token2} `
-  }});
-  
-
-  useEffect(() => {
-      const perloaddatalist:datalistinterface[][] = productsrlist;
-      setlistdata(perloaddatalist)
-  }, [productsrlist])
-
-  const [swtichComponent, setComponent] = useState<JSX.Element | null>(null);
-  
-  // useEffect(() => {
-  //   setComponent(<GridView popMenuwindow={popMenuwindow}  gridData={listdata} />)
-  // }, [listdata, popMenuwindow])
-
-  function popMenuwindow() {
-    setComponent(<AdminSingleProductView />)
-  }
-
-
-  return (
-      <LayoutAdmin>
-        <Suspense >
-            <ProductList />
-        </Suspense>
       </LayoutAdmin>
   );
 }
