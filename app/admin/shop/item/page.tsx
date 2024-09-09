@@ -82,7 +82,7 @@ const Home = () => {
         <div><h3 className='text-2xl font-inter font-bold text-black'>{brand_name} ({item_name})</h3></div>
         <div className="grid grid-cols-3 mt-10 gap-2">
             <Suspense fallback={<div>Loading...</div>}>
-                {dataset?.map((item, index) => (
+                {productbrandtypessrlist?.map((item:any, index:number) => (
                     <Card data={item} sellfunction={sellfunction} key={`div_${index}`} />
                 ))}
             </Suspense>

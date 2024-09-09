@@ -87,7 +87,6 @@ const Tiles = ({data, popMenuwindow}:{
 
 const Card:React.FC<datalistinterface> = (props) => {
 
-  
     return (
         <div className="rounded-2xl relative border w-56 h-36 max-sm:w-full  p-3 bg-lightblack text-white font-inter font-bold">
           <Image src={`${props?.image}`} className="rounded-2xl z-0 brightness-50" fill={true}  alt="..."></Image>
@@ -97,7 +96,6 @@ const Card:React.FC<datalistinterface> = (props) => {
                 <div className="mt-3">
                     <p className="text-center">
                         {`${props?.name}`}
-                 
                     </p>
                 </div>
                 <div>
@@ -114,8 +112,6 @@ const GridView = ({gridData, popMenuwindow}:{
         popMenuwindow?:(event:any) => void,
     }) => {
 
- 
-      
   return (
     <>
         {gridData?.map((item: any[], indx) => (
@@ -123,14 +119,13 @@ const GridView = ({gridData, popMenuwindow}:{
               
                 {item?.map((itemdata:any, index) => (
                     <>
-                    
-                      <Card 
-                        key={`${itemdata.title}}_${index}`} 
-                        name={`${itemdata.name}`} 
-                        image={itemdata.image.image}
-                        popMenuwindow={popMenuwindow}
-                        content={itemdata?.content}
-                      />
+                        <Card 
+                          key={`${itemdata.title}}_${index}`} 
+                          name={`${itemdata.name}`} 
+                          image={itemdata.image.image}
+                          popMenuwindow={popMenuwindow}
+                          content={itemdata?.content}
+                        />
                       </>
                     ))}
                 </div>
@@ -202,16 +197,13 @@ export default function Home() {
                   <div className="flex flex-col space-y-10">
                       {/* <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div> */}
                       <div className="px-3">
-                          <Suspense fallback={<div>Loading...</div>}>
-                            <GridView  gridData={listdata} />
+                          <Suspense fallback={<div>Loading...</div>}  >
+                            <GridView  gridData={listdata}  />
                           </Suspense>
                       </div>
                   </div>
               </div>
               {/* aside */}
-             
-             
-           
             </div>
             ) : swtichComponent}
         </main>
