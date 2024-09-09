@@ -105,7 +105,7 @@ const Login1 = () => {
                             </div>
                             <div className="text-center">
                             <button 
-                                className="btn border-none bg-darkorage text-white px-14 text-lg font-inter" 
+                                className="btn border-none bg-red-600 text-white px-14 text-lg font-inter" 
                                 type="submit"
                                 // disabled={status === EnumMessage.LOADING}
                             >
