@@ -247,7 +247,7 @@ export default function Home() {
 
   return (
       <LayoutAdmin>
-        <Suspense fallback={`<div>Loading</div>`} >
+        <Suspense >
             <ProductList />
         </Suspense>
       </LayoutAdmin>
