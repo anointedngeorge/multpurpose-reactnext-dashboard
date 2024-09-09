@@ -1,6 +1,6 @@
 "use client"
 import { useCustomSSR } from '@/app/custom_hooks';
-import { ThemeContext, externalurls } from '@/app/interface';
+import { ThemeContext, Token, externalurls } from '@/app/interface';
 import Link from 'next/link'
 import React, {useContext, useEffect, useState} from 'react'
 import { IconType } from 'react-icons';
@@ -60,9 +60,9 @@ const SidebarLinks:React.FC<IconInterface> = (prop) => {
 
 const Sidebar = () => {
   const context = useContext(ThemeContext);
-
+  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
   const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.profile}`, headers:{
-    "Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJzdWIiOnRydWUsImV4cCI6MTcyNTg0MDM3OX0.Tr0nWZMaxDmxB5GxLxvI1AeIaZyWMnUxhzehHfZtzFA `
+    "Authorization":`Bearer ${Token2} `
   }});
 
 

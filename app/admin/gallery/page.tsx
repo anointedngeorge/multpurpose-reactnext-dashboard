@@ -1,6 +1,6 @@
 
 "use client"
-
+import {Suspense} from "react"
 import Image from "next/image";
 import LayoutAdmin from "@/components/admin/AdminLayout";
 import Chartjs from "@/components/admin/Chartjs";
@@ -31,6 +31,7 @@ export default function Home() {
     const [modaldataset, setModalDataset] = useState<any>(null);
     const [photodata, setPhotodata] = useState<any[]>([]);
     const {state, action, status} = useCustomActionState({fn:photoform});
+    const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
     const {
             ssrdata:productsrlist, 
@@ -39,7 +40,7 @@ export default function Home() {
             cssrmutate
         } 
             = useCustomSSR({url:`${externalurls.photolist}`, headers:{
-        "Authorization":`Bearer ${Token} `
+        "Authorization":`Bearer ${Token2} `
       } });
         
       useEffect(() => {

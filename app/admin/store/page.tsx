@@ -18,14 +18,15 @@ export default function Home() {
 
   const [listdata, setListData] = useState<any>([])
   const [storelistdata, setStoreListData] = useState<any>([])
+  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
   const {ssrdata, ssrerror, ssrstatus} = 
   useCustomSSR({url:`${externalurls.branchlist}`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2} `
   }});
 
 
   const {ssrdata:storelist, ssrerror:storeerror, ssrstatus:storetatus} = useCustomSSR({url:`${externalurls.warehouselist}`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2} `
   }});
 
   

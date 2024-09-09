@@ -33,6 +33,7 @@ const Photos = (prop:{data?:any}) => {
 
 export default function Home() {
     const [salesreportdata, setsalesreportdata] = useState<any[]>([]);
+    const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
     const {
             ssrdata:productsrlist, 
@@ -41,7 +42,7 @@ export default function Home() {
             cssrmutate
         } 
             = useCustomSSR({url:`${externalurls.salesreportlist}`, headers:{
-        "Authorization":`Bearer ${Token} `
+        "Authorization":`Bearer ${Token2} `
       } });
         
       useEffect(() => {

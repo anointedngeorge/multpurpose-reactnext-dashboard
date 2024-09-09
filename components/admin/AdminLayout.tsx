@@ -1,5 +1,5 @@
 "use client"
-
+import { Suspense } from 'react';
 import { useRouter } from 'next/navigation'
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AdminSidebar from './AdminSidebar';
@@ -40,8 +40,9 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
                     <AdminTop />
                     </div>
                     <div className='bg-white shadow p-3 rounded-sm max-h-[500px] overflow-y-scroll'>
-                        <LoadingWidget />
-                        {children}
+                        <Suspense fallback={<div>Loading...</div>}>
+                          {children}
+                        </Suspense>
                     </div>
                   </div>
                 </div>

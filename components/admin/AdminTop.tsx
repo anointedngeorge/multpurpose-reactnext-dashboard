@@ -44,9 +44,9 @@ const Searchbar = () => {
 
 
 const Profile = () => {
-    
+  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
   const {ssrdata, ssrerror, ssrstatus} = useCustomSSR({url:`${externalurls.profile}`, headers:{
-    "Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJzdWIiOnRydWUsImV4cCI6MTcyNTg0MDM3OX0.Tr0nWZMaxDmxB5GxLxvI1AeIaZyWMnUxhzehHfZtzFA `
+    "Authorization":`Bearer ${Token2}`
   }});
 
 

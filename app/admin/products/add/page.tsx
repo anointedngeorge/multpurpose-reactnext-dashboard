@@ -27,18 +27,19 @@ export default function Home() {
   const {state:producttypestate1, action:producttypeaction, status:producttypestatus} = useCustomActionState({fn:productType});
   const {state:products, action:productsaction, status:productsstatus} = useCustomActionState({fn:product_add});
 
+  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
 
   const {ssrdata:brandssrlist, ssrerror:brandssrerror, ssrstatus:brandssrtatus} = useCustomSSR({url:`${externalurls.brandlist}`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2}`
   }});
 
   const {ssrdata:brandtypessrlist, ssrerror:brandtypessrerror, ssrstatus:brandtypessrtatus} = useCustomSSR({url:`${externalurls.brandtypelist}`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2} `
   }});
 
   const {ssrdata:productbrandtypessrlist, ssrerror:productbrandtypessrerror, ssrstatus:productbrandtypessrtatus} = useCustomSSR({url:`${externalurls.producttypelist}`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2} `
   }});
 
   const getBrandsTypes = (event:any) => {

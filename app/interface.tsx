@@ -4,16 +4,19 @@ import { toast } from 'react-toastify';
 
 export const ThemeContext =  createContext<any>(null)
 
+export const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJzdWIiOnRydWUsImV4cCI6MTcyNjQ1OTY2Mn0.EaVGjE6eGfp2nC9kUA3p7gWtj4GBpMrJINH5BYkCn24"
 
-export const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJzdWIiOnRydWUsImV4cCI6MTcyNTg0MDM3OX0.Tr0nWZMaxDmxB5GxLxvI1AeIaZyWMnUxhzehHfZtzFA"
-
+// export const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+// console.log(Token2);
 
 export interface toastify {
     message:string
 }
 
-export const APIBASEURl = 'https://europeshop.mydigitaltrader.com';
+export const APIBASEURl = "https://europeshop.mydigitaltrader.com";
+
 // export const APIBASEURl = 'http://127.0.0.1:8000';
+
 
 export const externalurls = {
     'token':`${APIBASEURl}/api/v1/auth/token`,

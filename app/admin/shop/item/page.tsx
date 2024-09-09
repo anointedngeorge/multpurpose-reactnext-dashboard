@@ -1,5 +1,5 @@
 "use client"
-
+import { Suspense } from 'react';
 import React, { useEffect, useState } from 'react'
 import {useSearchParams} from "next/navigation"
 import Image from 'next/image'
@@ -47,6 +47,7 @@ const Card:React.FC<cardinterface> = (prop) => {
 const Home = () => {
     const [dataset, setDataset] = useState<[]>([]);
     const [modaldataset, setModalDataset] = useState<any>(null);
+    const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
     const query = useSearchParams();
     const product_id = query?.get('id');
     const brand_id = query?.get('brand_id');
@@ -58,7 +59,7 @@ const Home = () => {
         ssrerror:productbrandtypessrerror, 
         ssrstatus:productbrandtypessrtatus,
     } = useCustomSSR({url:`${externalurls.productbrandlisting}/${brand_id}/${product_id}`, headers:{
-        "Authorization":`Bearer ${Token} `
+        "Authorization":`Bearer ${Token2} `
       }});
 
 
@@ -80,11 +81,13 @@ const Home = () => {
     <main className='w-full p-3'>
         <div><h3 className='text-2xl font-inter font-bold text-black'>{brand_name} ({item_name})</h3></div>
         <div className="grid grid-cols-3 mt-10 gap-2">
-            {dataset?.length > 0 ? '' : 'Fetching data from server...'}
-            {dataset?.map((item, index) => (
-                <Card data={item} sellfunction={sellfunction} key={`div_${index}`} />
-            ))}
+            <Suspense fallback={<div>Loading...</div>}>
+                {dataset?.map((item, index) => (
+                    <Card data={item} sellfunction={sellfunction} key={`div_${index}`} />
+                ))}
+            </Suspense>
         </div>
+        
         
         <ModalPopOver data={modaldataset} />
     </main>

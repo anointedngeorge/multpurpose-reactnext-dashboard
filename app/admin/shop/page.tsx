@@ -81,13 +81,14 @@ const ShowEmptyPage = () => {
 export default function Home() {
   const [dataset,setDataset] = useState<any>([])
   const [pagehref, setPagehref] = useState<string | null>(null)
+  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
   const {
     ssrdata, 
     ssrerror, 
     ssrstatus,
     } = useCustomSSR({url:`${externalurls.productbrandslist}`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2} `
   }});
 
   useEffect(() => {

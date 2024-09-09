@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image";
+import { Suspense } from 'react';
 import LayoutAdmin from "@/components/admin/AdminLayout";
 import Chartjs from "@/components/admin/Chartjs";
 import AdminAside from "@/components/admin/AdminAside";
@@ -106,9 +107,9 @@ const Card:React.FC<datalistinterface> = (props) => {
                       
                     </p>
                 </div>
-                <p className="text-center">
+                {/* <p className="text-center">
                         {`${props?.data?.brand_type?.name}`}
-                    </p>
+                    </p> */}
                 <div>
                     <Tiles additem={props.additem} edititem={props.edititem} data={props} popMenuwindow={props.popMenuwindow} />
                 </div>
@@ -162,16 +163,18 @@ export default function Home() {
   const [switchview, setSwitchView] = useState<string>('grid');
   const [iframesrc, setIframesrc] = useState<string>('');
 
+  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+
   const {ssrdata:productsrlist, ssrerror:productsrerror, ssrstatus:productsrtatus} = useCustomSSR({url:`${externalurls.productlist}`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2} `
   }});
 
   
     
-  useEffect(() => {
-      const perloaddatalist:datalistinterface[][] = productsrlist;
-      setlistdata(perloaddatalist)
-  }, [productsrlist])
+  // useEffect(() => {
+  //     const perloaddatalist:datalistinterface[][] = productsrlist;
+  //     setlistdata(perloaddatalist)
+  // }, [productsrlist])
 
   function changeDataDisplayView(event:any) {
     setSwitchView('table')
@@ -192,7 +195,7 @@ export default function Home() {
 
   }
   
-  
+
   const editItem = async (event:any) => {
     event.preventDefault();
     const href:string =  event.currentTarget.href;
@@ -210,10 +213,12 @@ export default function Home() {
                   <div className="flex flex-col space-y-10">
                       <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div>
                       <div className="px-3 ">
-                        {switchview == 'grid'? <GridView  additem={addItem} edititem={editItem} gridData={listdata} /> : <TableView />}
+                        <Suspense fallback={<div>Loading...</div>}>
+                          {switchview == 'grid'? <GridView  additem={addItem} edititem={editItem} gridData={productsrlist} /> : <TableView />}
+                        </Suspense>
                       </div>
                   </div>
-                  {listdata?.length > 0 ? "" : "loading..., please wait."}
+                 
               </div>
               {/* aside */}
               <div className="w-1/2 max-sm:w-full">

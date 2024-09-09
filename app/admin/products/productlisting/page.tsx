@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image";
+import { Suspense } from 'react';
 import LayoutAdmin from "@/components/admin/AdminLayout";
 import Chartjs from "@/components/admin/Chartjs";
 import AdminAside from "@/components/admin/AdminAside";
@@ -155,6 +156,7 @@ const ProductListLink = () => {
 export default function Home() {
   const [listdata, setlistdata] = useState<datalistinterface[][]>([]);
   const [switchview, setSwitchView] = useState<string>('grid');
+  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
   const router = useSearchParams();
   const id = router.get('id');
@@ -163,7 +165,7 @@ export default function Home() {
   const {ssrdata:productsrlist, 
     ssrerror:productsrerror, 
     ssrstatus:productsrtatus} = useCustomSSR({url:`${externalurls.productlisting}/${id}/`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2} `
   }});
   
 
@@ -200,11 +202,9 @@ export default function Home() {
                   <div className="flex flex-col space-y-10">
                       {/* <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div> */}
                       <div className="px-3">
-                          {listdata?.length > 0 ? 
+                          <Suspense fallback={<div>Loading...</div>}>
                             <GridView  gridData={listdata} />
-                            :
-                            <LoaderSpinner />
-                          }
+                          </Suspense>
                       </div>
                   </div>
               </div>

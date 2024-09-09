@@ -17,9 +17,11 @@ export default function Home() {
   const {state, action, status} = useCustomActionState({fn:createbranch});
   const [listdata, setListData] = useState<any>([])
 
+  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+  
   const {ssrdata, ssrerror, ssrstatus} = 
   useCustomSSR({url:`${externalurls.branchlist}`, headers:{
-    "Authorization":`Bearer ${Token} `
+    "Authorization":`Bearer ${Token2} `
   }});
 
   useEffect( () => {
