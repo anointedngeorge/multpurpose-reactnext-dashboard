@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { Suspense } from 'react';
+import { Suspense, useCallback } from 'react';
 import LayoutAdmin from "@/components/admin/AdminLayout";
 import Chartjs from "@/components/admin/Chartjs";
 import AdminAside from "@/components/admin/AdminAside";
@@ -15,6 +15,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { APIBASEURl, Token, externalurls } from "@/app/interface";
 import { useCustomSSR } from "@/app/custom_hooks";
 import { ModalProductPopover } from "@/components/globalComponents";
+import { useSearchParams } from "next/navigation";
+import { HiMiniArrowSmallRight } from "react-icons/hi2";
+
+
 
 interface actioninterface {
     add:string,
@@ -75,21 +79,44 @@ const SearchBar = (
 
 interface TilesInterface {
   data?:any,
-  name?:string,
   popMenuwindow?:(event:any) => void,
   additem?:(event:any) => void,
   edititem?:(event:any) => void,
 }
 
+
+const BrandTypesListing = (prop:{brandid:any, data:any[], changeFun?:(event:any) => void}) => {
+
+  return (
+      <div className="flex flex-col shrink-0">
+          <nav>
+              <ul>
+                 {prop?.data?.map((item:any, index:any) => (
+                     <li title={`${item?.name}`} key={`list_id_${index}`}>
+                        <Link className={item?.name} id={`${item?.id}`} onClick={prop.changeFun} href={`/${item?.id}`}>
+                          <div className="flex flex-row items-center">
+                            <div><HiMiniArrowSmallRight /> </div>
+                            <div>{`${item?.name}`}</div>
+                          </div>
+                      </Link></li>
+                 ))}
+              </ul>
+          </nav>
+      </div>
+  )
+}
+
+
+
 const Tiles:React.FC<TilesInterface> = (prop) => {
 
     return (
         <div className="flex flex-row shrink-0">
-            {/* <div>
+            <div>
                 <Link className="btn btn-ghost btn-circle" onClick={prop?.additem}  href={`${APIBASEURl}/api/v1/products/add/product/item/${prop?.data?.id}/`}><MdOutlineAddCircle size={25} /></Link>
-            </div> */}
-            <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.popMenuwindow} href={{pathname:'/admin/products/branddetails/', query:{id:`${prop?.data?.id}`, name:`${prop?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
-            {/* <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div> */}
+            </div>
+            <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.popMenuwindow} href={{pathname:'/admin/products/productlisting/', query:{id:`${prop?.data?.id}`, name:`${prop?.data?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
+            <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div>
             <div><Link className="btn btn-ghost btn-circle" onClick={prop?.popMenuwindow} href={`delete/?id=${prop?.data?.id}`}><MdDelete size={25} /></Link></div>
         </div>
     )
@@ -107,9 +134,11 @@ const Card:React.FC<datalistinterface> = (props) => {
                       
                     </p>
                 </div>
-      
+                {/* <p className="text-center">
+                        {`${props?.data?.brand_type?.name}`}
+                    </p> */}
                 <div>
-                    <Tiles name={props.data?.name} additem={props.additem} edititem={props.edititem} data={props} popMenuwindow={props.popMenuwindow} />
+                    <Tiles additem={props.additem} edititem={props.edititem} data={props} popMenuwindow={props.popMenuwindow} />
                 </div>
             </div>
         </div>
@@ -126,20 +155,23 @@ interface gridInterface {
 
 const GridView:React.FC<gridInterface>= (prop) => {
   return (
-    <div  className="grid grid-cols-4 gap-3 mt-4 max-sm:flex max-sm:flex-col">
-        {prop.gridData?.map((itemdata: any) => (
-                
-                <Card
-                  id={itemdata?.id}
-                  key={`${uuidv4()}_${itemdata?.name}`} 
-                  data={itemdata} 
-                  popMenuwindow={prop.popMenuwindow}
-                  content={itemdata?.content}
-                  additem={prop.additem}
-                  edititem={prop.edititem}
-                />
+    <>
+        {prop.gridData?.map((item: any[]) => (
+            <div key={`${uuidv4()}_${item}`} className="flex flex-row gap-3 mt-4 max-sm:flex-col">
+                {item?.map((itemdata) => (
+                        <Card
+                          id={itemdata?.id}
+                          key={`${uuidv4()}_${itemdata?.name}`} 
+                          data={itemdata} 
+                          popMenuwindow={prop.popMenuwindow}
+                          content={itemdata?.content}
+                          additem={prop.additem}
+                          edititem={prop.edititem}
+                          />
+                    ))}
+                </div>
           ))} 
-    </div>
+    </>
   )
 }
 
@@ -157,14 +189,25 @@ const ProductHome = () => {
   const [listdata, setlistdata] = useState<datalistinterface[][]>([]);
   const [switchview, setSwitchView] = useState<string>('grid');
   const [iframesrc, setIframesrc] = useState<string>('');
+  const [itemname, setItemName] = useState<string>('');
+
 
   const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
-  const {ssrdata:productsrlist, ssrerror:productsrerror, ssrstatus:productsrtatus} = useCustomSSR({url:`${externalurls.productbrandslist}`, headers:{
+  const router = useSearchParams();
+  const brandId = router.get('id');
+  const name = router.get('name');
+
+   const {ssrdata:brandlist, ssrerror:branderror, ssrstatus:brandstatus} = useCustomSSR({url:`${externalurls.productbrandslist}`, headers:{
     "Authorization":`Bearer ${Token2} `
   }});
 
- 
+  const [brandliststate, setBrandList] = useState<any[]>()
+  useEffect(() => {
+      setBrandList(brandlist)
+  }, [brandlist])
+
+  const brand = brandliststate?.find(b => b.id === brandId);
 
   function changeDataDisplayView(event:any) {
     setSwitchView('table')
@@ -186,30 +229,55 @@ const ProductHome = () => {
   }
   
 
-  const editItem = async (event:any) => {
-    event.preventDefault();
-    const href:string =  event.currentTarget.href;
-    setIframesrc(href);
+  const selectType = (e:any) => {
+      e.preventDefault();
+      const url = `${externalurls.productsbybrandsandtypes}/${brandId}/${e.currentTarget.id}/list`;
+      const fetchData = async () => {
+        try {
+          const response = await fetch(url, {
+            headers: {
+                'Content-Type':'application/json',
+                "Authorization":`Bearer ${Token2} `
+            },
+          });
+      
+          if (response.ok) {
+            const result = await response.json();
+            setlistdata(result);
+          } else {
+                // 
+          }
+        } catch (err) {}
+      };
+      setItemName(e.currentTarget.className)
+      fetchData();
   }
+
 
   
   return (
         <main className="p-2">
-            <LineTitle heading="Products/Brands" content={[{title:'products',link:'products'}]} />
+            <LineTitle heading={`Brands ${name}`} content={[{title:'products',link:'products'}]} />
             <div className="flex flex-row mt-5 lg:space-x-10 max-sm:flex-col">
               {/* section */}
-              <div className="max-sm:w-full">
+              <div className="w-2/3 max-sm:w-full">
                   <div className="flex flex-col space-y-10">
-                      <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div>
+                      {/* <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div> */}
                       <div className="px-3 ">
-                        
-                          {switchview == 'grid'? <GridView  additem={addItem} edititem={addItem} gridData={productsrlist} /> : <TableView />}
+                          <h3 className="text-2xl">{`${itemname}`.toUpperCase()}</h3>
+                          {listdata.length > 0 ? <GridView  additem={addItem} edititem={addItem} gridData={listdata} /> : "Click types to load data"}
                         
                       </div>
                   </div>
                  
               </div>
-        
+              {/* aside */}
+              <div className="w-1/2 max-sm:w-full">
+                  <h3 className="text-2xl font-sans font-bold">Brand Types</h3>
+                  <BrandTypesListing changeFun={selectType} brandid={brandId} data={brand?.listtypes} />
+
+                  <ModalProductPopover src={iframesrc} />
+              </div>
             </div>
         </main>
   );
@@ -220,7 +288,7 @@ const ProductHome = () => {
 export default function Home () { 
   return (
       <LayoutAdmin>
-          <Suspense fallback={"<div>Loading...</div>"}>
+          <Suspense fallback={"Loading..."}>
               <ProductHome />
           </Suspense>
       </LayoutAdmin>

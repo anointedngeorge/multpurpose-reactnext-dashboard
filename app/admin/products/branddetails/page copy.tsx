@@ -15,6 +15,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { APIBASEURl, Token, externalurls } from "@/app/interface";
 import { useCustomSSR } from "@/app/custom_hooks";
 import { ModalProductPopover } from "@/components/globalComponents";
+import { useSearchParams } from "next/navigation";
+
+
 
 interface actioninterface {
     add:string,
@@ -75,7 +78,6 @@ const SearchBar = (
 
 interface TilesInterface {
   data?:any,
-  name?:string,
   popMenuwindow?:(event:any) => void,
   additem?:(event:any) => void,
   edititem?:(event:any) => void,
@@ -85,11 +87,11 @@ const Tiles:React.FC<TilesInterface> = (prop) => {
 
     return (
         <div className="flex flex-row shrink-0">
-            {/* <div>
+            <div>
                 <Link className="btn btn-ghost btn-circle" onClick={prop?.additem}  href={`${APIBASEURl}/api/v1/products/add/product/item/${prop?.data?.id}/`}><MdOutlineAddCircle size={25} /></Link>
-            </div> */}
-            <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.popMenuwindow} href={{pathname:'/admin/products/branddetails/', query:{id:`${prop?.data?.id}`, name:`${prop?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
-            {/* <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div> */}
+            </div>
+            <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.popMenuwindow} href={{pathname:'/admin/products/productlisting/', query:{id:`${prop?.data?.id}`, name:`${prop?.data?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
+            <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div>
             <div><Link className="btn btn-ghost btn-circle" onClick={prop?.popMenuwindow} href={`delete/?id=${prop?.data?.id}`}><MdDelete size={25} /></Link></div>
         </div>
     )
@@ -107,9 +109,11 @@ const Card:React.FC<datalistinterface> = (props) => {
                       
                     </p>
                 </div>
-      
+                {/* <p className="text-center">
+                        {`${props?.data?.brand_type?.name}`}
+                    </p> */}
                 <div>
-                    <Tiles name={props.data?.name} additem={props.additem} edititem={props.edititem} data={props} popMenuwindow={props.popMenuwindow} />
+                    <Tiles additem={props.additem} edititem={props.edititem} data={props} popMenuwindow={props.popMenuwindow} />
                 </div>
             </div>
         </div>
@@ -126,20 +130,23 @@ interface gridInterface {
 
 const GridView:React.FC<gridInterface>= (prop) => {
   return (
-    <div  className="grid grid-cols-4 gap-3 mt-4 max-sm:flex max-sm:flex-col">
-        {prop.gridData?.map((itemdata: any) => (
-                
-                <Card
-                  id={itemdata?.id}
-                  key={`${uuidv4()}_${itemdata?.name}`} 
-                  data={itemdata} 
-                  popMenuwindow={prop.popMenuwindow}
-                  content={itemdata?.content}
-                  additem={prop.additem}
-                  edititem={prop.edititem}
-                />
+    <>
+        {prop.gridData?.map((item: any[]) => (
+            <div key={`${uuidv4()}_${item}`} className="flex flex-row gap-3 mt-4 max-sm:flex-col">
+                {item?.map((itemdata) => (
+                        <Card
+                          id={itemdata?.id}
+                          key={`${uuidv4()}_${itemdata?.name}`} 
+                          data={itemdata} 
+                          popMenuwindow={prop.popMenuwindow}
+                          content={itemdata?.content}
+                          additem={prop.additem}
+                          edititem={prop.edititem}
+                          />
+                    ))}
+                </div>
           ))} 
-    </div>
+    </>
   )
 }
 
@@ -160,11 +167,20 @@ const ProductHome = () => {
 
   const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
-  const {ssrdata:productsrlist, ssrerror:productsrerror, ssrstatus:productsrtatus} = useCustomSSR({url:`${externalurls.productbrandslist}`, headers:{
+  const router = useSearchParams();
+  const id = router.get('id');
+  const name = router.get('name');
+
+  const {ssrdata:productsrlist, ssrerror:productsrerror, ssrstatus:productsrtatus} = useCustomSSR({url:`${externalurls.productlist}`, headers:{
     "Authorization":`Bearer ${Token2} `
   }});
 
- 
+  
+    
+  // useEffect(() => {
+  //     const perloaddatalist:datalistinterface[][] = productsrlist;
+  //     setlistdata(perloaddatalist)
+  // }, [productsrlist])
 
   function changeDataDisplayView(event:any) {
     setSwitchView('table')
@@ -195,21 +211,26 @@ const ProductHome = () => {
   
   return (
         <main className="p-2">
-            <LineTitle heading="Products/Brands" content={[{title:'products',link:'products'}]} />
+            <LineTitle heading={`Brands ${name}`} content={[{title:'products',link:'products'}]} />
             <div className="flex flex-row mt-5 lg:space-x-10 max-sm:flex-col">
               {/* section */}
-              <div className="max-sm:w-full">
+              <div className="w-2/3 max-sm:w-full">
                   <div className="flex flex-col space-y-10">
                       <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div>
                       <div className="px-3 ">
-                        
+                          {id} {name}
                           {switchview == 'grid'? <GridView  additem={addItem} edititem={addItem} gridData={productsrlist} /> : <TableView />}
                         
                       </div>
                   </div>
                  
               </div>
-        
+              {/* aside */}
+              <div className="w-1/2 max-sm:w-full">
+                {/* <AdminAside /> */}
+                <ModalProductPopover src={iframesrc} />
+                {/* <iframe className="w-full h-[500px]" allowFullScreen={true} src={iframesrc} id="iframepageloader"></iframe> */}
+              </div>
             </div>
         </main>
   );
