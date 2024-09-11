@@ -80,7 +80,7 @@ export const useCustomSSR = (props: customssrgetInterface) => {
   
     useEffect(() => {
       fetchData();
-    }, [fetchData]); 
+    }, []); 
     
 
     const cssrmutate = () => {

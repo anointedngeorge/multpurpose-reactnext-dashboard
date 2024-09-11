@@ -89,7 +89,6 @@ const Tiles:React.FC<TilesInterface> = (prop) => {
             </div>
             <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.popMenuwindow} href={{pathname:'/admin/products/productlisting/', query:{id:`${prop?.data?.id}`, name:`${prop?.data?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
             <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div>
-            
             <div><Link className="btn btn-ghost btn-circle" onClick={prop?.popMenuwindow} href={`delete/?id=${prop?.data?.id}`}><MdDelete size={25} /></Link></div>
         </div>
     )
@@ -158,7 +157,7 @@ const TableView = () => {
 }
 
 
-export default function Home() {
+const ProductHome = () => {
   const [listdata, setlistdata] = useState<datalistinterface[][]>([]);
   const [switchview, setSwitchView] = useState<string>('grid');
   const [iframesrc, setIframesrc] = useState<string>('');
@@ -204,7 +203,6 @@ export default function Home() {
 
   
   return (
-      <LayoutAdmin>
         <main className="p-2">
             <LineTitle heading="Products" content={[{title:'products',link:'products'}]} />
             <div className="flex flex-row mt-5 lg:space-x-10 max-sm:flex-col">
@@ -213,9 +211,9 @@ export default function Home() {
                   <div className="flex flex-col space-y-10">
                       <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div>
                       <div className="px-3 ">
-                        <Suspense fallback={<div>Loading...</div>}>
-                          {switchview == 'grid'? <GridView  additem={addItem} edititem={editItem} gridData={productsrlist} /> : <TableView />}
-                        </Suspense>
+                        
+                          {switchview == 'grid'? <GridView  additem={addItem} edititem={addItem} gridData={productsrlist} /> : <TableView />}
+                        
                       </div>
                   </div>
                  
@@ -228,6 +226,17 @@ export default function Home() {
               </div>
             </div>
         </main>
-      </LayoutAdmin>
   );
 }
+
+
+
+export default function Home () { 
+  return (
+      <LayoutAdmin>
+          <Suspense fallback={"<div>Loading...</div>"}>
+              <ProductHome />
+          </Suspense>
+      </LayoutAdmin>
+  )
+ }
