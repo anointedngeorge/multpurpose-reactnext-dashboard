@@ -126,7 +126,7 @@ export default function Home() {
                                   ))}
                               </div>
                             </div>
-                            <div className="w-3/4 max-sm:w-full max-sm:h-full border-4 border-neutral-200 shrink-0">
+                            <div className="w-3/4 min-h-96 max-sm:w-full max-sm:h-full border-4 border-neutral-200 shrink-0">
                               {pagehref ? (
                                   <iframe src={`${pagehref}`} className="border-none w-full h-full"></iframe>
                               ) : <ShowEmptyPage />}
