@@ -13,9 +13,9 @@ export interface toastify {
     message:string
 }
 
-// export const APIBASEURl = "https://europeshop.mydigitaltrader.com";
+export const APIBASEURl = "https://europeshop.mydigitaltrader.com";
 
-export const APIBASEURl = 'http://127.0.0.1:8000';
+// export const APIBASEURl = 'http://127.0.0.1:8000';
 
 
 export const externalurls = {
