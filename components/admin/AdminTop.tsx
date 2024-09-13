@@ -1,26 +1,34 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { IconType } from 'react-icons'
 import { FaBell, FaCartArrowDown, FaRegBell } from 'react-icons/fa'
 import { LuShoppingCart } from 'react-icons/lu'
 import Image from 'next/image'
 import { useCustomSSR } from '@/app/custom_hooks'
-import { externalurls } from '@/app/interface'
+import { cartStorageName, externalurls } from '@/app/interface'
+import CartComponent from './CartComponent'
 
 interface NotificationInterface {
     Icon:IconType,
-    val?:string
+    val?:string,
+    link?:string,
+    onclick?:(e:any) => void
 }
 
-const Notification:React.FC<NotificationInterface> = (props) => {
+const Notification:React.FC<NotificationInterface> = (prop) => {
     return (
-      <button className="btn btn-ghost btn-circle">
-      <div className="indicator">
-        <props.Icon size={25} />
-        <span className="badge badge-md bg-lightorange text-white indicator-item">{`${props.val}`}</span>
-      </div>
-    </button>
+      <Link 
+          onClick={prop.onclick}
+          className="btn btn-ghost btn-circle" 
+          href={`${prop.link}`}
+      >
+            <div className="indicator">
+                <prop.Icon size={25} />
+                <span className="badge badge-md bg-lightorange text-white indicator-item">{`${prop.val}`}</span>
+            </div>
+      </Link>
     )
 }
 
@@ -80,18 +88,48 @@ const Profile = () => {
 }
 
 const AdminTop = () => {
+  const [cartCounter, setCartCounter] = useState<any>('0');
+  const [cartData, setCartData] = useState<any>();
+
+  useEffect(() => {
+    setInterval(() => {
+      const cartstoragedata:any =  globalThis.sessionStorage.getItem(cartStorageName);
+      if (cartstoragedata) {
+        const parse = JSON.parse(cartstoragedata);
+        setCartData(parse)
+        const total = Object?.keys(parse);
+        setCartCounter(total?.length);
+      }
+     
+    }, 3000)
+  }, [])
+
+  const viewCartdetails = (event:any) => {
+      event.preventDefault();
+      const modal:any =  document.getElementById("my_modal_4");
+      if (modal) {
+          modal.showModal();
+      }
+  }
+
+
   return (
-    <div className='grid grid-flow-col max-sm:grid-flow-row lg:space-x-48 w-full py-3 px-8 max-sm:p-1 place-content-between'>
-        <div><Searchbar /> </div>
-      
-        <div>
-          <div className="flex flex-row space-x-10 ">
-              <div><Notification Icon={LuShoppingCart} val='0' /></div>
-              <div><Notification Icon={FaRegBell} val='0' /></div>
-              <div><Profile /> </div>
+    <>
+      <div className='grid grid-flow-col max-sm:grid-flow-row lg:space-x-48 w-full py-3 px-8 max-sm:p-1 place-content-between'>
+          <div><Searchbar /> </div>
+        
+          <div>
+            <div className="flex flex-row space-x-10 ">
+                <div><Notification Icon={LuShoppingCart}  val={`${cartCounter}`} onclick={viewCartdetails} /></div>
+                <div><Notification Icon={FaRegBell} val='0' /></div>
+                <div><Profile /> </div>
+            </div>
           </div>
-        </div>
-    </div>
+
+          
+      </div>
+      <CartComponent data={cartData} />
+    </>
   )
 }
 

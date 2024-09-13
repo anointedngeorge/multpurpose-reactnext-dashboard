@@ -83,6 +83,8 @@ export const SelectTag:React.FC<SelectTagProps> = ({
 export const InputTag = (props:{
 label?:string,
 name:string,
+min?:number,
+max?:number,
 value?:string,
 placeholder?:string,
 required?:boolean,
@@ -100,6 +102,8 @@ type:string,}) => {
           className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-3xl drop-shadow-sm "
           name={`${props.name}`}
           required={props.required}
+          min={props.min}
+          max={props.max}
           value={props.value}
      />
     ) : (<input 

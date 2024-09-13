@@ -1,7 +1,7 @@
 import { SignupFormSchema, FormState } from '@/app/lib/definitions'
 import { useRouter } from 'next/router';
 import { notify, postdata, postdataWithImage, setupsessiondb } from '../function';
-import {Token, externalurls, postInterface} from "../interface"
+import {Token, cartStorageName, checkoutStorageName, externalurls, postInterface} from "../interface"
 import { getIronSession } from 'iron-session';
 import { FaMdb } from 'react-icons/fa';
 
@@ -208,6 +208,61 @@ export const createWarehouse = async (state: FormState, formData: FormData) => {
 
   const postRequest:postInterface =  {
     url:`${externalurls.warehouseadd}`,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${Token}`
+    },
+    body:data
+  }
+
+  const req = await postdata(postRequest);
+
+  if (req?.ok) {
+    notify({message:'Created!'});
+  } else {
+
+    notify({message:`${req?.statusText}`});
+  }
+  
+}
+
+
+
+export const productSellAddToCart = async (state: FormState, formData: FormData) => {
+    const data:any = formprops(formData);
+    const itemid = formData.get("id");
+
+    let storage:any = {}
+ 
+    const cartdataitem = globalThis.sessionStorage.getItem(cartStorageName)
+
+    if (cartdataitem) {
+      let cartdataitemparse = JSON.parse(cartdataitem)
+      cartdataitemparse[`${itemid}`] = data;
+      globalThis.sessionStorage.setItem(cartStorageName, JSON.stringify(cartdataitemparse))
+    
+    } else {
+        storage[`${itemid}`] = data;
+        globalThis.sessionStorage.setItem(cartStorageName, JSON.stringify(storage))
+    }
+
+}
+
+
+export const productSellAddToCartSubmit = async (state: FormState, formData: FormData) => {
+  const data:any = formprops(formData);
+
+  globalThis.sessionStorage.setItem(checkoutStorageName, JSON.stringify(data));
+  globalThis.location.href = "/admin/checkout"
+}
+
+export const createnewsales = async (state: FormState, formData: FormData) => {
+  // const popdata = formData.delete('total_price')
+  const data:any = formprops(formData);
+  console.log(data)
+
+  const postRequest:postInterface =  {
+    url:`${externalurls.createnewsales}`,
     headers:{
       "Content-Type":"application/json",
       "Authorization": `Bearer ${Token}`

@@ -2,6 +2,8 @@ import { createContext } from 'react';
 import { toast } from 'react-toastify';
  
 
+export const cartStorageName = "cartdata";
+export const checkoutStorageName = "checkoutcartdata";
 export const ThemeContext =  createContext<any>(null)
 
 export const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJzdWIiOnRydWUsImV4cCI6MTcyNjQ1OTY2Mn0.EaVGjE6eGfp2nC9kUA3p7gWtj4GBpMrJINH5BYkCn24"
@@ -42,6 +44,7 @@ export const externalurls = {
     'warehouseadd':`${APIBASEURl}/api/v1/utility/warehouse/create`,
     'warehouselist':`${APIBASEURl}/api/v1/utility/warehouse/list`,
     'salesreportlist':`${APIBASEURl}/api/v1/reports/report/list`,
+    'createnewsales':`${APIBASEURl}/api/v1/reports/createnewsales`,
     
 }
 

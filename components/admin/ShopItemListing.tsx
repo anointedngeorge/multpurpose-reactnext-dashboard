@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react'
 import {useSearchParams} from "next/navigation"
 import Image from 'next/image'
 import { Token, externalurls } from '@/app/interface'
-import { useCustomSSR } from '@/app/custom_hooks'
+import { useCustomActionState, useCustomSSR } from '@/app/custom_hooks'
 import { InputTag } from '@/components/admin/FormElements'
 import { ModalPopOver } from '@/components/globalComponents'
+import { photoform, productSellAddToCart } from '@/app/actions/auth';
 
 
 interface cardinterface {
@@ -47,6 +48,8 @@ const Card:React.FC<cardinterface> = (prop) => {
 const ShopItemListing = () => {
     const [dataset, setDataset] = useState<[]>([]);
     const [modaldataset, setModalDataset] = useState<any>(null);
+    const {state, action, status} = useCustomActionState({fn:productSellAddToCart});
+
     const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
     const query = useSearchParams();
     const product_id = query?.get('id');
@@ -88,8 +91,7 @@ const ShopItemListing = () => {
             </Suspense>
         </div>
         
-        
-        <ModalPopOver data={modaldataset} />
+        <ModalPopOver data={modaldataset} action={action} />
     </main>
   )
 }
