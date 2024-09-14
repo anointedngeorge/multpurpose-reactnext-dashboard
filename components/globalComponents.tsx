@@ -125,8 +125,8 @@ export const ModalProductPopover = (prop:{src?:any}) => {
     const [preview, setPreview] = useState<string>('');
     
     return (
-        <dialog id="my_modal_5" className="modal modal-top sm:modal-middle">
-                <div className="modal-box  bg-slate-100">
+        <dialog id="my_modal_5" className="modal">
+                <div className="modal-box w-11/12 max-w-5xl  bg-slate-100">
                 
                 <iframe className="w-full h-[500px]"  src={prop?.src} id="iframepageloader"></iframe>
                 

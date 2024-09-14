@@ -11,6 +11,9 @@ const nextConfig = {
 
         ],
       },
+  env: {
+    APIBASEURl: process.env.APIBASEURl,
+  },
 };
 
 export default nextConfig;

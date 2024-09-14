@@ -9,10 +9,10 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <LayoutAdmin>
+  
       <Suspense fallback={<div>Loading...</div>}>
           <ProductList />
       </Suspense>
-    </LayoutAdmin>
+  
   );
 }

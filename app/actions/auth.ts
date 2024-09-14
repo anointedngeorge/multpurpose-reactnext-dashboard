@@ -1,11 +1,12 @@
 import { SignupFormSchema, FormState } from '@/app/lib/definitions'
 import { useRouter } from 'next/router';
 import { notify, postdata, postdataWithImage, setupsessiondb } from '../function';
-import {Token, cartStorageName, checkoutStorageName, externalurls, postInterface} from "../interface"
+import {cartStorageName, checkoutStorageName, externalurls, postInterface} from "../interface"
 import { getIronSession } from 'iron-session';
 import { FaMdb } from 'react-icons/fa';
 
 
+const Token = globalThis?.sessionStorage?.getItem("apptoken")
 
 const formprops = (formdata: FormData) => {
   let container: { [key: string]: any } = {};
@@ -53,7 +54,6 @@ export const signup = async (state: FormState, formData: FormData) => {
     setupsessiondb({name:'apptoken', value:token})
     window.location.href = "/admin";
   } else {
-    console.log(req)
     window.location.href = "/";
   }
   
@@ -158,7 +158,6 @@ export const product_add = async (state: FormState, formData: FormData) => {
 
 
 export const photoform = async (state: FormState, formData: FormData) => {
-  console.log(formData.get('image'))
 
   const postRequest:postInterface =  {
     url:`${externalurls.photoaddnewfile}`,
@@ -280,6 +279,32 @@ export const createnewsales = async (state: FormState, formData: FormData) => {
     globalThis.location.href = "/admin/"
   } else {
     notify({message:`${req?.statusText}`});
+  }
+  
+}
+
+
+
+
+
+export const productVariations = async (state: FormState, formData: FormData) => {
+  const data:any = formprops(formData);
+
+  const postRequest:postInterface =  {
+    url:`${externalurls.productaddvariations}`,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${Token}`
+    },
+    body:data
+  }
+
+  const req = await postdata(postRequest);
+
+  if (req?.ok) {
+    alert("Created");
+  } else {
+    alert(`${req?.statusText}`);
   }
   
 }

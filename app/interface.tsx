@@ -33,6 +33,8 @@ export const externalurls = {
     'productlist':`${APIBASEURl}/api/v1/products/products/list`,
     'productsbybrandsandtypes':`${APIBASEURl}/api/v1/products/productsbybrandsandtypes`,
     'productlisting':`${APIBASEURl}/api/v1/products/productlisting/list`,
+    'productaddvariations':`${APIBASEURl}/api/v1/products/products/variations/add`,
+    'productfetchvariations':`${APIBASEURl}/api/v1/products/products/variations`,
 
     'productbrandslist':`${APIBASEURl}/api/v1/products/productbrands/list/`,
     'productbrandlisting':`${APIBASEURl}/api/v1/products/productbrandlisting/list`,

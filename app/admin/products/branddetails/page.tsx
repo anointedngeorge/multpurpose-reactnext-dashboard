@@ -109,13 +109,14 @@ const BrandTypesListing = (prop:{brandid:any, data:any[], changeFun?:(event:any)
 
 
 const Tiles:React.FC<TilesInterface> = (prop) => {
-
+    // console.log(prop.data?.data.name)
     return (
         <div className="flex flex-row shrink-0">
+         
             <div>
                 <Link className="btn btn-ghost btn-circle" onClick={prop?.additem}  href={`${APIBASEURl}/api/v1/products/add/product/item/${prop?.data?.id}/`}><MdOutlineAddCircle size={25} /></Link>
             </div>
-            <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.popMenuwindow} href={{pathname:'/admin/products/productlisting/', query:{id:`${prop?.data?.id}`, name:`${prop?.data?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
+            <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.edititem} href={{pathname:'/admin/products/productlisting/', query:{id:`${prop?.data?.id}`, name:`${prop?.data?.data?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
             <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div>
             <div><Link className="btn btn-ghost btn-circle" onClick={prop?.popMenuwindow} href={`delete/?id=${prop?.data?.id}`}><MdDelete size={25} /></Link></div>
         </div>
@@ -124,9 +125,9 @@ const Tiles:React.FC<TilesInterface> = (prop) => {
 
 
 const Card:React.FC<datalistinterface> = (props) => {
-    // alert(JSON.stringify())
+    // console.log(props)
     return (
-        <div className="rounded-2xl border w-56 h-36 max-sm:w-full  p-3 bg-lightblack text-white font-inter font-bold">
+        <div className="rounded-2xl border w-56 min-h-44 max-sm:w-full  p-3 bg-lightblack text-white font-inter font-bold">
             <div className="flex flex-col place-content-center items-center">
                 <div className="mt-3">
                     <p className="text-center">
@@ -134,9 +135,9 @@ const Card:React.FC<datalistinterface> = (props) => {
                       
                     </p>
                 </div>
-                {/* <p className="text-center">
-                        {`${props?.data?.brand_type?.name}`}
-                    </p> */}
+                    <p className="text-center text-6xl text-red-500">
+                        {`${props?.data?.quantity}`}
+                    </p>
                 <div>
                     <Tiles additem={props.additem} edititem={props.edititem} data={props} popMenuwindow={props.popMenuwindow} />
                 </div>
@@ -256,7 +257,7 @@ const ProductHome = () => {
 
   
   return (
-        <main className="p-2">
+        <main className="p-2 h-screen">
             <LineTitle heading={`Brands ${name}`} content={[{title:'products',link:'products'}]} />
             <div className="flex flex-row mt-5 lg:space-x-10 max-sm:flex-col">
               {/* section */}
@@ -266,7 +267,6 @@ const ProductHome = () => {
                       <div className="px-3 ">
                           <h3 className="text-2xl">{`${itemname}`.toUpperCase()}</h3>
                           {listdata.length > 0 ? <GridView  additem={addItem} edititem={addItem} gridData={listdata} /> : "Click types to load data"}
-                        
                       </div>
                   </div>
                  

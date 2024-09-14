@@ -109,7 +109,7 @@ onclick?:(event?:any) => void,
           required={props.required}
           min={props.min}
           max={props.max}
-          value={props.value}
+          defaultValue={props.value}
           onKeyUp={props.onkeyup}
           disabled={props.disabled}
           readOnly={props.readonly}
@@ -121,6 +121,7 @@ onclick?:(event?:any) => void,
       onKeyUp={props.onkeyup}
       disabled={props.disabled}
       readOnly={props.readonly}
+      defaultValue={props.value}
  />)}
 </div>
   )

@@ -57,7 +57,7 @@ export const useCustomSSR = (props: customssrgetInterface) => {
     const [ssrstatus, setStatus] = useState<boolean>(false);
     const [ssrerror, setError] = useState<any>(null);
   
-    const timer = props.mutatetime || 60000;
+    const timer = props.mutatetime || 2000;
   
     const fetchData = useCallback(async () => {
       try {
