@@ -17,7 +17,7 @@ const config: Config = {
       colors: {
           'lightblack':'#0F0F0F',
           'graywhite':'#EEEEEE',
-          'lightorange':'#F5AC62',
+          'lightorange':'#DF392F',
           'darkorage':'#D69656',
           'black':'#000000',
           'white':'#ffffff'
@@ -32,7 +32,7 @@ const config: Config = {
   ],
   daisyui : {
     styled: true,
-    themes: true,
+    // themes: true,
     base: true,
     utils: true,
     logs: true,

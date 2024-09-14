@@ -266,7 +266,13 @@ const ProductHome = () => {
                       {/* <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div> */}
                       <div className="px-3 ">
                           <h3 className="text-2xl">{`${itemname}`.toUpperCase()}</h3>
-                          {listdata.length > 0 ? <GridView  additem={addItem} edititem={addItem} gridData={listdata} /> : "Click types to load data"}
+                          {listdata.length > 0 ? <GridView  additem={addItem} edititem={addItem} gridData={listdata} /> : (
+                            <>
+                                <Image 
+                                    src={`https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif?cid=790b7611u0e7z6dp6cd3h77viia785rx42sbnnlo0okh02km&ep=v1_gifs_search&rid=giphy.gif&ct=g`} 
+                                    width={100} height={100} alt="loading..." />
+                            </>
+                          )}
                       </div>
                   </div>
                  

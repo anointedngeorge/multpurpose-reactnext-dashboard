@@ -8,7 +8,7 @@ const nextConfig = {
           {hostname: "img.daisyui.com"},
           {hostname: "127.0.0.1"},
           {hostname: "europeshop.mydigitaltrader.com"},
-
+          {hostname: "media.giphy.com"},
         ],
       },
   env: {
