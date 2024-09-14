@@ -41,15 +41,12 @@ const AdminAside = () => {
   return (
     <div className='flex flex-col space-y-3 mt-5'>
         <Ulist data={[
-                {title: 'Nike Shoe sold'},
-                {title: 'Nike Shoe sold'},
-                {title: 'Nike Shoe sold'},
+                {title: '...'},
             ]} title='Recent Activities' />
             {/*  */}
         <Ulist data={[
-                {title: 'Wade Warren'},
-                {title: 'Guy Hawkins'},
-                {title: 'Robert Fox'},
+                {title: '...'},
+                
             ]}  title='Active users' />
         <div className='w-full'>
             {/* calendar */}
