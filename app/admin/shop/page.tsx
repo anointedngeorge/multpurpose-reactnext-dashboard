@@ -117,7 +117,7 @@ export default function Home() {
               {/* section */}
               <div className="w-full max-sm:w-full mb-20">
                   <div className="flex flex-col space-y-10 max-sm:flex-row">
-                      <div className="flex flex-row max-sm:flex-col">
+                      <div className="flex flex-row max-sm:flex-col h-screen">
                             <div className="w-1/4 max-sm:w-full p-3 drop-shadow-md overflow-auto shrink-0 border-4 border-neutral-400">
                               <div className="flex flex-col space-y-3 max-sm:flex-row max-sm:items-baseline max-sm:w-full">
                                 {dataset?.length > 0? "" : <LoaderSpinner  />}
@@ -137,9 +137,6 @@ export default function Home() {
               </div>
       
             </div>
-
-            
-
         </main>
       </LayoutAdmin>
   );
