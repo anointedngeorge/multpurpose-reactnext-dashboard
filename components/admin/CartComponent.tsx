@@ -115,7 +115,7 @@ const CartComponent = (prop:{data?:any}) => {
   return (
     <dialog id="my_modal_4" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
-                <h3 className="font-bold text-lg">
+                <h3 className="font-bold text-3xl text-lightorange">
                     Cart Preview
                 </h3>
 
