@@ -259,7 +259,8 @@ export const productSellAddToCartSubmit = async (state: FormState, formData: For
 export const createnewsales = async (state: FormState, formData: FormData) => {
   // const popdata = formData.delete('total_price')
   const data:any = formprops(formData);
-  console.log(data)
+  const checkoutName = checkoutStorageName;
+  const cartStorageNamed =  cartStorageName
 
   const postRequest:postInterface =  {
     url:`${externalurls.createnewsales}`,
@@ -274,8 +275,10 @@ export const createnewsales = async (state: FormState, formData: FormData) => {
 
   if (req?.ok) {
     notify({message:'Created!'});
+    globalThis.sessionStorage.removeItem(checkoutName)
+    globalThis.sessionStorage.removeItem(cartStorageNamed)
+    globalThis.location.href = "/admin/"
   } else {
-
     notify({message:`${req?.statusText}`});
   }
   

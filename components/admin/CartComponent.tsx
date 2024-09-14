@@ -123,7 +123,7 @@ const CartComponent = (prop:{data?:any}) => {
                 <div className="overflow-x-auto">
                     <form action={action}>
                           <CartTable data={itemData} totalprice={itemTotal} />
-                          {itemData? (
+                          {itemData.length > 0? (
                               <button className='btn btn-primary'>Checkout</button>
                           ) : ""}
                     </form>

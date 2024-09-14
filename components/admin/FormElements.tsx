@@ -88,7 +88,12 @@ max?:number,
 value?:string,
 placeholder?:string,
 required?:boolean,
-type:string,}) => {
+disabled?:boolean,
+readonly?:boolean,
+type:string,
+onkeyup?:(event?:any) => void,
+onclick?:(event?:any) => void,
+}) => {
   return (
     <div className="w-full">
       {props.label? (
@@ -105,11 +110,17 @@ type:string,}) => {
           min={props.min}
           max={props.max}
           value={props.value}
+          onKeyUp={props.onkeyup}
+          disabled={props.disabled}
+          readOnly={props.readonly}
      />
     ) : (<input 
       type={`${props.type}`} 
       className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-3xl drop-shadow-sm "
       name={`${props.name}`}
+      onKeyUp={props.onkeyup}
+      disabled={props.disabled}
+      readOnly={props.readonly}
  />)}
 </div>
   )
