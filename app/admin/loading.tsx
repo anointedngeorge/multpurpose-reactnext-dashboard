@@ -4,11 +4,13 @@
 
 const Skeleton = () => {
     return (
-      <div className="flex w-52 flex-col gap-4">
-      <div className="skeleton h-32 w-full"></div>
-      <div className="skeleton h-4 w-28"></div>
-      <div className="skeleton h-4 w-full"></div>
-      <div className="skeleton h-4 w-full"></div>
+      <div className="flex w-52 flex-col place-content-center items-center">
+        <div>
+          <span className="loading loading-dots loading-lg"></span>
+        </div>
+        <div className="text-center">
+            Loading...  
+        </div>
     </div>
     )
 }

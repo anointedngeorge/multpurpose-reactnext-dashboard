@@ -45,6 +45,7 @@ export const externalurls = {
     'warehouselist':`${APIBASEURl}/api/v1/utility/warehouse/list`,
     'salesreportlist':`${APIBASEURl}/api/v1/reports/report/list`,
     'createnewsales':`${APIBASEURl}/api/v1/reports/createnewsales`,
+    'chartmonthlyall':`${APIBASEURl}/api/v1/chart/month/all`,
     
 }
 

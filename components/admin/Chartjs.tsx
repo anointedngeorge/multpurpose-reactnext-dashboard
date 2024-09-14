@@ -1,14 +1,28 @@
 "use client"
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
+import { useCustomSSR } from '@/app/custom_hooks';
+import { externalurls } from '@/app/interface';
 
 Chart.register(...registerables);
 
 const Chartjs = () => {
+  const [monthList, setMonthList] = useState<any>([])
+  const [amountList, setAmountList] = useState<any>([])
+  const {
+            ssrdata, 
+            ssrerror,
+            ssrstatus
+        } 
+            = useCustomSSR({url:`${externalurls.chartmonthlyall}`, headers:{}});
+  // 
   const canvasRef = useRef<any>(null);
   const chartRef = useRef<any>(null);
-  // const [chartstate, setChartState] = use
 
+  useEffect( () => {
+    setMonthList(ssrdata?.month_list)
+    setAmountList(ssrdata?.amount_list)
+  }, [ssrdata] )
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -21,19 +35,18 @@ const Chartjs = () => {
 
       // Create a new chart instance
       chartRef.current = new Chart(ctx, {
-        type: 'bar', // Example chart type
+        type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          labels: monthList,
           datasets: [{
-            label: 'Monthly Sales',
-            data: [12, 19, 3, 5, 2, 3, 7],
+            label: "Sale's Summary",
+            data: amountList,
             backgroundColor: 'rgba(245, 172, 98, 0.4)',
             borderColor: 'rgba(245, 172, 98, 0.4)',
-            borderWidth: 1,
+            borderWidth: 10,
           }],
         },
         options: {
-          
           scales: {
             y: {
               beginAtZero: true,
@@ -49,7 +62,7 @@ const Chartjs = () => {
         chartRef.current.destroy();
       }
     };
-  }, []);
+  }, [monthList, amountList]);
 
   return (
     <div className='w-full'>

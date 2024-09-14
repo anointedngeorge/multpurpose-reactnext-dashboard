@@ -73,8 +73,8 @@ export default function Home() {
                                 <div className="mt-5">
                                     {salesreportdata?.length > 0 ? (
                                       <CustomTable
-                                          thead={['client','Attendant','Mode', 'Hash', 'on loan']}
-                                          mapper={['client.fullname','attendant.fullname','mode_of_payment', 'sales_hash', 'on_loan' ]}
+                                          thead={['client','Attendant','Mode', 'Hash', 'On Loan','Amount']}
+                                          mapper={['client.full_name','attendant.fullname','mode_of_payment', 'sales_hash', 'on_loan','total_price' ]}
                                           tbody={item?.sales_list}
                                       />
                                     ) : "Loading... "}
