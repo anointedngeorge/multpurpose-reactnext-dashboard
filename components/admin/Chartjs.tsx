@@ -41,8 +41,8 @@ const Chartjs = () => {
           datasets: [{
             label: "Sale's Summary",
             data: amountList,
-            backgroundColor: 'rgba(245, 172, 98, 0.4)',
-            borderColor: 'rgba(245, 172, 98, 0.4)',
+            backgroundColor: 'rgba(223,57,47, 0.4)',
+            borderColor: 'rgba(223,57,47, 0.4)',
             borderWidth: 10,
           }],
         },
