@@ -92,7 +92,7 @@ const AdminFooter = () => {
                   title='Accounts'
                   hovertitle='Accounts'
                   showicon={true}
-                  link='/admin/accounts/staff'
+                  link='/admin/accounts/'
                   />
                 </div>
         </footer>

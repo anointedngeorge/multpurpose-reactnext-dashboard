@@ -5,10 +5,8 @@ import Image from "next/image";
 
 
 
-export default function Manager() {
+export default function Home() {
   return (
-      <LayoutAdmin>
-        <h3>Manager</h3>
-      </LayoutAdmin>
+      <h1>Manager</h1>
   );
 }
