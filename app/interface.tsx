@@ -30,6 +30,11 @@ export const externalurls = {
     'productlist':`${APIBASEURl}/api/v1/products/products/list`,
     'productsbybrandsandtypes':`${APIBASEURl}/api/v1/products/productsbybrandsandtypes`,
     'productlisting':`${APIBASEURl}/api/v1/products/productlisting/list`,
+    'productlistingall':`${APIBASEURl}/api/v1/products/products/productlist/all`,
+    'productInStoreAdd':`${APIBASEURl}/api/v1/products/product/productinstore/add/`,
+    // server for the list and deleting
+    'productInStoreList':`${APIBASEURl}/api/v1/products/product/productinstore`,
+
     'productaddvariations':`${APIBASEURl}/api/v1/products/products/variations/add`,
     'productfetchvariations':`${APIBASEURl}/api/v1/products/products/variations`,
 

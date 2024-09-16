@@ -308,3 +308,29 @@ export const productVariations = async (state: FormState, formData: FormData) =>
   }
   
 }
+
+
+// 
+
+export const createProductInStore = async (state: FormState, formData: FormData) => {
+  const data:any = formprops(formData);
+
+  const postRequest:postInterface =  {
+    url:`${externalurls.productInStoreAdd}`,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${Token}`
+    },
+    body:data
+  }
+
+  const req = await postdata(postRequest);
+
+  if (req?.ok) {
+    alert('Created!');
+  } else {
+
+    alert(`${req?.statusText}`);
+  }
+  
+}

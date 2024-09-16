@@ -7,7 +7,7 @@ import { FcSalesPerformance } from 'react-icons/fc';
 import { HiMiniUserGroup } from 'react-icons/hi2';
 import { PiCurrencyNgnFill } from 'react-icons/pi';
 import { RiAlignItemBottomFill } from 'react-icons/ri';
-
+import { FaWarehouse } from "react-icons/fa6";
 
 
 interface IconInterface {
@@ -67,11 +67,12 @@ const AdminFooter = () => {
             </div>
             <div>
               <Icondata 
-                Icon={PiCurrencyNgnFill} 
+                Icon={FaWarehouse} 
                 iconclassname='size-8' 
-                title='Revenue'
-                hovertitle='Revenue'
+                title='Warehouse'
+                hovertitle='Warehouse'
                 showicon={true}
+                link='/admin/warehouse'
               />
             </div>
             <div>

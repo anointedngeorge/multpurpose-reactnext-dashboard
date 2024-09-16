@@ -1,4 +1,3 @@
-import useSWR from 'swr';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { FormState } from "./lib/definitions";
 import { EnumLike } from "zod";
@@ -53,29 +52,51 @@ export const useCustomActionState = ({fn}: propsData) => {
 }
 
 
-const fetcher = async (url: string, headers?: HeadersInit) => {
-  const response = await fetch(url, { headers });
-  if (!response.ok) throw new Error('Failed to fetch');
-  return response.json();
-};
-
 export const useCustomSSR = (props: customssrgetInterface) => {
-  const timer = props.mutatetime || 2000;
+    const [ssrdata, setSSRData] = useState<any>(null);
+    const [ssrstatus, setStatus] = useState<boolean>(false);
+    const [ssrerror, setError] = useState<any>(null);
+  
+    const timer = props.mutatetime || 2000;
+  
+    const fetchData = useCallback(async () => {
+      try {
+        const response = await fetch(props.url, {
+          headers: props.headers,
+        });
+    
+        if (response.ok) {
+          const result = await response.json();
+          setSSRData(result); 
+          setStatus(false);    
+        } else {
+          setStatus(true);     
+        }
+      } catch (err) {
+        setError(err);    
+        setStatus(true);    
+      }
+    }, [props.url, props.headers, setSSRData, setStatus, setError]);
+  
+    useEffect(() => {
+      fetchData();
+    }, []); 
+    
 
-  // Use SWR for data fetching
-  const { data: ssrdata, error: ssrerror, isValidating: ssrstatus, mutate: cssrmutate } = useSWR(
-    props.url ? props.url : null, 
-    () => fetcher(props.url, props.headers),
-    {
-      revalidateOnFocus: false,
-      dedupingInterval: timer,
-    }
-  );
+    const cssrmutate = () => {
+      const intervalId = setInterval(() => {
+        fetchData();
+      }, timer);
+      return () => clearInterval(intervalId); 
+    };
+  
+    return {
+      ssrdata,
+      ssrstatus,
+      ssrerror,
+      cssrmutate,
+    };
+  }
+  
+ 
 
-  return {
-    ssrdata,
-    ssrstatus: !!ssrstatus,
-    ssrerror,
-    cssrmutate,
-  };
-};
