@@ -69,10 +69,10 @@ const reloadPage =  useCallback( () => {
 
 
     return (
-      <div className='p-10' >
+      <div className='p-10 max-sm:p-1' >
         <button type='button' onClick={reloadPage} className='btn btn-sm btn-primary'>Reload</button>
        <form action={action} >
-       <div className="flex flex-col  items-center p-10 space-y-3 ">
+       <div className="flex flex-col  items-center p-10 max-sm:p-1 space-y-3 ">
             <div>
                 <Image className='rounded-lg' src={`${data2?.image?.image}`} alt='...' width={250} height={100} />
             </div>
@@ -84,7 +84,7 @@ const reloadPage =  useCallback( () => {
                 <div className="grid grid-cols-3 max-sm:flex max-sm:flex-col max-sm:space-y-3">
                     <div>
                       Quantity:
-                      <span className='font-bold text-3xl'>{data2?.quantity_available}</span>
+                      <span className='font-bold text-3xl max-sm:text-sm'>{data2?.quantity_available}</span>
                     </div>
                     <div>
                     Quantity Sold:
@@ -92,7 +92,7 @@ const reloadPage =  useCallback( () => {
                     </div>
                     <div>
                     Selling Price:
-                    <span className='font-bold text-3xl'>N{data2?.selling_price}</span>
+                    <span className='font-bold text-3xl max-sm:text-md'>N{data2?.selling_price}</span>
                     </div>
                 </div>
                 <br />

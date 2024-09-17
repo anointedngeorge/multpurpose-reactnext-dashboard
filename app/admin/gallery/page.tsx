@@ -1,6 +1,6 @@
 
 "use client"
-import {Suspense} from "react"
+import {MouseEventHandler, Suspense, useCallback} from "react"
 import Image from "next/image";
 import LayoutAdmin from "@/components/admin/AdminLayout";
 import Chartjs from "@/components/admin/Chartjs";
@@ -13,15 +13,43 @@ import { useCustomActionState, useCustomSSR } from "@/app/custom_hooks";
 import { brandType, photoform } from "@/app/actions/auth";
 import { IoMdCloudUpload } from "react-icons/io";
 import { GrGallery } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
 
 
-
+const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
 
 const Photos = (prop:{data?:any}) => {
+  const removePhoto = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+        const photoId = event.currentTarget.getAttribute('data-id');
+        
+        if (photoId && confirm("Are You Sure?")) {
+            const ft = async () => {
+                const f =  await fetch(`${externalurls.photoremove}/${photoId}/`, {
+                      method:'delete',
+                      headers: {
+                          "Content-Type":"application/json",
+                          'Authorization':`Bearer ${Token2}`
+                      }
+                  });
+                  if (f.ok) {
+                      globalThis.location.reload();
+                  }
+            }
+            ft();
+        }
+    }, []);
+
     return (
-        <div className="col-span-1 w-full h-52  rounded-lg relative border-4 border-l-fuchsia-800  ">
+        <div className="col-span-1 w-full h-52   rounded-lg relative border-4 border-l-fuchsia-800  ">
             <Image className="image-full rounded-md" src={`${prop?.data?.image}`} fill={true} alt="" />
+            <div className="w-full h-full flex place-content-center items-center   z-40 absolute">
+                <div>
+                    <button data-id={prop.data.id} onClick={removePhoto} className="btn btn-lg btn-circle p-2 bg-lightorang drop-shadow-lg content-center">
+                        <MdDelete size={60} className="shadow-lg" color="#000" />
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }
@@ -31,7 +59,7 @@ export default function Home() {
     const [modaldataset, setModalDataset] = useState<any>(null);
     const [photodata, setPhotodata] = useState<any[]>([]);
     const {state, action, status} = useCustomActionState({fn:photoform});
-    const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+    
 
     const {
             ssrdata:productsrlist, 

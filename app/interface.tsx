@@ -42,6 +42,7 @@ export const externalurls = {
     'productbrandlisting':`${APIBASEURl}/api/v1/products/productbrandlisting/list`,
     'photolist':`${APIBASEURl}/api/v1/products/photo/list`,
     'photoaddnewfile':`${APIBASEURl}/api/v1/products/photo/create/`,
+    'photoremove':`${APIBASEURl}/api/v1/products/photo/remove`,
 
     'branchadd':`${APIBASEURl}/api/v1/utility/branch/create`,
     'branchlist':`${APIBASEURl}/api/v1/utility/branch/list`,
