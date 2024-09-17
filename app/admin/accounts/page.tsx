@@ -33,7 +33,7 @@ const Home = () => {
                                 href={`${process.env.APIBASEURl}/api/v1/accounts/manager/add/`} >Create Manager</Link></div>
                         </div>
                     </div>
-                    <div className='border-4 col-span-1'>2</div>
+                    <div className='col-span-1'></div>
             </div>
 
         <ModalProductPopover src={loadpage} />
