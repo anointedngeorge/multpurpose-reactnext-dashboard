@@ -63,6 +63,7 @@ const AdminFooter = () => {
                 title='History'
                 hovertitle='History'
                 showicon={true}
+                link='/admin/'
               />
             </div>
             <div>
