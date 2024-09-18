@@ -49,13 +49,13 @@ const Tiles = (prop: {
 
 const Card: React.FC<datalistinterface> = (props) => (
   <div className="rounded-2xl relative border w-56 min-h-44 max-sm:w-full p-3 bg-lightblack text-white font-inter font-bold">
-    <Image src={`${props?.image}`} className="rounded-2xl z-0 brightness-50" fill={true} alt="..." />
+    <Image src={`${props?.image? props?.image : ""}`} className="rounded-2xl z-0 brightness-50" fill={true} alt="..." />
     <div className="relative z-10 flex flex-col space-y-8 place-content-center items-center">
       <div className="mt-3">
         <p className="text-center">{props?.name}</p>
       </div>
       <div>
-        <Tiles image={props.image} id={props.id} name={props.name} data={props?.content} popMenuwindow={props.popMenuwindow} />
+        <Tiles image={props?.image} id={props.id} name={props.name} data={props?.content} popMenuwindow={props.popMenuwindow} />
       </div>
     </div>
   </div>
