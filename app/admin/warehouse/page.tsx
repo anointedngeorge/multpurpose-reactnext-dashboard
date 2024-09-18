@@ -14,6 +14,7 @@ import CustomTable from "@/components/customTable";
 import { FaEye } from "react-icons/fa6";
 import { ModalProductPopover } from "@/components/globalComponents";
 import Link from "next/link";
+import { FaEdit, FaPlus } from "react-icons/fa";
 
 export default function Home() {
   const {state, action, status} = useCustomActionState({fn:createWarehouse});
@@ -77,18 +78,31 @@ export default function Home() {
                                                 src={`${item?.image?.image? item?.image?.image : ''}`} 
                                                 width={100} 
                                                 height={50}
-                                                alt="loading..."
-                                                className="image-cover"
+                                                alt="..."
+                                                style={{
+                                                  width:"120px",
+                                                  height:"120px"
+                                                }}
+                                            
                                               />
                                           </td>
                                           <td className="font-bold font-2xl">{`${item.name}`}</td>
                                           <td>
-                                            <Link href={`/admin/warehouse/item/?data=${JSON.stringify(item)}`}  onClick={viewLoaddata} className="btn btn-primary btn-sm">
-                                                <div className="flex flex-row space-x-1 items-center">
-                                                    <div><FaEye size={20} /></div>
-                                                    <div>View</div>
-                                                </div>
-                                            </Link>
+                                              <div className="flex flex-row space-x-3">
+                                                  <Link title="Add Variation" href={`/admin/warehouse/item/?data=${JSON.stringify(item)}`}  onClick={viewLoaddata} >
+                                                      <div className="flex flex-row space-x-1 items-center">
+                                                          <div><FaPlus size={20} /></div>
+                                                          <div>View</div>
+                                                      </div>
+                                                  </Link>
+                                                  <Link title={`Edit ${item.name}`} href={`${process.env.APIBASEURl}/api/v1/products/productlisting/${item.id}/item/`}  onClick={viewLoaddata} >
+                                                      <div className="flex flex-row space-x-1 items-center">
+                                                          <div><FaEdit size={20} /></div>
+                                                          <div>View</div>
+                                                      </div>
+                                                  </Link>
+                                              </div>
+                                           
                                           </td>
                                       </tr>
                                   ) )}
@@ -114,7 +128,7 @@ export default function Home() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><button onClick={loadmoredata} className="btn btn-primary btn-sm">Load More</button></td>
+                                <td><button onClick={loadmoredata} className="btn btn-warning btn-sm">Load More</button></td>
                             </tr>
                           </tfoot>
                       </table>
