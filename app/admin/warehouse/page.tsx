@@ -74,7 +74,7 @@ export default function Home() {
                                           <td>{index + 1}</td>
                                           <td>
                                             <Image 
-                                                src={`${item.image.image}`} 
+                                                src={`${item?.image?.image? item?.image?.image : ''}`} 
                                                 width={100} 
                                                 height={50}
                                                 alt="loading..."
