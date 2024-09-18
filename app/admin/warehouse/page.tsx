@@ -98,7 +98,7 @@ export default function Home() {
                                                   <Link title={`Edit ${item.name}`} href={`${process.env.APIBASEURl}/api/v1/products/productlisting/${item.id}/item/`}  onClick={viewLoaddata} >
                                                       <div className="flex flex-row space-x-1 items-center">
                                                           <div><FaEdit size={20} /></div>
-                                                          <div>View</div>
+                                                          <div>Edit</div>
                                                       </div>
                                                   </Link>
                                               </div>
