@@ -43,12 +43,14 @@ const Photos = (prop:{data?:any}) => {
     return (
         <div className="col-span-1 w-full h-52   rounded-lg relative border-4 border-l-fuchsia-800  ">
             <Image className="image-full rounded-md" src={`${prop?.data?.image}`} fill={true} alt="" />
-            <div className="w-full h-full flex place-content-center items-center   z-40 absolute">
+            <div className="w-full h-full flex flex-col  place-content-center items-center   z-40 absolute">
+                <div></div>
                 <div>
                     <button data-id={prop.data.id} onClick={removePhoto} className="btn btn-lg btn-circle p-2 bg-lightorang drop-shadow-lg content-center">
                         <MdDelete size={60} className="shadow-lg" color="#000" />
                     </button>
                 </div>
+                <div className="text-lg font-bold text-white  bg-black w-full text-center">{prop?.data?.title}</div>
             </div>
         </div>
     )
