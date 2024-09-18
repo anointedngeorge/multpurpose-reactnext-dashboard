@@ -75,7 +75,7 @@ const GridView = ({ gridData, popMenuwindow }: {
             key={`${itemdata.title}_${index}`}
             name={itemdata.name}
             id={itemdata.id}
-            image={itemdata.image.image}
+            image={itemdata?.image?.image}
             popMenuwindow={popMenuwindow}
             content={itemdata?.content}
           />
