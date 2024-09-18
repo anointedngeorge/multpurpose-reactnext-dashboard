@@ -14,7 +14,7 @@ import CustomTable from "@/components/customTable";
 import { FaEye } from "react-icons/fa6";
 import { ModalProductPopover } from "@/components/globalComponents";
 import Link from "next/link";
-import { FaEdit, FaPlus } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 
 export default function Home() {
   const {state, action, status} = useCustomActionState({fn:createWarehouse});
@@ -51,6 +51,27 @@ export default function Home() {
   useEffect( () => {
       setListData(ssrdata)
   }, [ssrdata] )
+
+  const removeProduct = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    const productid = event.currentTarget.getAttribute('data-id');
+    
+    if (productid && confirm("Are You Sure?")) {
+        const ft = async () => {
+            const f =  await fetch(`${process.env.APIBASEURl}/api/v1/products/productlisting/${productid}/item/delete/`, {
+                  method:'delete',
+                  headers: {
+                      "Content-Type":"application/json",
+                      'Authorization':`Bearer ${Token2}`
+                  }
+              });
+              
+              if (f.ok) {
+                  globalThis.location.reload();
+              }
+        }
+        ft();
+    }
+}, []);
 
   return (
       <LayoutAdmin>
@@ -101,6 +122,12 @@ export default function Home() {
                                                           <div>Edit</div>
                                                       </div>
                                                   </Link>
+                                                  <button data-id={`${item?.id}`} onClick={removeProduct}>
+                                                      <div className="flex flex-row space-x-1 items-center">
+                                                          <div><FaTrash color="#DF392F" size={20} /></div>
+                                                          <div>Delete</div>
+                                                      </div>
+                                                  </button>
                                               </div>
                                            
                                           </td>
