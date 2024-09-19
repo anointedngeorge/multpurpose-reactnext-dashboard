@@ -20,6 +20,10 @@ import { HiMiniArrowSmallRight } from "react-icons/hi2";
 
 
 
+const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+
+
+
 interface actioninterface {
     add:string,
     edit:string,
@@ -110,6 +114,26 @@ const BrandTypesListing = (prop:{brandid:any, data:any[], changeFun?:(event:any)
 
 const Tiles:React.FC<TilesInterface> = (prop) => {
     // console.log(prop.data?.data.name)
+    const removeProduct = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+      const productid = event.currentTarget.getAttribute('data-id');
+      
+      if (productid && confirm("Warning!, this action will delete every data attached to it. Do you still want to continue!")) {
+          const ft = async () => {
+              const f =  await fetch(`${process.env.APIBASEURl}/api/v1/products/product/${productid}/delete/`, {
+                    method:'delete',
+                    headers: {
+                        "Content-Type":"application/json",
+                        'Authorization':`Bearer ${Token2}`
+                    }
+                });
+                
+                if (f.ok) {
+                    globalThis.location.reload();
+                }
+          }
+          ft();
+      }
+  }, []);
     return (
         <div className="flex flex-row shrink-0">
          
@@ -118,7 +142,7 @@ const Tiles:React.FC<TilesInterface> = (prop) => {
             </div>
             <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.edititem} href={{pathname:'/admin/products/productlisting/', query:{id:`${prop?.data?.id}`, name:`${prop?.data?.data?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
             <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div>
-            <div><Link className="btn btn-ghost btn-circle" onClick={prop?.popMenuwindow} href={`delete/?id=${prop?.data?.id}`}><MdDelete size={25} /></Link></div>
+            <div><button className="btn btn-ghost btn-circle" onClick={removeProduct}  data-id={`${prop?.data?.id}`}><MdDelete size={25} /></button></div>
         </div>
     )
 }

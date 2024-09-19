@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { Suspense } from 'react';
+import { Suspense, useCallback } from 'react';
 import LayoutAdmin from "@/components/admin/AdminLayout";
 import Chartjs from "@/components/admin/Chartjs";
 import AdminAside from "@/components/admin/AdminAside";
@@ -15,6 +15,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { APIBASEURl, Token, externalurls } from "@/app/interface";
 import { useCustomSSR } from "@/app/custom_hooks";
 import { ModalProductPopover } from "@/components/globalComponents";
+
+
+
+
+
+const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+
+
 
 interface actioninterface {
     add:string,
@@ -83,6 +91,27 @@ interface TilesInterface {
 
 const Tiles:React.FC<TilesInterface> = (prop) => {
 
+  const removeProduct = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    const productid = event.currentTarget.getAttribute('data-id');
+    
+    if (productid && confirm("Warning!, this action will delete every data attached to it. Do you still want to continue!")) {
+        const ft = async () => {
+            const f =  await fetch(`${process.env.APIBASEURl}/api/v1/products/productbrand/${productid}/delete/`, {
+                  method:'delete',
+                  headers: {
+                      "Content-Type":"application/json",
+                      'Authorization':`Bearer ${Token2}`
+                  }
+              });
+              
+              if (f.ok) {
+                  globalThis.location.reload();
+              }
+        }
+        ft();
+    }
+}, []);
+
     return (
         <div className="flex flex-row shrink-0">
             {/* <div>
@@ -90,7 +119,7 @@ const Tiles:React.FC<TilesInterface> = (prop) => {
             </div> */}
             <div><Link className="btn btn-ghost btn-circle"  onClick={prop?.popMenuwindow} href={{pathname:'/admin/products/branddetails/', query:{id:`${prop?.data?.id}`, name:`${prop?.name}` }}}><BsFillEyeFill size={25} /></Link></div>
             {/* <div><Link className="btn btn-ghost btn-circle" onClick={prop?.edititem} href={`${APIBASEURl}/api/v1/products/edit/product/item/${prop?.data?.id}/`}><FiEdit size={25} /></Link></div> */}
-            <div><Link className="btn btn-ghost btn-circle" onClick={prop?.popMenuwindow} href={`delete/?id=${prop?.data?.id}`}><MdDelete size={25} /></Link></div>
+            <div><button className="btn btn-ghost btn-circle" onClick={removeProduct}  data-id={`${prop?.data?.id}`}><MdDelete size={25} /></button></div>
         </div>
     )
 }

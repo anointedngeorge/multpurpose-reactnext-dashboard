@@ -16,6 +16,16 @@ import { ModalProductPopover } from "@/components/globalComponents";
 import Link from "next/link";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 
+
+
+
+const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+
+
+
+
+
+
 export default function Home() {
   const {state, action, status} = useCustomActionState({fn:createWarehouse});
 
@@ -23,7 +33,7 @@ export default function Home() {
   const [listdataOnchange, setListOnChnageData] = useState<any>()
   const [listOffSet, setOffSet] = useState<number>(3)
 
-  const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+
 
   const {
     ssrdata, 
