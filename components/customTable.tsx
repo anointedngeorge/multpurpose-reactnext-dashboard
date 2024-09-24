@@ -54,7 +54,7 @@ const Tbody:React.FC<theadInterface> = (prop) => {
 
 const CustomTable:React.FC<customTableInterface> = (props) => {
   return (
-   <div className='className="overflow-x-auto"'>
+    <div className="overflow-x-auto">
         {props.title? (
             <h3>{props.title || '...'}</h3>
         ) : ''}

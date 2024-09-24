@@ -68,7 +68,7 @@ export const ModalGalleryPopOver = (prop:{data?:any, formaction?:any}) => {
           reader.onload = (e) => {
             setPreview(e.target?.result as string); // Update preview with the file data
           };
-          reader.readAsDataURL(file); // Read the file and generate a preview URL
+          reader.readAsDataURL(file);
         }
       };
 
