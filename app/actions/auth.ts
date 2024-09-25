@@ -52,11 +52,9 @@ export const signup = async (state: FormState, formData: FormData) => {
     const j = await req.json();
     const token = j['token'];
     setupsessiondb({name:'apptoken', value:token})
-    window.location.href = "/admin";
-  } else {
-    console.log(req);
-    
-    // window.location.href = "/";
+    globalThis.location.href = "/admin";
+  } else {    
+    globalThis.location.href = "/";
   }
   
 }
