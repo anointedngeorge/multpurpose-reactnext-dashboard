@@ -29,11 +29,11 @@ const Card = (prop:CardInterface) => {
                     <div>{prop.Icon? (
                       <prop.Icon size={prop.iconsize} color={prop.iconcolor} />
                     ) : ''} </div>
-                    <div className="font-bold">
+                    <div className="font-bold text-xs">
                         {prop?.title}
                     </div>
                 </div>
-                <div className="text-5xl font-bold text-lightorange">
+                <div className="text-xl font-bold text-lightorange">
                     {prop.value}
                 </div>
           </div>

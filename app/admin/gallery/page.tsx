@@ -41,16 +41,23 @@ const Photos = (prop:{data?:any}) => {
     }, []);
 
     return (
-        <div className="col-span-1 w-full h-52   rounded-lg relative border-4 border-l-fuchsia-800  ">
-            <Image className="image-full rounded-md" src={`${prop?.data?.image}`} fill={true} alt="" />
-            <div className="w-full h-full flex flex-col  place-content-center items-center   z-40 absolute">
-                <div></div>
-                <div>
-                    <button data-id={prop.data.id} onClick={removePhoto} className="btn btn-lg btn-circle p-2 bg-lightorang drop-shadow-lg content-center">
-                        <MdDelete size={60} className="shadow-lg" color="#000" />
+        <div 
+        style={{
+            background:`url(${prop?.data?.image})`,
+            backgroundSize:'cover'
+        }}
+        className="object-cover col-span-1 w-full h-52   rounded-lg relative border-4 border-l-fuchsia-800  ">
+            {/* <Image className="image-full rounded-md -z-10" src={`${prop?.data?.image}`} width={'100'} height={'100'} alt="" /> */}
+            <div className="grid grid-rows-2 space-y-3 h-full">
+                <div className="p-2">
+                    <button data-id={prop.data.id} onClick={removePhoto} className="btn btn-sm btn-circle p-2 bg-red-500 drop-shadow-lg content-center">
+                        <MdDelete size={30} color="#000" />
                     </button>
+                   
                 </div>
-                <div className="text-lg font-bold text-white  bg-black w-full text-center">{prop?.data?.title}</div>
+                <div className="text-xl font-bold bg-black bg-opacity-60  flex flex-col items-center">
+                    <div className=" text-center text-yellow-500 font-bold drop-shadow-sm h-full">{prop?.data?.title}</div>
+                </div>
             </div>
         </div>
     )
