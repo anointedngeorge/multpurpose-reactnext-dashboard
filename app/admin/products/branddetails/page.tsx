@@ -17,7 +17,7 @@ import { useCustomSSR } from "@/app/custom_hooks";
 import { ModalProductPopover } from "@/components/globalComponents";
 import { useSearchParams } from "next/navigation";
 import { HiMiniArrowSmallRight } from "react-icons/hi2";
-
+import { FaTrash } from "react-icons/fa";
 
 
 const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
@@ -91,18 +91,56 @@ interface TilesInterface {
 
 const BrandTypesListing = (prop:{brandid:any, data:any[], changeFun?:(event:any) => void}) => {
 
+  const removeType =  useCallback( ( event: React.MouseEvent<HTMLAnchorElement> ) => {
+      event.preventDefault();
+      const id = event?.currentTarget?.id;
+      // alert(`${APIBASEURl}/api/v1/products/brand/${id}/item/`)
+      if (confirm("Are you sure?")) {
+        const ft = async () => {
+          const f =  await fetch(`${APIBASEURl}/api/v1/products/brand/${id}/item/`, {
+                method:'delete',
+                headers: {
+                    "Content-Type":"application/json",
+                    'Authorization':`Bearer ${Token2}`
+                }
+            });
+            if (f.ok) {
+                globalThis.location.reload();
+            } else {
+              alert(f.statusText)
+            }
+      }
+      ft();
+      }
+  }, [] )
+
   return (
       <div className="flex flex-col shrink-0">
           <nav>
               <ul>
                  {prop?.data?.map((item:any, index:any) => (
                      <li title={`${item?.name}`} key={`list_id_${index}`}>
-                        <Link className={item?.name} id={`${item?.id}`} onClick={prop.changeFun} href={`/${item?.id}`}>
-                          <div className="flex flex-row items-center">
-                            <div><HiMiniArrowSmallRight /> </div>
-                            <div>{`${item?.name}`}</div>
+                          <div className="flex flex-row space-x-3 items-center">
+                              <div>
+                                  <Link className={item?.name} id={`${item?.id}`} onClick={prop.changeFun} href={`/${item?.id}`}>
+                                      <div className="flex flex-row items-center">
+                                        <div><HiMiniArrowSmallRight /> </div>
+                                        <div>{`${item?.name}`}</div>
+                                      </div>
+                                  </Link>
+                              </div>
+                              <div>
+                                  <Link onClick={removeType} id={`${item?.id}`} className="text-red-400" href={``}>
+                                     <div className="flex flex-row items-center">
+                                          <div>
+                                          <FaTrash /> 
+                                          </div>
+                                          <div>Remove</div>
+                                     </div>
+                                  </Link>
+                              </div>
                           </div>
-                      </Link></li>
+                      </li>
                  ))}
               </ul>
           </nav>
@@ -200,14 +238,6 @@ const GridView:React.FC<gridInterface>= (prop) => {
   )
 }
 
-
-const TableView = () => {
-  return (
-      <>  
-        table view
-      </>
-  )
-}
 
 
 const ProductHome = () => {

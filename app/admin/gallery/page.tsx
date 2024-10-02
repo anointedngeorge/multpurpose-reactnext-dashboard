@@ -41,23 +41,26 @@ const Photos = (prop:{data?:any}) => {
     }, []);
 
     return (
-        <div 
-        style={{
-            background:`url(${prop?.data?.image})`,
-            backgroundSize:'cover'
-        }}
-        className="object-cover col-span-1 w-full h-52   rounded-lg relative border-4 border-l-fuchsia-800  ">
-            {/* <Image className="image-full rounded-md -z-10" src={`${prop?.data?.image}`} width={'100'} height={'100'} alt="" /> */}
-            <div className="grid grid-rows-2 space-y-3 h-full">
-                <div className="p-2">
-                    <button data-id={prop.data.id} onClick={removePhoto} className="btn btn-sm btn-circle p-2 bg-red-500 drop-shadow-lg content-center">
-                        <MdDelete size={30} color="#000" />
-                    </button>
-                   
-                </div>
-                <div className="text-xl font-bold bg-black bg-opacity-60  flex flex-col items-center">
-                    <div className=" text-center text-yellow-500 font-bold drop-shadow-sm h-full">{prop?.data?.title}</div>
-                </div>
+        <div>
+            <div 
+                style={{
+                    background:`url(${prop?.data?.image})`,
+                    backgroundSize:'cover'
+                }}
+                className="object-cover col-span-1 w-full h-52   rounded-lg relative border-4 border-l-fuchsia-800  ">
+                    {/* <Image className="image-full rounded-md -z-10" src={`${prop?.data?.image}`} width={'100'} height={'100'} alt="" /> */}
+                    <div className="grid grid-rows-2 space-y-3 h-full">
+                        <div className="p-2">
+                            <button data-id={prop.data.id} onClick={removePhoto} className="btn btn-sm btn-circle p-2 bg-red-500 drop-shadow-lg content-center">
+                                <MdDelete size={30} color="#000" />
+                            </button>
+                        
+                        </div>
+                        
+                    </div>
+            </div>
+            <div className="text-xl font-bold bg-white drop- flex flex-col items-center">
+                <h3 className=" text-center text-red-500 font-bold drop-shadow-sm h-full">{prop?.data?.title}</h3>
             </div>
         </div>
     )
