@@ -10,7 +10,7 @@ import { FaMoneyBill, FaSalesforce } from "react-icons/fa";
 import { useCustomSSR } from "../custom_hooks";
 import { externalurls } from "../interface";
 import { BsPerson } from "react-icons/bs";
-
+import { FaWarehouse } from "react-icons/fa6";
 
 
 interface CardInterface {
@@ -94,6 +94,13 @@ export default function Home() {
                               title="Manager"
                               iconsize={30}
                               value={ssrdata?.manager}
+                          />
+
+                      <Card
+                              Icon={FaWarehouse}
+                              title="Warehouse"
+                              iconsize={30}
+                              value={ssrdata?.warehouse}
                           />
                     </div>
                     <div><Chartjs /></div>
