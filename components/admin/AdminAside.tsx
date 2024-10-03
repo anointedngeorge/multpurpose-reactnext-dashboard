@@ -1,11 +1,14 @@
 "use client"
 import { List } from 'postcss/lib/list'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Link  from 'next/link'
-import { Calendar } from '@fullcalendar/core'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import CalendarView from './CalendarView'
-import { v4 as uuidv4 } from 'uuid';
+import { IoStorefrontSharp } from "react-icons/io5";
+import StoresListing from './Stores';
+
+// import { Calendar } from '@fullcalendar/core'
+// import dayGridPlugin from '@fullcalendar/daygrid'
+// import CalendarView from './CalendarView'
+// import { v4 as uuidv4 } from 'uuid';
 
 
 interface  ulistInterface {
@@ -37,6 +40,9 @@ const Ulist:React.FC<ulistinterfacedata>=(props) => {
 }
 
 
+
+
+
 const AdminAside = () => {
   return (
     <div className='flex flex-col space-y-3 mt-5'>
@@ -49,8 +55,10 @@ const AdminAside = () => {
                 
             ]}  title='Active users' />
         <div className='w-full'>
+            <h3 className='font-bold'>Store listing</h3>
+            <StoresListing />
             {/* calendar */}
-            <CalendarView />
+            {/* <CalendarView /> */}
         </div>
     </div>
   )

@@ -22,10 +22,6 @@ import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
 
-
-
-
-
 export default function Home() {
   const {state, action, status} = useCustomActionState({fn:createWarehouse});
 
@@ -120,10 +116,10 @@ export default function Home() {
                                           <td className="font-bold font-2xl">{`${item.name}`}</td>
                                           <td>
                                               <div className="flex flex-row space-x-3">
-                                                  <Link title="Add Variation" href={`/admin/warehouse/item/?data=${JSON.stringify(item)}`}  onClick={viewLoaddata} >
+                                                  <Link href={`/admin/warehouse/item/?data=${JSON.stringify(item)}`}  onClick={viewLoaddata} >
                                                       <div className="flex flex-row space-x-1 items-center">
                                                           <div><FaPlus size={20} /></div>
-                                                          <div>View</div>
+                                                          <div>Assign Product</div>
                                                       </div>
                                                   </Link>
                                                   <Link title={`Edit ${item.name}`} href={`${process.env.APIBASEURl}/api/v1/products/productlisting/${item.id}/item/`}  onClick={viewLoaddata} >
