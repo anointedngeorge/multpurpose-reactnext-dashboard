@@ -121,7 +121,7 @@ const DetailsPage = () => {
                   <div className="font-black text-xs">Total Revenue Generated</div>
                   <div className="text-3xl font-bold text-red-500">
                       
-                      {revenue? moneyFormat({currency:'NGN', country:'en-NG'}).format(revenue?.revenue) : 0.00}
+                      {revenue? moneyFormat({currency:'NGN', country:'en-NG'}).format(revenue?.revenue) : moneyFormat({currency:'NGN', country:'en-NG'}).format(0.00)}
                   </div>
               </div>
           </div>
