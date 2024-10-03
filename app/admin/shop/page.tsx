@@ -110,10 +110,10 @@ export default function Home() {
               content={[{title:'Products', link:'products/'}]}
               
           />
-          <div>
+          {/* <div>
               <InputTag name="search" type="search" placeholder="Search" />
-          </div>
-            <div className="flex flex-row mt-5 lg:space-x-8 max-sm:flex-col">
+          </div> */}
+            <div className="flex flex-row mt-1 lg:space-x-8 max-sm:flex-col">
               {/* section */}
               <div className="w-full max-sm:w-full mb-20">
                   <div className="flex flex-col space-y-10 max-sm:flex-row">
