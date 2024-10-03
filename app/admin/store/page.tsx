@@ -8,7 +8,7 @@ import { LineTitle } from "@/components/admin/LineTitle";
 import { InputTag, SelectTag } from "@/components/admin/FormElements";
 import { useCustomActionState, useCustomSSR } from "@/app/custom_hooks";
 import { createWarehouse, createbranch, photoform } from "@/app/actions/auth";
-import { Token, externalurls } from "@/app/interface";
+import { APIBASEURl, Token, externalurls } from "@/app/interface";
 import { useEffect, useState } from "react";
 import CustomTable from "@/components/customTable";
 
@@ -86,6 +86,36 @@ export default function Home() {
                             thead={['Name', 'Description', 'Branch']}
                             mapper={['name', 'description', 'branch.name']}
                             tbody={storelistdata}
+                            placeholder_values={{'$id':"data.id"}}
+                            actions={[
+                              { 
+                                  name:'Delete',
+                                  id:'$id',
+                                  link:'/admin/products/$id/',
+                                  onclick(event:React.MouseEvent<HTMLAnchorElement>) {
+                                        event.preventDefault();
+                                        if (confirm("Are you sure?")) {
+                                          
+                                          const ft = async () => {
+                                            const id = event?.currentTarget?.id
+                                            const f =  await fetch(`${APIBASEURl}/api/v1/utility/warehouse/${id}/item`, {
+                                                  method:'delete',
+                                                  headers: {
+                                                      "Content-Type":"application/json",
+                                                      'Authorization':`Bearer ${Token2}`
+                                                  }
+                                              });
+                                              if (f.ok) {
+                                                  globalThis.location.reload();
+                                              } else {
+                                                alert(f.statusText)
+                                              }
+                                        }
+                                        ft();
+                                        }
+                                  },
+                              },
+                            ]}
                         />
                       ) : "Loading... "}
                     </div>

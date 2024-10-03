@@ -10,7 +10,7 @@ import { useCustomActionState, useCustomSSR } from "@/app/custom_hooks";
 import { createbranch, photoform } from "@/app/actions/auth";
 import CustomTable from "@/components/customTable";
 import { useEffect, useState } from "react";
-import { Token, externalurls } from "@/app/interface";
+import { APIBASEURl, Token, externalurls } from "@/app/interface";
 
 
 export default function Home() {
@@ -70,6 +70,36 @@ export default function Home() {
                             thead={['Name', 'Address']}
                             mapper={['name', 'address' ]}
                             tbody={listdata}
+                            placeholder_values={{'$id':"data.id"}}
+                            
+                            actions={[
+                              { 
+                                  name:'Delete',
+                                  id:'$id',
+                                  link:'/admin/products/$id/',
+                                  onclick(event:React.MouseEvent<HTMLAnchorElement>) {
+                                        event.preventDefault();
+                                        if (confirm("Are you sure?")) {
+                                          const ft = async () => {
+                                            const id = event?.currentTarget?.id
+                                            const f =  await fetch(`${APIBASEURl}/api/v1/utility/branch/${id}/item`, {
+                                                  method:'delete',
+                                                  headers: {
+                                                      "Content-Type":"application/json",
+                                                      'Authorization':`Bearer ${Token2}`
+                                                  }
+                                              });
+                                              if (f.ok) {
+                                                  globalThis.location.reload();
+                                              } else {
+                                                alert(f.statusText)
+                                              }
+                                        }
+                                        ft();
+                                        }
+                                  },
+                              },
+                            ]}
                         />
                       ) : "Loading... "}
                     </div>

@@ -138,9 +138,9 @@ export default function Home() {
       left: 10,
     })
       .then(newWindow => {
-        console.log("This will log in the new window.");
+        // console.log("This will log in the new window.");
         newWindow.addEventListener("beforeunload", _event => {
-          console.log("This will log when the new window is closed.");
+          // console.log("This will log when the new window is closed.");
         });
       })
       .catch(_error => {
@@ -202,9 +202,7 @@ export default function Home() {
                   </div>
               </div>
               {/* aside */}
-             
             </div>
         </main>
-
-  );
+    );
 }
