@@ -6,6 +6,8 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams  } from "next/navigation";
 import { useCustomSSR } from "@/app/custom_hooks";
 import { APIBASEURl, externalurls } from "@/app/interface";
+import StoreChartjs from "@/components/admin/StoreChartjs";
+import { moneyFormat } from "@/app/utils/utils";
 
 
 
@@ -53,25 +55,79 @@ const ListProduct = ({wayhouse_id, branch_id}:{wayhouse_id?:string, branch_id?:s
 }
 
 
+const ListStaff = ({wayhouse_id, branch_id}:{wayhouse_id?:string, branch_id?:string}) => {
+  const [listdata, setListData] = useState([])
+  const {ssrdata:wayhouselist} = useCustomSSR({url:`${APIBASEURl}/api/v1/accounts/staff/${branch_id}`, headers:{
+    "Authorization":`Bearer ${Token2} `
+  }});
+
+    useEffect( () => {
+      setListData(wayhouselist)
+    }, [wayhouselist] )
+
+    return(
+      <div className="overflow-auto">
+   
+        <table className="table table-sm">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                </tr>
+            </thead>
+            <tbody>
+              {listdata?.map( (item:{
+                    id:string,
+                    first_name:string,
+                    last_name:string,
+                  },
+                    index:number
+                ) => (
+                  <tr key={`store_staff_list_${index}`}>
+                      <td> {item?.first_name} </td>
+                      <td> {item?.last_name} </td>
+                  </tr>
+              ) )}
+            </tbody>
+        </table>
+      </div>
+    )
+}
+
+
 
 
 const DetailsPage = () => {
   const query = useSearchParams();
-  const wayhouse_id = query.get("id");
+  const store_id = query.get("id");
   const name = query.get("name");
   const branch_id = query.get("branch_id");
   const branch_name = query.get('branch_name')
+
+  const {ssrdata:revenue} = useCustomSSR({url:`${APIBASEURl}/api/v1/chart/month/store/${store_id}/revenue`, headers:{} });
 
   return (
       <div className="w-full flex flex-col">
           <div className="font-bold">Store Information</div>
           <div className="text-3xl font-bold">{name}({branch_name})</div>
-          <div className="grid grid-cols-[2fr_1fr_1fr]">
+          <div className="grid grid-cols-[2fr_1fr_1fr] gap-x-3">
               <div className="bg-slate-100 p-2">
-                <ListProduct wayhouse_id={`${wayhouse_id}`} branch_id={`${branch_id}`} />
+                <ListProduct wayhouse_id={`${store_id}`} branch_id={`${branch_id}`} />
               </div>
-              <div>staff</div>
-              <div>Accounts</div>
+              <div>
+                  <ListStaff branch_id={`${branch_id}`} />
+              </div>
+              <div className="flex flex-col">
+                  <div className="font-black text-xs">Total Revenue Generated</div>
+                  <div className="text-3xl font-bold text-red-500">
+                      
+                      {revenue? moneyFormat({currency:'NGN', country:'en-NG'}).format(revenue?.revenue) : 0.00}
+                  </div>
+              </div>
+          </div>
+
+          <div className="w-full mt-3">
+              <StoreChartjs title={`${name}`} store_id={`${store_id}`} />
           </div>
       </div>
   )
