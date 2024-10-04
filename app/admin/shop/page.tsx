@@ -108,7 +108,6 @@ export default function Home() {
           <LineTitle 
               heading="Shopping Mall" 
               content={[{title:'Products', link:'products/'}]}
-              
           />
           {/* <div>
               <InputTag name="search" type="search" placeholder="Search" />

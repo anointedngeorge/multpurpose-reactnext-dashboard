@@ -11,6 +11,7 @@ import { useCustomSSR } from "../custom_hooks";
 import { externalurls } from "../interface";
 import { BsPerson } from "react-icons/bs";
 import { FaWarehouse } from "react-icons/fa6";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 
 
 interface CardInterface {
@@ -84,6 +85,12 @@ export default function Home() {
                               value={ssrdata?.product_listing}
                           />
                           <Card
+                              Icon={MdOutlineProductionQuantityLimits}
+                              title="Brand Quantity"
+                              iconsize={30}
+                              value={ssrdata?.overall_quantity}
+                          />
+                          <Card
                               Icon={BsPerson}
                               title="Staff"
                               iconsize={30}
@@ -96,7 +103,7 @@ export default function Home() {
                               value={ssrdata?.manager}
                           />
 
-                      <Card
+                          <Card
                               Icon={FaWarehouse}
                               title="Warehouse"
                               iconsize={30}

@@ -189,7 +189,7 @@ const ProductHome = () => {
 
   const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
-  const {ssrdata:productsrlist, ssrerror:productsrerror, ssrstatus:productsrtatus} = useCustomSSR({url:`${externalurls.productbrandslist}`, headers:{
+  const {ssrdata:productsrlist} = useCustomSSR({url:`${externalurls.productbrandslist}`, headers:{
     "Authorization":`Bearer ${Token2} `
   }});
 
@@ -224,12 +224,12 @@ const ProductHome = () => {
   
   return (
         <main className="p-2">
-            <LineTitle heading="Products/Brands" content={[{title:'products',link:'products'}]} />
+            <LineTitle heading="Products/Brands"  />
             <div className="flex flex-row mt-5 lg:space-x-10 max-sm:flex-col">
               {/* section */}
               <div className="max-sm:w-full">
                   <div className="flex flex-col space-y-10">
-                      <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div>
+                      {/* <div><SearchBar isviewswitched={switchview} changeDataReverseView={changeDataReverseView} changeDataDisplayView={changeDataDisplayView} /></div> */}
                       <div className="px-3 ">
                         
                           {switchview == 'grid'? <GridView  additem={addItem} edititem={addItem} gridData={productsrlist} /> : <TableView />}
