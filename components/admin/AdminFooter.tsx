@@ -56,7 +56,7 @@ const AdminFooter = () => {
                   showicon={true}
                 />
             </div>
-            <div>
+            {/* <div>
               <Icondata 
                 Icon={LuHistory} 
                 iconclassname='size-8' 
@@ -65,7 +65,7 @@ const AdminFooter = () => {
                 showicon={true}
                 link='/admin/'
               />
-            </div>
+            </div> */}
             <div>
               <Icondata 
                 Icon={FaWarehouse} 
