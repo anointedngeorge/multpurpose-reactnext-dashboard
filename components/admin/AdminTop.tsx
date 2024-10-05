@@ -67,7 +67,8 @@ const Searchbar = () => {
         });
         if (f.ok) {
             const data = await f.json()
-            setSearchInput(data)
+            const dt = data? data : [];
+            setSearchInput(dt)
         } 
   }
   ft();
