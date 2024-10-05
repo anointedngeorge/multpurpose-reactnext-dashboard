@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import LayoutAdmin from "@/components/admin/AdminLayout";
 import { LineTitle } from "@/components/admin/LineTitle";
 import { BiSolidDashboard } from "react-icons/bi";
@@ -9,7 +9,7 @@ import { MdDelete, MdOpenWith } from "react-icons/md";
 import { BsFillEyeFill } from "react-icons/bs";
 import AdminSingleProductView from "@/components/admin/AdminSingleProductView";
 import { useSearchParams } from "next/navigation";
-import { externalurls } from "@/app/interface";
+import { APIBASEURl, externalurls } from "@/app/interface";
 import { useCustomSSR } from "@/app/custom_hooks";
 import LoaderSpinner from "@/components/Loader";
 
@@ -23,27 +23,28 @@ interface datalistinterface {
   name: string;
   image?: string;
   content?: actioninterface;
-  popMenuwindow?: (event: any) => void;
+  popMenuwindow?: React.MouseEventHandler<HTMLAnchorElement>;
+  onclickRemove?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 const Tiles = (prop: {
-  data?: actioninterface;
-  id?:any,
-  name?:any,
-  image?:any
-  popMenuwindow?: (event: any) => void;
+  data?: actioninterface; id?:any, name?:any,
+  image?:any, 
+  popMenuwindow?:  React.MouseEventHandler<HTMLAnchorElement>;
+  onclickRemove?:  React.MouseEventHandler<HTMLAnchorElement>;
 }) => (
-  <div className="flex flex-row space-x-2">
+
+  <div className="flex flex-row space-x-2 items-center">
     <div>
       <Link title="view"  href={`${`/admin/products/singleproductlist/?id=${prop.id}&name=${prop.name}&image=${prop.image}`}`}>
-          <BsFillEyeFill size={45} />
+          <BsFillEyeFill size={25} />
       </Link>
     </div>
-    {/* <div>
-      <Link title="delete" href={``}>
+    <div>
+      <Link title="delete" onClick={prop.onclickRemove} href={``} id={`${prop.id}`}  >
         <MdDelete size={25} />
       </Link>
-    </div> */}
+    </div>
   </div>
 );
 
@@ -55,17 +56,25 @@ const Card: React.FC<datalistinterface> = (props) => (
         <p className="text-center">{props?.name}</p>
       </div>
       <div>
-        <Tiles image={props?.image} id={props.id} name={props.name} data={props?.content} popMenuwindow={props.popMenuwindow} />
+        <Tiles 
+              image={props?.image} id={props.id} 
+              name={props.name} 
+              data={props?.content} 
+              popMenuwindow={props.popMenuwindow}
+              onclickRemove={props.onclickRemove}
+        />
       </div>
     </div>
   </div>
 );
 
-const GridView = ({ gridData, popMenuwindow }: {
+const GridView = ({ gridData, popMenuwindow, onclickRemoval }: {
   gridData: datalistinterface[][],
   id?:any,
   name?:any,
   popMenuwindow?: (event: any) => void,
+  onclickRemoval?: React.MouseEventHandler<HTMLAnchorElement>,
+  
 }) => (
   <>
     {gridData?.map((item: any[], indx) => (
@@ -77,6 +86,7 @@ const GridView = ({ gridData, popMenuwindow }: {
             id={itemdata.id}
             image={itemdata?.image?.image}
             popMenuwindow={popMenuwindow}
+            onclickRemove={onclickRemoval}
             content={itemdata?.content}
           />
         ))}
@@ -107,6 +117,31 @@ const ProductList = () => {
 
   const [switchComponent, setComponent] = useState<JSX.Element | null>(null);
 
+
+  const removeProductType = useCallback( (event:React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+
+        if (confirm("Are you sure?")) {
+          const ft = async () => {
+            const id = event?.currentTarget?.id
+            const f =  await fetch(`${APIBASEURl}/api/v1/products/productlisting/${id}/item/delete/`, {
+                  method:'delete',
+                  headers: {
+                      "Content-Type":"application/json",
+                      'Authorization':`Bearer ${Token2}`
+                  }
+              });
+              if (f.ok) {
+                  globalThis.location.reload();
+              } else {
+                alert(f.statusText)
+              }
+        }
+        ft();
+        }
+  }, [] );
+
+
   function popMenuwindow() {
     setComponent(<AdminSingleProductView />);
   }
@@ -121,7 +156,11 @@ const ProductList = () => {
         <div className="w-full shrink-0 max-sm:w-full">
           <div className="flex flex-col space-y-10">
             <div className="px-3">
-                <GridView gridData={listdata} popMenuwindow={popMenuwindow} />
+                <GridView 
+                    gridData={listdata} 
+                    popMenuwindow={popMenuwindow}
+                    onclickRemoval={removeProductType}
+                />
             </div>
           </div>
         </div>

@@ -28,7 +28,7 @@ export default function Home() {
   const [listdata, setListData] = useState<any>()
   const [listdataOnchange, setListOnChnageData] = useState<any>()
   const [listOffSet, setOffSet] = useState<number>(3)
-
+  let index = 10;
 
 
   const {
@@ -40,8 +40,9 @@ export default function Home() {
   }});
 
   const loadmoredata = useCallback(() => {
-    setOffSet(10);
-  }, [listOffSet])
+    index += 10;
+    setOffSet(index);
+  }, [index])
 
 
   const viewLoaddata = useCallback((event:any) => {

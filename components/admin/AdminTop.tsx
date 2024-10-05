@@ -1,14 +1,22 @@
 "use client"
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { IconType } from 'react-icons'
 import { FaBell, FaCartArrowDown, FaRegBell } from 'react-icons/fa'
 import { LuShoppingCart } from 'react-icons/lu'
 import Image from 'next/image'
 import { useCustomSSR } from '@/app/custom_hooks'
-import { cartStorageName, externalurls } from '@/app/interface'
+import { APIBASEURl, cartStorageName, externalurls } from '@/app/interface'
 import CartComponent from './CartComponent'
+import { FaWindowClose } from "react-icons/fa";
+
+
+
+
+const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+
+
 
 interface NotificationInterface {
     Icon:IconType,
@@ -34,19 +42,91 @@ const Notification:React.FC<NotificationInterface> = (prop) => {
 
 
 const Searchbar = () => {
+
+  const [searchInput, setSearchInput] = useState<{
+        id:string,
+        name:string,
+        image:{image:string},
+        product:{id:string},
+        brands:{id:string},
+        brand_type:{id:string},
+    }[]>([]);
+  const [is_searchable, setSearchable] = useState<boolean>(true);
+
+
+  const handleInput = (event:React.KeyboardEvent<HTMLInputElement>) => {
+    const selectedValue = event?.currentTarget?.value;
+    setSearchable(false)
+    const ft = async () => {
+      const f =  await fetch(`${APIBASEURl}/api/v1/products/productlisting/search/?name__icontains=${selectedValue}`, {
+            method:'get',
+            headers: {
+                "Content-Type":"application/json",
+                'Authorization':`Bearer ${Token2}`
+            }
+        });
+        if (f.ok) {
+            const data = await f.json()
+            setSearchInput(data)
+        } 
+  }
+  ft();
+    if (selectedValue == '') {
+      setSearchable(true)
+    }
+  };
+
+  // close
+  const closeOPenSearch = () => {
+    setSearchable(true)
+  }
+
   return (
-      <form action="">
-        <div className="flex w-96 h-10 max-sm:w-auto bg-white border-2 rounded-full place-content-center items-center space-x-3">
-          <div className='w-72' >
-              <input 
-                  type="text"
-                  placeholder='Search...'
-                  className='focus:outline-none focus:border-none p-2 border-0 border-lightblack w-full h-full focus-within:border-0'
-                 />
-          </div>
-          <div className='text-center'><button type='submit'><CiSearch size={25}/></button></div>
-      </div>
-      </form>
+      
+        <div className='flex flex-col  w-96 fixed z-40'>
+
+            <div className="flex h-10 max-sm:w-auto bg-white border-2 rounded-full place-content-center items-center space-x-3">
+                      <div className='w-72' >
+                          <input 
+                              type="text"
+                              placeholder='Products'
+                              onKeyUp={handleInput}
+                              className='focus:outline-none focus:border-none p-2 border-0 border-lightblack w-full h-full focus-within:border-0'
+                            />
+                      </div>
+                      <div className='text-center'><span><CiSearch size={25}/></span></div>
+              </div>
+            
+            <div hidden={is_searchable} className='mt-1 fade-in bg-slate-100 w-full p-3 min-h-32 drop-shadow-2xl'>
+                <span onClick={closeOPenSearch} className='cursor-pointer text-xs float-end'><FaWindowClose size={16} /></span>
+                <hr className='w-full' />
+                <ul className='list mt-2'>
+                    {searchInput? searchInput?.map((item, index) => (
+                        <li key={`search_${index}`}>
+                            <Link href={{pathname:`/admin/products/singlesearchproductlist`, query:{
+                              id:item?.id,
+                              name:item?.name,
+                              product_id:item?.product?.id,
+                              brands_id:item?.brands?.id,
+                              brand_type_id:item?.brand_type?.id,
+                              image:item?.image?.image
+                            } }}>
+                            <div className="flex flex-row items-center space-x-1">
+                                <div>
+                                  <Image className='rounded-md' src={`${item?.image.image}`} width={35} height={35} alt='...' />
+                                </div>
+                                <div className='text-lg font-bold'>
+                                    {`${item?.name}`}
+                                </div>
+                            </div>
+                            </Link>
+                        </li>
+                    )) : "Not Found"}
+                </ul>
+            </div>
+
+        </div>
+   
   )
 }
 
