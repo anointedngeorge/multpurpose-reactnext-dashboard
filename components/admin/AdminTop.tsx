@@ -84,7 +84,7 @@ const Searchbar = () => {
     setSearchable(true)
   }
 
-  
+  const notfoundpng = "https://png.pngtree.com/png-clipart/20221221/original/pngtree-no-camera-icon-png-image_8792933.png";
 
   return (
       
@@ -118,7 +118,7 @@ const Searchbar = () => {
                             } }}>
                             <div className="flex flex-row items-center space-x-1">
                                 <div>
-                                  <Image className='rounded-md' src={`${item?.image.image}`} width={35} height={35} alt='...' />
+                                  <Image className='rounded-md' src={`${item?.image.image? item?.image.image : notfoundpng}`} width={35} height={35} alt='...' />
                                 </div>
                                 <div className='text-lg font-bold'>
                                     {`${item?.name}`}

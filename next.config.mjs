@@ -10,6 +10,7 @@ const nextConfig = {
           
           {hostname: "europeapi.sharashellacademy.com"},
           {hostname: "media.giphy.com"},
+          {hostname: "png.pngtree.com"},
         ],
       },
   env: {
