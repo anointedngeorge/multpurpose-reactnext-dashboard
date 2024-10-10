@@ -65,14 +65,18 @@ const Searchbar = () => {
                 'Authorization':`Bearer ${Token2}`
             }
         });
+
         if (f.ok) {
-            const data = await f.json()
+            const data = await f?.json()
+            console.log("loading...");
+            console.log(data);
             const dt = data? data : [];
             setSearchInput(dt)
         } else {
           setSearchInput([])
         }
   }
+
   ft();
     if (selectedValue == '') {
       setSearchable(true)
