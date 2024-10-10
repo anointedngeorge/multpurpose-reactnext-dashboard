@@ -68,8 +68,6 @@ const Searchbar = () => {
 
         if (f.ok) {
             const data = await f?.json()
-            console.log("loading...");
-            console.log(data);
             const dt = data? data : [];
             setSearchInput(dt)
         } else {
@@ -122,7 +120,7 @@ const Searchbar = () => {
                             } }}>
                             <div className="flex flex-row items-center space-x-1">
                                 <div>
-                                  <Image className='rounded-md' src={`${item?.image.image? item?.image.image : notfoundpng}`} width={35} height={35} alt='...' />
+                                  <Image className='rounded-md' src={`${item?.image? item?.image.image : notfoundpng}`} width={35} height={35} alt='...' />
                                 </div>
                                 <div className='text-lg font-bold'>
                                     {`${item?.name}`}
