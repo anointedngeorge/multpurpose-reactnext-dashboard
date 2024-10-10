@@ -69,7 +69,9 @@ const Searchbar = () => {
             const data = await f.json()
             const dt = data? data : [];
             setSearchInput(dt)
-        } 
+        } else {
+          setSearchInput([])
+        }
   }
   ft();
     if (selectedValue == '') {
@@ -81,6 +83,8 @@ const Searchbar = () => {
   const closeOPenSearch = () => {
     setSearchable(true)
   }
+
+  
 
   return (
       
