@@ -224,7 +224,9 @@ const ProductHome = () => {
   
   return (
         <main className="p-2">
-            <LineTitle heading="Products/Brands"  />
+            <LineTitle heading="Products/Brands" content={[
+              {title:'Add Product', link:'/additem'}
+            ]}  />
             <div className="flex flex-row mt-5 lg:space-x-10 max-sm:flex-col">
               {/* section */}
               <div className="max-sm:w-full">
