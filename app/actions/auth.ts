@@ -54,7 +54,48 @@ export const signup = async (state: FormState, formData: FormData) => {
     setupsessiondb({name:'apptoken', value:token})
     globalThis.location.href = "/admin";
   } else {    
-    globalThis.location.href = "/";
+    globalThis.location.href = "/admin/login";
+  }
+  
+}
+
+
+export const staffsignup = async (state: FormState, formData: FormData) => {
+  // Validate form fields
+  const validatedFields = SignupFormSchema.safeParse({
+    username: formData.get('username'),
+    password: formData.get('password'),
+  })
+
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+        errors: validatedFields.error.flatten().fieldErrors,
+    }
+  }
+
+  const username = formData.get('username');
+  const password = formData.get('password');
+
+  const postRequest:postInterface =  {
+    url:`${externalurls.token}`,
+    headers:{
+      "Content-Type":"application/json",
+    },
+    body: {
+      username,
+      password,
+    }
+  }
+  const req = await postdata(postRequest);
+  
+  if (req?.ok) {
+    const j = await req.json();
+    const token = j['token'];
+    setupsessiondb({name:'apptoken', value:token})
+    globalThis.location.href = "/staff";
+  } else {    
+    globalThis.location.href = "/staff/login";
   }
   
 }

@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { toast } from 'react-toastify';
  
-
+export const Apptoken = "apptoken";
 export const cartStorageName = "cartdata";
 export const checkoutStorageName = "checkoutcartdata";
 export const ThemeContext =  createContext<any>(null)

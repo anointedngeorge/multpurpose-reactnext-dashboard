@@ -47,7 +47,7 @@ const Searchbar = () => {
         id:string,
         name:string,
         image:{image:string},
-        product:{id:string},
+        product:{id:string, quantity:string},
         brands:{id:string},
         brand_type:{id:string},
     }[]>([]);
@@ -96,7 +96,7 @@ const Searchbar = () => {
                       <div className='w-72' >
                           <input 
                               type="text"
-                              placeholder='Products'
+                              placeholder='Product Search...'
                               onKeyUp={handleInput}
                               className='focus:outline-none focus:border-none p-2 border-0 border-lightblack w-full h-full focus-within:border-0'
                             />
@@ -104,26 +104,22 @@ const Searchbar = () => {
                       <div className='text-center'><span><CiSearch size={25}/></span></div>
               </div>
             
-            <div hidden={is_searchable} className='mt-1 fade-in bg-slate-100 w-full p-3 min-h-32 drop-shadow-2xl'>
+            <div hidden={is_searchable} className='mt-1  fade-in bg-slate-100 w-full p-3 min-h-32 drop-shadow-2xl'>
                 <span onClick={closeOPenSearch} className='cursor-pointer text-xs float-end'><FaWindowClose size={16} /></span>
                 <hr className='w-full' />
+                {/* /admin/products/singlesearchproductlist */}
                 <ul className='list mt-2'>
                     {searchInput? searchInput?.map((item, index) => (
                         <li key={`search_${index}`}>
-                            <Link href={{pathname:`/admin/products/singlesearchproductlist`, query:{
-                              id:item?.id,
-                              name:item?.name,
-                              product_id:item?.product?.id,
-                              brands_id:item?.brands?.id,
-                              brand_type_id:item?.brand_type?.id,
-                              image:item?.image?.image
-                            } }}>
+                            <Link href={"#"}>
                             <div className="flex flex-row items-center space-x-1">
                                 <div>
                                   <Image className='rounded-md' src={`${item?.image? item?.image.image : notfoundpng}`} width={35} height={35} alt='...' />
                                 </div>
-                                <div className='text-lg font-bold'>
-                                    {`${item?.name}`}
+                                <div className='text-lg font-bold flex flex-row space-x-3'>
+                                    <div>{`${item?.name}`}</div>
+                                    <div>{`${item?.product.quantity}`}</div><br />
+                                 
                                 </div>
                             </div>
                             </Link>
@@ -200,18 +196,6 @@ const AdminTop = () => {
   }
 
 
-  const [dataset,setDataset] = useState<string | number>(0)
-  const {
-    ssrdata, 
-    } = useCustomSSR({url:`${APIBASEURl}/api/v1/products/request/count/`, headers:{
-    "Authorization":`Bearer ${Token2}`
-  }});
-
-  useEffect(() => {
-  setDataset(ssrdata?.count)
-  }, [ssrdata])
-
-
   return (
     <>
       <div className='grid grid-flow-col max-sm:grid-flow-row lg:space-x-48 w-full py-3 px-8 max-sm:p-1 place-content-between'>
@@ -220,7 +204,7 @@ const AdminTop = () => {
           <div>
             <div className="flex flex-row space-x-10 ">
                 <div><Notification Icon={LuShoppingCart}  val={`${cartCounter}`} onclick={viewCartdetails} /></div>
-                <div><Notification link='/admin/productrequest/' Icon={FaRegBell} val={`${dataset}`} /></div>
+                <div><Notification Icon={FaRegBell} val='0' /></div>
                 <div><Profile /> </div>
             </div>
           </div>

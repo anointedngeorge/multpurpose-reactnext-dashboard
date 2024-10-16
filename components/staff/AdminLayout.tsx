@@ -6,12 +6,11 @@ import AdminTop from './AdminTop';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getdbsid } from '@/app/function';
-import { APIBASEURl, externalurls, ThemeContext } from '@/app/interface';
+import { APIBASEURl, ThemeContext } from '@/app/interface';
 import { useCustomSSR } from '@/app/custom_hooks copy';
 
 
 const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
-
 
 const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => {
     const [token, setToken] = useState<any>(null)
@@ -21,29 +20,27 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
     }, []);
 
     
-    // const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
     const { ssrdata } 
-            = useCustomSSR({url:`${APIBASEURl}/api/v1/auth/token/validate/`, headers:{
-        "Authorization":`Bearer ${Token2} `
-      } });
+    = useCustomSSR({url:`${APIBASEURl}/api/v1/auth/token/validate/`, headers:{
+  "Authorization":`Bearer ${Token2} `
+  } });
 
-      // force login if token validate is false
-      useEffect(() => {
-          if (ssrdata?.token) {
-             globalThis.location.href = "/admin/login";
-          }
-      }, []);
-    
+    // force login if token validate is false
+    useEffect(() => {
+    if (ssrdata?.token) {
+        globalThis.location.href = "/staff/login";
+    }
+    }, []);
 
   return (
     <ThemeContext.Provider value={{token:token}}>
       <main>
-        
+
         <div className='flex flex-row'>
           <div className='w-screen'>
             <div className="flex flex-row">
                 {/*  */}
-                <div className='h-screen max-sm:hidden w-1/5 bg-lightblack max-sm:h-screen rounded-br-lg p-10 '>
+                <div className='max-sm:hidden w-1/5 bg-lightblack max-sm:h-screen rounded-br-lg p-10 min-h-screen'>
                   <AdminSidebar />
                 </div>
                 {/*  */}
@@ -52,10 +49,8 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
                     <div>
                     <AdminTop />
                     </div>
-                    <div className='bg-white shadow p-3 rounded-sm max-h-[500px] overflow-y-scroll'>
-                        
-                          {children}
-                     
+                    <div className='bg-white shadow p-3 rounded-sm  overflow-y-scroll'>
+                        {children}
                     </div>
                   </div>
                 </div>
@@ -65,9 +60,9 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
         </div>
         
         {/* footer start here */}
-        <div>
+        {/* <div>
             <AdminFooter />
-        </div>
+        </div> */}
         {/* end of footer */}
         
         <ToastContainer />

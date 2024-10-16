@@ -4,12 +4,11 @@ import { Apptoken, ThemeContext, Token, externalurls } from '@/app/interface';
 import Link from 'next/link'
 import React, {useCallback, useContext, useEffect, useState} from 'react'
 import { IconType } from 'react-icons';
-import { BiHome } from 'react-icons/bi';
-import { FaListUl, FaShopify } from 'react-icons/fa';
-import { LiaStoreAltSolid } from 'react-icons/lia';
+import { FaShopify } from 'react-icons/fa';
+import { FaCodePullRequest } from "react-icons/fa6";
 import { LuLogOut } from 'react-icons/lu';
-import { MdOutlineLocationCity } from 'react-icons/md';
-import { TbPhotoFilled } from 'react-icons/tb';
+
+
 
 interface IconInterface {
   Icon:IconType,
@@ -40,7 +39,7 @@ const Profile = ({data}:{data?:any}) => {
           </div>
           <div className='text-center mt-3'>
             <h3 className='font-inter text-lightorange font-semibold'>{`${data?.username}` || 'Cameron Williamson'}</h3>
-              <p className='text-graywhite text-xs'>Administrator</p>
+              <p className='text-graywhite text-xs'>Staff Admin</p>
           </div>
       </div>
   )
@@ -49,7 +48,7 @@ const Profile = ({data}:{data?:any}) => {
 const SidebarLinks:React.FC<IconInterface> = (prop) => {
   return (
     <div className='text-white'>
-      <Link onClick={prop.onclick} href={`${prop.link}`} className={`${prop.linkclassname}`} title={`${prop.hovertitle}`}>
+      <Link onClick={prop?.onclick} href={`${prop.link}`} className={`${prop.linkclassname}`} title={`${prop.hovertitle}`}>
           <div className='flex flex-row space-x-2 place-items-center'>
             {prop.showicon? <div><prop.Icon className={`${prop.iconclassname}`} style={prop.iconstyle} /></div> : ''}
             <div><span className={`${prop.textclassname}`}>{`${prop.title}`}</span></div>
@@ -66,15 +65,13 @@ const Sidebar = () => {
     "Authorization":`Bearer ${Token2} `
   }});
 
-
   const logout = useCallback((event:React.MouseEvent) => {
-        event.preventDefault();
-        if (confirm("Are you sure?")) {
-            globalThis?.sessionStorage?.removeItem(`${Apptoken}`);
-            globalThis.location.href = "/";
-        }
-  }, [])
-
+    event.preventDefault();
+    if (confirm("Are you sure?")) {
+        globalThis?.sessionStorage?.removeItem(`${Apptoken}`);
+        globalThis.location.href = "/";
+    }
+}, [])
 
 
   return (
@@ -85,41 +82,24 @@ const Sidebar = () => {
             </div>
 
             <div className="flex flex-col space-y-5">
-               <SidebarLinks 
-                      Icon={LiaStoreAltSolid} 
-                      showicon={true}
-                      hovertitle='Stores'
-                      title='Stores'
-                      link='/admin/store/'
-                      iconclassname='text-lightorange size-4'
-                      textclassname='text-white text-md hover:text-lightorange'
-                />
-               <SidebarLinks 
-                      Icon={TbPhotoFilled}
-                      link='/admin/gallery/'
-                      showicon={true} 
-                      title='Gallery'
-                      hovertitle='Gallery'
-                      iconclassname='text-lightorange size-4'
-                      textclassname='text-white text-md hover:text-lightorange'
-                />
-
-              <SidebarLinks 
-                      Icon={MdOutlineLocationCity} 
-                      showicon={true} 
-                      title='Branch'
-                      hovertitle='Branch'
-                      link='/admin/branch/'
-                      iconclassname='text-lightorange size-4'
-                      textclassname='text-white text-md hover:text-lightorange'
-                />
+              
 
               <SidebarLinks 
                       Icon={FaShopify} 
                       showicon={true} 
                       title='Shop'
                       hovertitle='Shop'
-                      link='/admin/shop'
+                      link='/staff/shop'
+                      iconclassname='text-lightorange size-4'
+                      textclassname='text-white text-md hover:text-lightorange'
+                />
+
+              <SidebarLinks 
+                      Icon={FaCodePullRequest} 
+                      showicon={true} 
+                      title='Product Request'
+                      hovertitle='Place A request'
+                      link='/staff/productrequest'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
                 />
@@ -132,9 +112,9 @@ const Sidebar = () => {
         {/*  */}
         <div className='mt-32'>
         <SidebarLinks   
-                  link='/' 
-                  onclick={logout}
+                  link='/'  
                   Icon={LuLogOut}
+                  onclick={logout}
                   showicon={true}
                   hovertitle='Logout'
                   title='Logout'

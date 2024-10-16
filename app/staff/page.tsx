@@ -1,10 +1,10 @@
 
 "use client"
 import Image from "next/image";
-import LayoutAdmin from "@/components/admin/AdminLayout";
-import Chartjs from "@/components/admin/Chartjs";
-import AdminAside from "@/components/admin/AdminAside";
-import { LineTitle } from "@/components/admin/LineTitle";
+import LayoutAdmin from "@/components/staff/AdminLayout";
+import Chartjs from "@/components/staff/Chartjs";
+import AdminAside from "@/components/staff/AdminAside";
+import { LineTitle } from "@/components/staff/LineTitle";
 import { IconType } from "react-icons";
 import { FaMoneyBill, FaSalesforce } from "react-icons/fa";
 import { useCustomSSR } from "../custom_hooks";
@@ -43,12 +43,15 @@ const Card = (prop:CardInterface) => {
 }
 
 
+
 export default function Home() {
  
   const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
     const {
-            ssrdata
+            ssrdata, 
+            ssrerror,
+            ssrstatus,
         } 
             = useCustomSSR({url:`${externalurls.countlist}`, headers:{
         "Authorization":`Bearer ${Token2} `
@@ -63,24 +66,24 @@ export default function Home() {
               <div className="w-2/3 max-sm:w-full">
                   <div className="flex flex-col space-y-10">
                     <div className="grid grid-cols-2 gap-3">
-                          <Card
+                          {/* <Card
                               Icon={FaMoneyBill}
                               title="Revenue"
                               iconsize={30}
                               value={ssrdata?.revenue}
-                          />
-                          <Card
+                          /> */}
+                          {/* <Card
                               Icon={FaSalesforce}
                               title="Sales"
                               iconsize={30}
                               value={ssrdata?.sales}
-                          />
-                          <Card
+                          /> */}
+                          {/* <Card
                               Icon={FaMoneyBill}
                               title="Products"
                               iconsize={30}
                               value={ssrdata?.product_listing}
-                          />
+                          /> */}
                           <Card
                               Icon={MdOutlineProductionQuantityLimits}
                               title="Brand Quantity"
@@ -93,12 +96,12 @@ export default function Home() {
                               iconsize={30}
                               value={ssrdata?.staff}
                           />
-                          <Card
+                          {/* <Card
                               Icon={BsPerson}
                               title="Manager"
                               iconsize={30}
                               value={ssrdata?.manager}
-                          />
+                          /> */}
 
                           <Card
                               Icon={FaWarehouse}

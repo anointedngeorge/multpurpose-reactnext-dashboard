@@ -12,6 +12,7 @@ export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
                         <div className='col-span-1'>
                         <div className="card bg-base-100  w-full border-4 p-2">
                             <figure className='w-full relative h-72'>
+                                {/* {JSON.stringify(data)} */}
                                 <Image
                                 src={data?.data?.image.image? `${data?.data?.image.image}`: ''}
                                 alt="Shoes" fill={true}  />
@@ -24,19 +25,34 @@ export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
                                         <div className="badge badge-secondary">NEW</div>
                                         </h2>
                                         <p>{data?.data.description}</p>
+                                       
                                         <form action={action} >
                                             <input type="text" readOnly hidden value={JSON.stringify(data?.data)} name="data" />
                                             <input type="text" readOnly hidden value={`${data?.data?.id}`} name="id" />
                                             <div className="flex flex-col">
                                                 <div><InputTag max={data?.data?.selling_price} value={data?.data?.selling_price} label="Price" name='selling_price' type='number' /></div>
                                                 <div className="flex flex-row space-x-2">
-                                                    <div><InputTag placeholder="0" label="Size" name='size' type='number' /></div>
+                                                    {/* <div><InputTag placeholder="0" label="Size" name='size' type='number' /></div> */}
+                                                    <div>
+                                                        <label >Choose Sizes</label>
+                                                        <select
+                                                        className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-lg drop-shadow-sm"
+                                                        name="size"
+                                                        >
+                                                            {data?.data?.variation_list?.map((item:{size:number}, index:number) => (
+                                                                <option key={`size_${index}`} value={`${item.size}`}>{`${item.size}`} </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
                                                     <div><InputTag placeholder="0"  label={`Quantity Available (${data?.data?.quantity_available})`} name='quantity' type='number'  /></div>
                                                 </div>
                                             </div>
                                             <br />
                                         {(data?.data?.quantity_available <= data?.data?.quantity_sold)}
-                                            <button type='submit' className='btn btn-sm  btn-secondary btn-block'>Add To Cart</button>
+                                            <button type='submit' className='btn btn-sm  btn-secondary btn-block'>
+                                                Add To Cart
+                                               
+                                            </button>
                                         </form>
                                     </div>
                                     </div>
