@@ -127,7 +127,7 @@ const Table = (prop:{id?:string, data?:[]}) => {
 }
 
 
-export function Receipt() {
+const Receipt = () => {
 
     const query = useSearchParams();
     const id = query.get("id")
@@ -163,6 +163,8 @@ export function Receipt() {
         </main>
     )
 }
+
+
 
 export default function Home() { 
     return (
