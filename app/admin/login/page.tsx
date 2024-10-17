@@ -61,7 +61,7 @@ export default  function Home ()  {
         <div className="w-1/2 max-sm:w-auto drop-shadow-lg lg:bg-gray-100 rounded-lg p-8">
             <div className="flex flex-col place-content-center items-center space-y-10">
                 <div className="text-center">
-                    <h3 className="text-3xl font-inter font-bold text-red-600">Europe Shop d {process.env.APIBASEURl}</h3>
+                    <h3 className="text-3xl font-inter font-bold text-red-600">Europe Shop </h3>
                     <p><strong><b>Administrator</b></strong></p>
                 </div>
                 <div >

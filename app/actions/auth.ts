@@ -47,14 +47,15 @@ export const signup = async (state: FormState, formData: FormData) => {
     }
   }
   const req = await postdata(postRequest);
-  
+  console.log(req)
   if (req?.ok) {
     const j = await req.json();
     const token = j['token'];
     setupsessiondb({name:'apptoken', value:token})
     globalThis.location.href = "/admin";
-  } else {    
-    globalThis.location.href = "/admin/login";
+  } else {   
+    
+    // globalThis.location.href = "/admin/login";
   }
   
 }
