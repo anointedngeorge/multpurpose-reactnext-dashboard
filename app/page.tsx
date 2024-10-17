@@ -13,7 +13,7 @@ export default function Home() {
   // 
   return (
     <main>
-        <div className="min-h-screen flex flex-row place-content-evenly place-items-center">
+        <div className="min-h-screen flex flex-row max-sm:flex-col place-content-evenly place-items-center">
             <div className="bg-red-500 drop-shadow-md px-10 py-8 text-white font-bold rounded-full ">
               <Link  href={'/admin/login'}>
                 <div className="flex flex-row space-x-2 items-center">
