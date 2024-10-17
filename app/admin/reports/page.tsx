@@ -8,7 +8,7 @@ import AdminAside from "@/components/admin/AdminAside";
 import { LineTitle } from "@/components/admin/LineTitle";
 import { useEffect, useState } from "react";
 import { ModalGalleryPopOver } from "@/components/globalComponents";
-import { Token, externalurls } from "@/app/interface";
+import { APIBASEURl, Token, externalurls } from "@/app/interface";
 import { useCustomActionState, useCustomSSR } from "@/app/custom_hooks";
 import { brandType, photoform } from "@/app/actions/auth";
 import { IoMdCloudUpload } from "react-icons/io";
@@ -18,7 +18,7 @@ import { FaArrowAltCircleRight } from "react-icons/fa";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 
-
+const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
 
 
@@ -33,7 +33,7 @@ const Photos = (prop:{data?:any}) => {
 
 export default function Home() {
     const [salesreportdata, setsalesreportdata] = useState<any[]>([]);
-    const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+    
 
     const {
             ssrdata:productsrlist, 
@@ -73,9 +73,26 @@ export default function Home() {
                                 <div className="mt-5">
                                     {salesreportdata?.length > 0 ? (
                                       <CustomTable
-                                          thead={['client','Attendant','Mode', 'Hash', 'On Loan','Amount']}
-                                          mapper={['client.full_name','attendant.fullname','mode_of_payment', 'sales_hash', 'on_loan','total_price' ]}
+                                          thead={['id','client','Attendant','Mode', 'Hash', 'On Loan','Amount']}
+                                          mapper={['id','client.full_name','attendant.fullname','mode_of_payment', 'sales_hash', 'on_loan','total_price' ]}
                                           tbody={item?.sales_list}
+                                          placeholder_values={{'$id':"data.id"}}
+
+                                          actions={[
+                                            { 
+                                                name:'Print',
+                                                id:'$id',
+                                                link:'/admin/products/$id/',
+                                                onclick(event:React.MouseEvent<HTMLAnchorElement>) {
+                                                      event.preventDefault();
+                                                      const ft = async () => {
+                                                        const id = event?.currentTarget?.id
+                                                        globalThis.location.href = `/admin/receipt/?id=${id}`
+                                                    }
+                                                    ft();
+                                                },
+                                            },
+                                          ]}
                                       />
                                     ) : "Loading... "}
                                 </div>
