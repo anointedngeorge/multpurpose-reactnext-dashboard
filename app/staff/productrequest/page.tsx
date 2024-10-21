@@ -41,10 +41,10 @@ export default function Home() {
             "Authorization":`Bearer ${Token2}`
         }
       });
-
-      if ((await ft).ok) {
-          alert("Request Sent");
-      }
+      ft.then( async response => {
+        const m = await response?.json();
+        alert(m.message);
+      })
       
    }, [])
 
@@ -74,7 +74,7 @@ export default function Home() {
                       image:{image:string},
                       product:{name:string, brands:{name:string} },
                       brands:{name:string},
-                      variation_list:[{id:string, quantity:string, size:string}]
+                      variation_list:[{id:string, quantity:number, size:string}]
                       
                   }, index:number) => (
                     <tr className="even:bg-red-200 odd:bg-red-100" key={`product_list_${index}`}>
@@ -88,7 +88,7 @@ export default function Home() {
                         <td>
                           <select id={`select_${index}`} >
                               {item?.variation_list?.map((itm, indx) => (
-                                  <option value={`${itm.quantity}`} key={`option_${indx}`}> {`Size:${itm.size}-Quantity:${itm.quantity}`} </option>
+                                  <option value={`${itm?.id}`} key={`option_${indx}`}> {`Size:${itm.size}-Quantity:${itm.quantity}`} </option>
                               ))}
                           </select>
                         </td>

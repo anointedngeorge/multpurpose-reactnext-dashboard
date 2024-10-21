@@ -21,7 +21,7 @@ const Card:React.FC<cardinterface> = (prop) => {
                 <div className="card bg-base-100  w-full shadow-xl">
                     <figure className='w-full relative h-44'>
                         <Image
-                        src={prop?.data?.image?.image? `${prop?.data?.image?.image}`: ''}
+                        src={prop?.data?.image? `${prop?.data?.image}`: ''}
                         alt="Shoes" fill={true}  />
                     </figure>
                     <div className="card-body">
@@ -31,7 +31,7 @@ const Card:React.FC<cardinterface> = (prop) => {
                         </div> */}
                         <h2 className="card-title text-sm text-center">
                         {`${prop?.data?.name}`}
-                        <div className="badge badge-secondary">NEW</div>
+                        {/* <div className="badge badge-secondary">NEW</div> */}
                         </h2>
                         {/* <p>{`${prop?.data?.description}`}</p> */}
                         <button value={JSON.stringify(prop)} type='button' onClick={prop.sellfunction} className='btn btn-sm  btn-secondary btn-block'>Proceed</button>
@@ -88,7 +88,7 @@ const ShopItemListing = () => {
                 <br /> */}
                 {/* {brand_id} */}
                 {/* <br /> */}
-                {/* {product_id} */}
+                {/* {JSON.stringify(dataset)} */}
                 {productbrandtypessrlist?.map((item:any, index:number) => (
                     <Card data={item} sellfunction={sellfunction} key={`div_${index}`} />
                 ))}

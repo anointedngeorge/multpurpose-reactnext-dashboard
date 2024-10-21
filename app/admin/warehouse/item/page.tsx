@@ -104,7 +104,7 @@ const reloadPage =  useCallback( () => {
                         <SelectTag required={true} name={'wayhouse_id'} mapper={['id','name']} content={listdata} label='Store' />
                     </div>
                     <div>
-                        <SelectTag required={true} name={'sizes'} mapper={['size','size']} content={data2?.variation_list} label='Sizes' />
+                        <SelectTag required={true} name={'sizes'} mapper={['id','size']} content={data2?.variation_list} label='Sizes' />
                     </div>
                     <div><InputTag name={'quantity'} type={'number'} label='Quantity?' required={true} /></div>
                 </div>

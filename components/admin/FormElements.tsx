@@ -69,7 +69,7 @@ export const SelectTag:React.FC<SelectTagProps> = ({
           required={required}
      >
       <>
-      <option defaultValue="...">Choose</option>
+      <option defaultValue="..." disabled>Choose</option>
         {content?.map((item, index) => (
             <option key={`${namemapper(item, mapper[0])}_${index}`} value={`${namemapper(item, mapper[0])}`}>{`${namemapper(item, mapper[1])}`}</option>
         ))}
@@ -86,13 +86,14 @@ name:string,
 min?:number,
 max?:number,
 value?:string,
+defaultvalue?:string,
 placeholder?:string,
 required?:boolean,
 disabled?:boolean,
 readonly?:boolean,
 type:string,
-onkeyup?:(event?:any) => void,
-onclick?:(event?:any) => void,
+onkeyup?:(event:React.KeyboardEvent<HTMLInputElement>) => void,
+onclick?:(event?:React.MouseEventHandler) => void,
 }) => {
   return (
     <div className="w-full">
@@ -109,7 +110,8 @@ onclick?:(event?:any) => void,
           required={props.required}
           min={props.min}
           max={props.max}
-          defaultValue={props.value}
+          defaultValue={props.defaultvalue}
+          value={props.value}
           onKeyUp={props.onkeyup}
           disabled={props.disabled}
           readOnly={props.readonly}

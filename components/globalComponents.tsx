@@ -1,11 +1,20 @@
+"use client"
 import Image from "next/image"
 import { InputTag } from "./admin/FormElements"
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, HtmlHTMLAttributes, useEffect, useState } from "react"
 import { FormState } from "@/app/lib/definitions"
+import { moneyFormat } from "@/app/utils/utils"
+import { APIBASEURl, externalurls } from "@/app/interface"
+import { useCustomSSR } from "@/app/custom_hooks"
 
 
 
 export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [inputquantity, setQuantity] = useState(0);
+    const [inputsize, setSize] = useState(0);
+    const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
+
     return (
         <dialog id="my_modal_5" className="modal modal-top sm:modal-middle">
                 <div className="modal-box">
@@ -14,7 +23,7 @@ export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
                             <figure className='w-full relative h-72'>
                                 {/* {JSON.stringify(data)} */}
                                 <Image
-                                src={data?.data?.image.image? `${data?.data?.image.image}`: ''}
+                                src={data?.data?.image? `${data?.data?.image}`: ''}
                                 alt="Shoes" fill={true}  />
                             </figure>
                             <div className="card-body">
@@ -22,7 +31,7 @@ export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
                                         <h2 className="card-title text-sm">
                                         {data?.data.name}
                                         
-                                        <div className="badge badge-secondary">NEW</div>
+                                        {/* <div className="badge badge-secondary">NEW</div> */}
                                         </h2>
                                         <p>{data?.data.description}</p>
                                        
@@ -30,28 +39,82 @@ export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
                                             <input type="text" readOnly hidden value={JSON.stringify(data?.data)} name="data" />
                                             <input type="text" readOnly hidden value={`${data?.data?.id}`} name="id" />
                                             <div className="flex flex-col">
-                                                <div><InputTag max={data?.data?.selling_price} value={data?.data?.selling_price} label="Price" name='selling_price' type='number' /></div>
+                                                <div>
+                                                    <span id="current_selling_price" className="text-red-400 text-xs" data-price={`${data?.data?.selling_price}`} >
+                                                        <span className="text-black">Current Selling Price:</span>
+                                                            {data?.data?.selling_price? moneyFormat({currency:'NGN', country:'en-NG'}).format(data?.data?.selling_price) : moneyFormat({currency:'NGN', country:'en-NG'}).format(0.00)}
+                                                    </span>
+
+                                                    <InputTag 
+                                                            max={data?.data?.selling_price} 
+                                                            label={`Selling Price`} 
+                                                            name='selling_price' 
+                                                            type='number'
+                                                            min={0}
+                                                            onkeyup={(event:React.KeyboardEvent<HTMLInputElement>) => {
+                                                                const selling_price_value = event.currentTarget.value;
+                                                                const selling_price = document.getElementById("current_selling_price")?.dataset['price'];
+                                                                
+                                                                if (selling_price) {
+                                                                    if (parseInt(selling_price_value) > parseInt(selling_price)) {
+                                                                        setIsDisabled(true);
+                                                                    } else {
+                                                                        setIsDisabled(false);
+                                                                    }
+                                                                }
+                                                                
+                                                            }}
+                                                        /></div>
                                                 <div className="flex flex-row space-x-2">
                                                     {/* <div><InputTag placeholder="0" label="Size" name='size' type='number' /></div> */}
                                                     <div>
-                                                        <label >Choose Sizes</label>
+                                                        <label >Choose Sizes </label>
+                                            
                                                         <select
-                                                        className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-lg drop-shadow-sm"
-                                                        name="size"
+                                                            className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-lg drop-shadow-sm"
+                                                            name="size"
+                                                            onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                                                                const dt = data?.data?.variation_store_list?.filter((e:{id:string}) => e.id = event.target.value);
+                                                                const url = `${APIBASEURl}/api/v1/products/productinstorevariation/${event.target.value}`;
+                                                                const ft = fetch(url, {
+                                                                    headers:{
+                                                                        Authorization:`Bearer ${Token2}`
+                                                                    }
+                                                                })
+                                                                ft.then(async e => {
+                                                                   const response = await e.json();
+                                                                   if (e.ok) {
+                                                                        const sizes = response['sizes'];
+                                                                        const quantity = response['quantity'];
+                                                                        setQuantity(parseInt(quantity))
+                                                                        setSize((parseInt(sizes)))
+                                                                        
+                                                                   }else {
+                                                                       const rsp = response['message'];
+                                                                       setQuantity(0)
+                                                                        setSize(0)
+                                                                   }
+                                                                })
+                                                                
+                                                            }}
                                                         >
-                                                            {data?.data?.variation_list?.map((item:{size:number}, index:number) => (
-                                                                <option key={`size_${index}`} value={`${item.size}`}>{`${item.size}`} </option>
+                                                            <option value={'choose'} >Choose</option>
+                                                            {/* {JSON.stringify(data?.data)} */}
+                                                            {data?.data?.variation_store_list?.map((item:{id:string, sizes:number, quantity:number}, index:number) => (
+                                                                <option key={`size_${index}`}  value={`${item.id}`} >{`${item.sizes}`} </option>
                                                             ))}
                                                         </select>
                                                     </div>
-                                                    <div><InputTag placeholder="0"  label={`Quantity Available (${data?.data?.quantity_available})`} name='quantity' type='number'  /></div>
+                                                    <div>
+                                                        <span>{inputsize} {inputquantity}</span>
+                                                        <InputTag placeholder="0"  label={`Quantity Available (${data?.data?.quantity_available})`} name='quantity' type='number'  />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <br />
                                         {(data?.data?.quantity_available <= data?.data?.quantity_sold)}
-                                            <button type='submit' className='btn btn-sm  btn-secondary btn-block'>
+                                            <button type='submit' disabled={isDisabled} className='btn btn-sm  btn-secondary btn-block'>
                                                 Add To Cart
-                                               
                                             </button>
                                         </form>
                                     </div>

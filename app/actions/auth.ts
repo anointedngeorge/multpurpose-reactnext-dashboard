@@ -367,11 +367,7 @@ export const createProductInStore = async (state: FormState, formData: FormData)
 
   const req = await postdata(postRequest);
 
-  if (req?.ok) {
-    alert('Created!');
-  } else {
-
-    alert(`${req?.statusText}`);
-  }
+  const response = await req?.json()
+  alert(response?.message)
   
 }

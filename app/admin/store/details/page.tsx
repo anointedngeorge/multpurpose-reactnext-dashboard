@@ -114,13 +114,12 @@ const DetailsPage = () => {
               <div className="bg-slate-100 p-2">
                 <ListProduct wayhouse_id={`${store_id}`} branch_id={`${branch_id}`} />
               </div>
-              <div>
+              {/* <div>
                   <ListStaff branch_id={`${branch_id}`} />
-              </div>
+              </div> */}
               <div className="flex flex-col">
                   <div className="font-black text-xs">Total Revenue Generated</div>
                   <div className="text-3xl font-bold text-red-500">
-                      
                       {revenue? moneyFormat({currency:'NGN', country:'en-NG'}).format(revenue?.revenue) : moneyFormat({currency:'NGN', country:'en-NG'}).format(0.00)}
                   </div>
               </div>

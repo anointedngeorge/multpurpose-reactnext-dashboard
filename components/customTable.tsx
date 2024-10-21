@@ -103,7 +103,7 @@ const CustomTable:React.FC<customTableInterface> = (props) => {
                     </div>
             </div>
 
-            <div className="overflow-x-auto h-screen">
+            <div className="overflow-x-auto min-h-48">
                 {props.title? (
                     <h3>{props.title || '...'}</h3>
                 ) : ''}

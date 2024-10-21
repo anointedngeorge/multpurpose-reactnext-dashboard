@@ -34,7 +34,7 @@ const StoresListing = () => {
 
         storelist?.map( (item:{id:string, name:string, branch:{id:string, name:string}}, index:number) => {
             container.push({title:item.name, 
-                link:`/admin/store/details/?id=${item.id}&name=${item.name}&branch_id=${item.branch.id}&branch_name=${item.branch.name}`})
+                link:`/staff/store/details/?id=${item.id}&name=${item.name}&branch_id=${item.branch.id}&branch_name=${item.branch.name}`})
         } )
 
         setStoreListData(container)
