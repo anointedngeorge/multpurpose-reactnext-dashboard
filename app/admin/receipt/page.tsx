@@ -44,22 +44,22 @@ const Describe = (prop:{ssrdata?:PropertieInterface}) => {
     return (
         <div className="grid grid-cols-3">
             <div>
-                <h3>Client information</h3>
+                <h3 className="text-red-700 mb-3">Client information</h3>
                 <p>
-                    <span className="font-bold underline text-red-400">Client:</span><span>{prop?.ssrdata?.client?.full_name}</span>
+                    <span className="font-bold underline text-red-400">Client:</span> <span>{prop?.ssrdata?.client?.full_name}</span>
                 </p>
                 <p>
-                    <span className="font-bold underline text-red-400">Payment Mode: </span><span>{prop?.ssrdata?.mode_of_payment}</span>
+                    <span className="font-bold underline text-red-400">Payment Mode:</span> <span>{prop?.ssrdata?.mode_of_payment}</span>
                 </p>
                 <p>
-                    <span className="font-bold underline text-red-400">Loan Status:</span><span>{prop?.ssrdata?.on_loan? 'On Loan' : 'Full Payment'}</span>
+                    <span className="font-bold underline text-red-400">Loan Status:</span> <span>{prop?.ssrdata?.on_loan? 'On Loan' : 'Full Payment'}</span>
                 </p>
             </div>
             <div>
                 {/* <h3>From</h3> */}
             </div>
             <div className="text-right">
-                <h3>Information</h3>
+                <h3 className="text-red-700 mb-3">Information</h3>
                 <p>
                     <span className="font-bold underline">Attendant:</span> <span>{prop?.ssrdata?.attendant?.fullname}</span>
                 </p>
