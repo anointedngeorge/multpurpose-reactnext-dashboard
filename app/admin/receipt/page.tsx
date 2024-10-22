@@ -8,7 +8,7 @@ import { Suspense, useEffect, useState } from "react"
 import { FaWhatsapp } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
-
+import { BsTelephone } from "react-icons/bs";
 
 
 
@@ -175,8 +175,17 @@ const Receipt = () => {
                         <div>+23407065075128</div>
                     </div>
                     <div className="flex flex-row items-center space-x-2">
-                        <div><FaBell /></div>
+                        <div><BsTelephone /></div>
                         <div>+2347011856075</div>
+                    </div>
+                    <div className="flex flex-row items-center space-x-2">
+                        <div><FaBell /></div>
+                        <div>Europe_stores</div>
+                    </div>
+
+                    <div className="flex flex-row items-center space-x-2">
+                        <div><FaInstagramSquare /></div>
+                        <div>Europe_store.ng</div>
                     </div>
                     <div className="flex flex-row items-center space-x-2">
                         <div>Address:</div>

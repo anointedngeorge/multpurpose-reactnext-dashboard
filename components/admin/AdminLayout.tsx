@@ -38,7 +38,6 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
   return (
     <ThemeContext.Provider value={{token:token}}>
       <main>
-        
         <div className='flex flex-row'>
           <div className='w-screen'>
             <div className="flex flex-row">
