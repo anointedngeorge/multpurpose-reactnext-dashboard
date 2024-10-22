@@ -219,8 +219,8 @@ const AdminTop = () => {
         
           <div>
             <div className="flex flex-row space-x-10 ">
-                <div><Notification Icon={LuShoppingCart}  val={`${cartCounter}`} onclick={viewCartdetails} /></div>
-                {/* <div><Notification link='/admin/productrequest/' Icon={FaRegBell} val={`${dataset}`} /></div> */}
+                {/* <div><Notification Icon={LuShoppingCart}  val={`${cartCounter}`} onclick={viewCartdetails} /></div> */}
+                <div><Notification link='/admin/productrequest/' Icon={FaRegBell} val={`${dataset}`} /></div>
                 <div><Profile /> </div>
             </div>
           </div>
