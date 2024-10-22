@@ -6,7 +6,7 @@ import { externalurls } from '@/app/interface';
 
 Chart.register(...registerables);
 
-const Chartjs = () => {
+const Chartjs = ({width}:{width?:string}) => {
   const [monthList, setMonthList] = useState<any>([])
   const [amountList, setAmountList] = useState<any>([])
   const {
@@ -66,7 +66,7 @@ const Chartjs = () => {
 
   return (
     <div className='w-full'>
-      <canvas style={{width:'650px'}} ref={canvasRef} />
+        <canvas style={{width: `${width? width : '650px'}`}} ref={canvasRef} />
     </div>
   );
 };

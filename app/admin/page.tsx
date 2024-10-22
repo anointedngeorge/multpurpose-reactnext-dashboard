@@ -24,17 +24,17 @@ interface CardInterface {
 
 const Card = (prop:CardInterface) => {
     return (
-      <div className="p-10 rounded-xl border-4 drop-shadow-sm bg-gray-100">
+      <div className="p-10 rounded drop-shadow-sm  even:bg-warning odd:bg-primary text-white font-bold ">
           <div className="flex flex-col  place-items-center">
                 <div className="flex flex-row font-extrabold space-x-1 items-center">
                     <div>{prop.Icon? (
                       <prop.Icon size={prop.iconsize} color={prop.iconcolor} />
                     ) : ''} </div>
-                    <div className="font-bold text-xs">
+                    <div className="font-bold text-md">
                         {prop?.title}
                     </div>
                 </div>
-                <div className="text-xl font-bold text-lightorange">
+                <div className="text-xl font-bold text-black ">
                     {prop.value}
                 </div>
           </div>
@@ -60,9 +60,9 @@ export default function Home() {
           <LineTitle heading="Dashboard" linkpath="home" />
             <div className="flex flex-row mt-5 lg:space-x-8 max-sm:flex-col">
               {/* section */}
-              <div className="w-2/3 max-sm:w-full">
+              <div className="w-full max-sm:w-full">
                   <div className="flex flex-col space-y-10">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-3 gap-3">
                           <Card
                               Icon={FaMoneyBill}
                               title="Revenue"
@@ -107,11 +107,11 @@ export default function Home() {
                               value={ssrdata?.warehouse}
                           />
                     </div>
-                    <div><Chartjs /></div>
+                    <div><Chartjs width="100%" /></div>
                   </div>
               </div>
               {/* aside */}
-              <div className="w-1/3 max-sm:w-full">
+              <div className="w-1/4 max-sm:w-full">
                 <AdminAside />
               </div>
             </div>
