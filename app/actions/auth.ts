@@ -293,7 +293,7 @@ export const productSellAddToCartSubmit = async (state: FormState, formData: For
   const data:any = formprops(formData);
 
   globalThis.sessionStorage.setItem(checkoutStorageName, JSON.stringify(data));
-  globalThis.location.href = "/admin/checkout"
+  globalThis.location.href = "/staff/checkout"
 }
 
 export const createnewsales = async (state: FormState, formData: FormData) => {
@@ -317,7 +317,7 @@ export const createnewsales = async (state: FormState, formData: FormData) => {
     notify({message:'Created!'});
     globalThis.sessionStorage.removeItem(checkoutName)
     globalThis.sessionStorage.removeItem(cartStorageNamed)
-    globalThis.location.href = "/admin/"
+    globalThis.location.href = "/staff/"
   } else {
     notify({message:`${req?.statusText}`});
   }

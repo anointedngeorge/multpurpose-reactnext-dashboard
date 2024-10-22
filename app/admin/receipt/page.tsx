@@ -2,6 +2,7 @@
 import { useCustomSSR } from "@/app/custom_hooks copy"
 import { APIBASEURl, externalurls } from "@/app/interface"
 import { moneyFormat } from "@/app/utils/utils"
+import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
 
@@ -17,7 +18,9 @@ const Title = () => {
                 <h3 className="font-bold text-2xl">Europe Store Receipt</h3>
             </div>
             <div>
-                <div className="w-12 h-12 bg-slate-500 rounded-full text-center flex items-center place-content-center">logo</div>
+                <div className=" bg-white  text-center flex items-center place-content-center">
+                    <Image src={`/images/europe_logo.png`} className="rounded-2xl" alt="" width={200} height={100}   />
+                </div>
             </div>
         </div>
     )

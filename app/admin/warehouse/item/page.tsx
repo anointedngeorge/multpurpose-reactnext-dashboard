@@ -53,11 +53,11 @@ const removeProductFromStore = useCallback((event: React.MouseEvent<HTMLButtonEl
       return response.json();
     })
     .then(data => {
-      console.log('Product removed successfully:', data);
+      alert(`Product removed successfully: ${data}`);
       // Optionally, update UI or state after successful removal
     })
     .catch(error => {
-      console.error('There was a problem with the fetch operation:', error);
+      alert(`There was a problem with the fetch operation: ${error}`);
     });
   }
 }, []);
@@ -82,14 +82,14 @@ const reloadPage =  useCallback( () => {
 
             <div className='mt-5'>
                 <div className="grid grid-cols-3 max-sm:flex max-sm:flex-col max-sm:space-y-3">
-                    <div>
+                    {/* <div>
                       Quantity:
                       <span className='font-bold text-3xl max-sm:text-sm'>{data2?.quantity_available}</span>
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                     Quantity Sold:
                     <span className='font-bold text-3xl'>{data2?.quantity_sold}</span>
-                    </div>
+                    </div> */}
                     <div>
                     Selling Price:
                     <span className='font-bold text-3xl max-sm:text-md'>N{data2?.selling_price}</span>

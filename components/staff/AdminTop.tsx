@@ -140,15 +140,15 @@ const Profile = () => {
     "Authorization":`Bearer ${Token2}`
   }});
 
-
+  const ImageUrlPath = "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
     return (
       <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full relative">
           <Image
-            alt="Tailwind CSS Navbar component"
+            alt="..."
             fill={true}
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            src={ImageUrlPath? "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" : '/'}
            />
         </div>
       </div>

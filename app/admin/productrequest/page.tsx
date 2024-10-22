@@ -63,9 +63,15 @@ export default function Home() {
           }
         });
     
-        if ((await ft).ok) {
-            alert("Confirmed");
-        }
+        ft.then(async e => {
+            if (e.ok) {
+                const m =  await e.json();
+                alert(m['message']);
+            }else {
+              const m =  await e.json();
+              alert(m['message']);
+            }
+        })
       }
     
  }, [])

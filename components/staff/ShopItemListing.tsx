@@ -21,7 +21,7 @@ const Card:React.FC<cardinterface> = (prop) => {
                 <div className="card bg-base-100  w-full shadow-xl">
                     <figure className='w-full relative h-44'>
                         <Image
-                        src={prop?.data?.image? `${prop?.data?.image}`: ''}
+                        src={prop?.data?.image? `${prop?.data?.image}`: '/'}
                         alt="Shoes" fill={true}  />
                     </figure>
                     <div className="card-body">

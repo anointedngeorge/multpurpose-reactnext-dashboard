@@ -82,6 +82,7 @@ export const SelectTag:React.FC<SelectTagProps> = ({
 
 export const InputTag = (props:{
 label?:string,
+id?:string,
 name:string,
 min?:number,
 max?:number,
@@ -103,6 +104,7 @@ onclick?:(event?:React.MouseEventHandler) => void,
      
     {props.placeholder? (
     <input 
+          id={props.id}
           placeholder={`${props.placeholder}`} 
           type={`${props.type}`} 
           className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-3xl drop-shadow-sm "
@@ -117,6 +119,7 @@ onclick?:(event?:React.MouseEventHandler) => void,
           readOnly={props.readonly}
      />
     ) : (<input 
+      id={props.id}
       type={`${props.type}`} 
       className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-3xl drop-shadow-sm "
       name={`${props.name}`}
@@ -124,6 +127,7 @@ onclick?:(event?:React.MouseEventHandler) => void,
       disabled={props.disabled}
       readOnly={props.readonly}
       defaultValue={props.value}
+      value={props.value}
  />)}
 </div>
   )

@@ -114,7 +114,7 @@ const Sidebar = () => {
                       textclassname='text-white text-md hover:text-lightorange'
                 />
 
-              <SidebarLinks 
+              {/* <SidebarLinks 
                       Icon={FaShopify} 
                       showicon={true} 
                       title='Shop'
@@ -122,7 +122,7 @@ const Sidebar = () => {
                       link='/admin/shop'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
-                />
+                /> */}
 
             </div>
 

@@ -46,14 +46,14 @@ const Ulist:React.FC<ulistinterfacedata>=(props) => {
 const AdminAside = () => {
   return (
     <div className='flex flex-col space-y-3 mt-5'>
-        <Ulist data={[
+        {/* <Ulist data={[
                 {title: '...'},
-            ]} title='Recent Activities' />
+            ]} title='Recent Activities' /> */}
             {/*  */}
-        <Ulist data={[
+        {/* <Ulist data={[
                 {title: '...'},
                 
-            ]}  title='Active users' />
+            ]}  title='Active users' /> */}
         <div className='w-full'>
             <h3 className='font-bold'>Store listing</h3>
             <StoresListing />

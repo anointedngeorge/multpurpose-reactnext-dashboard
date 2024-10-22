@@ -5,6 +5,9 @@ const nextConfig = {
           {
             hostname: 'media.istockphoto.com',
           },
+          {
+            hostname: 'europestore.vercel.app',
+          },
           {hostname: "img.daisyui.com"},
           {hostname: "127.0.0.1"},
           

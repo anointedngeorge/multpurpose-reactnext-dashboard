@@ -1,4 +1,3 @@
-"use client"
 import Image from "next/image"
 import { InputTag } from "./admin/FormElements"
 import { ChangeEvent, HtmlHTMLAttributes, useEffect, useState } from "react"
@@ -11,8 +10,9 @@ import { useCustomSSR } from "@/app/custom_hooks"
 
 export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
     const [isDisabled, setIsDisabled] = useState(false);
-    const [inputquantity, setQuantity] = useState(0);
-    const [inputsize, setSize] = useState(0);
+    const [isDisabledInput, setIsDisabledInput] = useState(true);
+    const [inputquantity, setQuantity] = useState<number>(0);
+    const [inputsize, setSize] = useState<number>(0);
     const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
     return (
@@ -50,6 +50,7 @@ export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
                                                             label={`Selling Price`} 
                                                             name='selling_price' 
                                                             type='number'
+                                                            required={true}
                                                             min={0}
                                                             onkeyup={(event:React.KeyboardEvent<HTMLInputElement>) => {
                                                                 const selling_price_value = event.currentTarget.value;
@@ -72,30 +73,22 @@ export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
                                             
                                                         <select
                                                             className="mt-2 w-full border-2 text-lightorange font-inter font-bold py-3 px-5 rounded-lg drop-shadow-sm"
-                                                            name="size"
+                                                            name="store_variation_id"
                                                             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                                                                const dt = data?.data?.variation_store_list?.filter((e:{id:string}) => e.id = event.target.value);
-                                                                const url = `${APIBASEURl}/api/v1/products/productinstorevariation/${event.target.value}`;
-                                                                const ft = fetch(url, {
-                                                                    headers:{
-                                                                        Authorization:`Bearer ${Token2}`
-                                                                    }
-                                                                })
-                                                                ft.then(async e => {
-                                                                   const response = await e.json();
-                                                                   if (e.ok) {
-                                                                        const sizes = response['sizes'];
-                                                                        const quantity = response['quantity'];
-                                                                        setQuantity(parseInt(quantity))
-                                                                        setSize((parseInt(sizes)))
-                                                                        
-                                                                   }else {
-                                                                       const rsp = response['message'];
-                                                                       setQuantity(0)
-                                                                        setSize(0)
-                                                                   }
-                                                                })
-                                                                
+                                                                const dt = data?.data?.variation_store_list?.filter((e:{id:string}) => e.id == event.target.value);
+                                                                const quantityid = document.getElementById('quantityid');
+                                                                setIsDisabledInput(true)
+                                                                if (dt?.length > 0 && event.target.value !== 'choose') {
+                                                                    // alert(event.target.value);
+                                                                    setQuantity(dt[0]['quantity'] );
+                                                                    setSize(dt[0]['sizes'] );
+                                                                    setIsDisabledInput(false)
+
+                                                                } else {
+                                                                    setQuantity(0);
+                                                                    setSize(0);
+                                                                    setIsDisabledInput(true)
+                                                                }
                                                             }}
                                                         >
                                                             <option value={'choose'} >Choose</option>
@@ -104,10 +97,38 @@ export const ModalPopOver = ({data, action}:{data?:any, action?:any}) => {
                                                                 <option key={`size_${index}`}  value={`${item.id}`} >{`${item.sizes}`} </option>
                                                             ))}
                                                         </select>
+                                                        <input type="text" hidden name="size" defaultValue={inputsize} />
                                                     </div>
                                                     <div>
-                                                        <span>{inputsize} {inputquantity}</span>
-                                                        <InputTag placeholder="0"  label={`Quantity Available (${data?.data?.quantity_available})`} name='quantity' type='number'  />
+                                                        {/* <span>{inputsize} {inputquantity}</span> */}
+                                                        <InputTag 
+                                                                id="quantity"
+                                                                placeholder="0"  
+                                                                label={`Quantity Available (${inputquantity})`} 
+                                                                name='quantity' 
+                                                                type='number'
+                                                                required={true}
+                                                                disabled={isDisabledInput}
+                                                                onkeyup={(event:React.KeyboardEvent<HTMLInputElement>) => {
+                                                                    const quantity_value = event.currentTarget.value;
+                                                                    
+                                                                    if ( quantity_value == '' ) {
+                                                                        
+                                                                        setIsDisabled(true);
+                                                                    } else {
+                                                                        setIsDisabled(false);
+                                                                    }
+
+
+                                                                    if (inputquantity) {
+                                                                        if (parseInt(quantity_value) > inputquantity) {
+                                                                            setIsDisabled(true);
+                                                                        } else {
+                                                                            setIsDisabled(false);
+                                                                        }
+                                                                    }
+                                                                }}
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>

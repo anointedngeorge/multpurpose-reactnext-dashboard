@@ -1,11 +1,7 @@
 "use client"
-import Image from "next/image";
 import LayoutAdmin from "@/components/staff/AdminLayout";
-import Chartjs from "@/components/staff/Chartjs";
-import AdminAside from "@/components/staff/AdminAside";
 import { LineTitle } from "@/components/staff/LineTitle";
-import { title } from "process";
-import { Token, externalurls } from "@/app/interface";
+import { externalurls } from "@/app/interface";
 import { useCustomSSR } from "@/app/custom_hooks";
 import { useEffect, useRef, useState } from "react";
 import LoaderSpinner from "@/components/Loader";
@@ -14,7 +10,7 @@ import { IoMdArrowDropright } from "react-icons/io";
 import { MdOpenWith } from "react-icons/md";
 import { HiMiniBars3 } from "react-icons/hi2";
 import { FaSearch } from "react-icons/fa";
-import { InputTag } from "@/components/staff/FormElements";
+
 
 
 interface sidebarinterface {

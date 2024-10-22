@@ -2,6 +2,7 @@
 import { createnewsales } from '@/app/actions/auth';
 import { useCustomActionState } from '@/app/custom_hooks';
 import { checkoutStorageName } from '@/app/interface';
+import { moneyFormat } from '@/app/utils/utils';
 import { InputTag, SelectTag } from '@/components/staff/FormElements'
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react'
@@ -58,7 +59,7 @@ export default function Home() {
   return (
     <div className='py-10 px-32 max-sm:p-10'>
         <div>
-            <Link className='btn btn-ghost' title='Back To Home' href={`/admin/`}>
+            <Link className='btn btn-ghost' title='Back To Home' href={`/staff/`}>
                 <HiArrowSmLeft size={40} />
             </Link>
         </div>
@@ -67,9 +68,8 @@ export default function Home() {
 
         <form action={action} >
             <div className="grid grid-cols-2">
-                    <div className='py-20 px-3 bg-slate-100'>
+                    <div className='py-20 px-3 bg-slate-950 text-white'>
                         <div className="flex flex-col space-y-5">
-
                         <div>
                                 <SelectTag onchange={checkIfClientIsPayOnloan} required={true} content={[
                                     {name:"Yes", val:true},
@@ -131,7 +131,8 @@ export default function Home() {
                         <h3 className='text-6xl'>
                             {totalPrice? (
                                 <>
-                                    N{totalPrice}   
+                                    {/* N{totalPrice} */}
+                                    {moneyFormat({currency:'NGN', country:'en-NG'}).format(totalPrice)}
                                     <input type="text" defaultValue={totalPrice} hidden name='total_price' />
                                 </>
                             ) : <span className="loading loading-spinner loading-xs"></span>}
