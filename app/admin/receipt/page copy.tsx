@@ -22,7 +22,7 @@ const Title = () => {
             </div>
             <div>
                 <div className=" bg-white  text-center flex items-center place-content-center">
-                    <Image src={`/images/europe_logo.png`}  alt="" width={100} height={80}   />
+                    <Image src={`/images/europe_logo.png`} className="rounded-2xl" alt="" width={200} height={100}   />
                 </div>
             </div>
         </div>
@@ -46,13 +46,13 @@ const Describe = (prop:{ssrdata?:PropertieInterface}) => {
             <div>
                 <h3>Client information</h3>
                 <p>
-                    <span className="font-bold underline text-red-400">Client:</span><span>{prop?.ssrdata?.client?.full_name}</span>
+                    <span className="font-bold underline">Client:</span><span>{prop?.ssrdata?.client?.full_name}</span>
                 </p>
                 <p>
-                    <span className="font-bold underline text-red-400">Payment Mode: </span><span>{prop?.ssrdata?.mode_of_payment}</span>
+                    <span className="font-bold underline">Payment Mode: </span><span>{prop?.ssrdata?.mode_of_payment}</span>
                 </p>
                 <p>
-                    <span className="font-bold underline text-red-400">Loan Status:</span><span>{prop?.ssrdata?.on_loan? 'On Loan' : 'Full Payment'}</span>
+                    <span className="font-bold underline">Loan Status:</span><span>{prop?.ssrdata?.on_loan? 'On Loan' : 'Full Payment'}</span>
                 </p>
             </div>
             <div>
@@ -69,7 +69,19 @@ const Describe = (prop:{ssrdata?:PropertieInterface}) => {
                 <p>
                     <span className="font-bold underline">Date:</span><span>{prop?.ssrdata?.sale_date_tracker}</span>
                 </p>
-              
+                <p><span>Contact Information</span></p>
+                <p>
+                    <span className="font-bold underline"><FaWhatsapp />:</span><span>{'+23407065075128'}</span>
+                </p>
+                <p >
+                    <span className="font-bold underline"><FaBell  />:</span>
+                </p>
+                {/* <p>
+                    <span className="font-bold underline"><FaInstagramSquare />:</span><span>{''}</span>
+                </p> */}
+                <p>
+                    <span className="font-bold underline">Address:</span><span>{'FFog/25 Diamond Plaza, Abibu'} <br />  Oki Street,  Lagos Island, Nigeria.</span>
+                </p>
             </div>
         </div>
     )
@@ -97,7 +109,7 @@ const Table = (prop:{id?:string, data?:[]}) => {
     return (
         <>
             <table border={1} className="table border border-collapse table-xs   border-black text-xs">
-                <thead className="bg-gray-900 text-slate-50 font-bold">
+                <thead className="bg-gray-900 text-red-400 font-bold">
                     <tr>
                         <td>Qty</td>
                         <td>Description</td>
@@ -162,26 +174,9 @@ const Receipt = () => {
                 <div>
                     <Table id={`${id}`} data={ssrdata?.list_items} />
                 </div>
-                <div className="flex flex-row place-content-between text-lg font-bold  text-gray-950 p-3 rounded-md">
+                <div className="flex flex-row place-content-between text-lg font-bold border bg-gray-900 text-white p-3 rounded-md">
                     <div>Total Amount</div>
                     <div>{`${moneyFormat({currency:'NGN', country:'en-NG'}).format(ssrdata?.total_price) }`}</div>
-                </div>
-                <div className="flex flex-col place-content-start">
-                    <div>
-                        <h3 className="font-bold text-2xl text-red-700"><strong>Contact Information</strong></h3>
-                    </div>
-                    <div className="flex flex-row items-center space-x-2">
-                        <div><FaWhatsapp /></div>
-                        <div>+23407065075128</div>
-                    </div>
-                    <div className="flex flex-row items-center space-x-2">
-                        <div><FaBell /></div>
-                        <div>+2347011856075</div>
-                    </div>
-                    <div className="flex flex-row items-center space-x-2">
-                        <div>Address:</div>
-                        <div>FFog/25 Diamond Plaza, Abibu Oki Street, Lagos Island, Nigeria.</div>
-                    </div>
                 </div>
             </div>
         </main>

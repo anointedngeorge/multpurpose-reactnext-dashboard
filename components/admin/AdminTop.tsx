@@ -152,7 +152,7 @@ const Profile = () => {
           <Image
             alt="Tailwind CSS Navbar component"
             fill={true}
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            src="/images/europe_logo.png"
            />
         </div>
       </div>
@@ -161,13 +161,13 @@ const Profile = () => {
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
           <li><strong className='text-center'>{`${ssrdata?.username}` || "Cameron Williamson"}</strong></li>
         <li></li>
-        <li>
+        {/* <li>
           <Link href={`#`} className="justify-between">
             Profile
             <span className="badge">New</span>
           </Link>
-        </li>
-        <li><Link href={`#`}>Settings</Link></li>
+        </li> */}
+        {/* <li><Link href={`#`}>Settings</Link></li> */}
         <li><Link href={`#`}>Logout</Link></li>
       </ul>
     </div>

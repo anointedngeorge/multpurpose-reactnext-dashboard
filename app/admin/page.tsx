@@ -24,7 +24,7 @@ interface CardInterface {
 
 const Card = (prop:CardInterface) => {
     return (
-      <div className="p-8 rounded drop-shadow-sm  even:bg-warning odd:bg-primary text-white font-bold ">
+      <div className="p-8 rounded-2xl drop-shadow-sm  even:bg-warning odd:bg-primary text-white font-bold ">
           <div className="flex flex-col  place-items-center">
                 <div className="flex flex-row font-extrabold space-x-1 items-center">
                     <div>{prop.Icon? (

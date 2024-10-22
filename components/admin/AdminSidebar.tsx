@@ -1,6 +1,7 @@
 "use client"
 import { useCustomSSR } from '@/app/custom_hooks';
 import { Apptoken, ThemeContext, Token, externalurls } from '@/app/interface';
+import Image from 'next/image';
 import Link from 'next/link'
 import React, {useCallback, useContext, useEffect, useState} from 'react'
 import { IconType } from 'react-icons';
@@ -10,6 +11,7 @@ import { LiaStoreAltSolid } from 'react-icons/lia';
 import { LuLogOut } from 'react-icons/lu';
 import { MdOutlineLocationCity } from 'react-icons/md';
 import { TbPhotoFilled } from 'react-icons/tb';
+
 
 interface IconInterface {
   Icon:IconType,
@@ -29,14 +31,10 @@ const Profile = ({data}:{data?:any}) => {
       <div className="flex flex-col place-content-center items-center">
           <div>
             <div 
-            className='border-2 border-lightorange w-20 h-20 rounded-full'
-            style={{
-              background:`url(https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp)`,
-              backgroundSize:'cover',
-              backgroundRepeat:'no-repeat',
-              backgroundPosition:'bottom'
-            }}
-            ></div>
+            className='rounded-ful bg-white'
+            >
+                <Image src={'/images/europe_logo.png'} alt='..' width={130} height={40}  />
+            </div>
           </div>
           <div className='text-center mt-3'>
             <h3 className='font-inter text-lightorange font-semibold'>{`${data?.username}` || 'Cameron Williamson'}</h3>
