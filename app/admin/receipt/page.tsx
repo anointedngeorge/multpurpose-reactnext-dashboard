@@ -1,5 +1,5 @@
 "use client"
-import { useCustomSSR } from "@/app/custom_hooks copy"
+
 import { APIBASEURl, externalurls } from "@/app/interface"
 import { moneyFormat } from "@/app/utils/utils"
 import Image from "next/image"
@@ -9,6 +9,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { BsTelephone } from "react-icons/bs";
+import { useCustomSSR } from "@/app/custom_hooks"
 
 
 
