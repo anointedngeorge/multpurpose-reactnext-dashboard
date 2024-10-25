@@ -60,7 +60,7 @@ const removeProductFromStore = useCallback((event: React.MouseEvent<HTMLButtonEl
       console.error('There was a problem with the fetch operation:', error);
     });
   }
-}, []);
+}, [Token2]);
 
 
 const reloadPage =  useCallback( () => {

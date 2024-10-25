@@ -8,6 +8,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import  {ManagerSignup}  from "@/app/actions/auth";
 // import { useActionState, useState } from "react";
 import { useCustomActionState } from "@/app/custom_hooks";
+import { escapeSingleQuotes } from "@/app/interface";
 
 
 interface dataprops {
@@ -62,7 +63,7 @@ export default  function Home ()  {
             <div className="flex flex-col place-content-center items-center space-y-10">
                 <div className="text-center">
                     <h3 className="text-3xl font-inter font-bold text-red-600">Europe Shop </h3>
-                    <p><strong><b>Manager's Dashboard</b></strong></p>
+                    <p><strong><b>{escapeSingleQuotes("Manager's Dashboard")}</b></strong></p>
                 </div>
                 <div >
                     <form action={action} >

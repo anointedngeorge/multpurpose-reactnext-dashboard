@@ -75,10 +75,6 @@ const CartTable = (prop:{data?:any[], totalprice?:number}) => {
 }
 
 
-
-
-
-
 const CartComponent = (prop:{data?:any}) => {
   const [cartData, setCartData] = useState<any | null>('');
   const [itemData, setItemData] = useState<any[]>([]);
@@ -106,7 +102,7 @@ const CartComponent = (prop:{data?:any}) => {
     setItemData(container);
     setItemTotal(selling_price)
 
-  }, [prop])
+  }, [prop, cartData])
 
 
   

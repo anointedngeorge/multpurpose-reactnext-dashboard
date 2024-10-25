@@ -40,7 +40,7 @@ export default function Home() {
       useEffect(() => {
         const filtered = productsrlist?.filter((item:{month:string}) => item.month == get_current_month )
         setsalesreportdata(filtered)
-      }, [productsrlist])
+      }, [productsrlist, get_current_month])
 
   const selectReport = useCallback((event:React.ChangeEvent<HTMLSelectElement>) => {
       const value = event.currentTarget.value;

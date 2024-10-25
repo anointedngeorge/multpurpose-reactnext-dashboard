@@ -5,10 +5,10 @@ import AdminFooter from './AdminFooter';
 import AdminTop from './AdminTop';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { APIBASEURl, externalurls, ThemeContext } from '@/app/interface';
-import { useCustomSSR } from '@/app/custom_hooks copy';
+import { APIBASEURl, escapeSingleQuotes, externalurls, ThemeContext } from '@/app/interface';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useCustomSSR } from '@/app/custom_hooks';
 
 
 const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
@@ -27,7 +27,7 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
           if (ssrdata?.token) {
              globalThis.location.href = "/admin/login";
           }
-      }, []);
+      }, [ssrdata]);
     
     if (ssrdata?.token) {
         return (
@@ -79,7 +79,7 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
                 <div>
                     <h3 className='text-white font-bold'>{ssrdata?.message? `${ssrdata?.message}`.toUpperCase() : 'Loading, please wait...'}</h3>
                 </div>
-                <div> {ssrdata?.btn_action == 'login'? <Link href={'/manager/login/'} className='btn btn-sm btn-warning'>Access Manager's Dashboard</Link> : '...'}</div>
+                <div> {ssrdata?.btn_action == 'login'? <Link href={'/manager/login/'} className='btn btn-sm btn-warning'>{escapeSingleQuotes("Access Manager's Dashboard")}</Link> : '...'}</div>
             </div>
           </main>
         )

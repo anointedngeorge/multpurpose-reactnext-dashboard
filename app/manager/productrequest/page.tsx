@@ -43,7 +43,7 @@ export default function Home() {
             }
       }
       
-   }, [])
+   }, [Token2])
 
 
    const confirmFun =   useCallback( async (event:React.MouseEvent<HTMLTitleElement>) => {
@@ -74,7 +74,7 @@ export default function Home() {
         })
       }
     
- }, [])
+ }, [Token2])
 
 
   return (

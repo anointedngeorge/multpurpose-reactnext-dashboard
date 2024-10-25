@@ -7,9 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getdbsid } from '@/app/function';
 import { APIBASEURl, ThemeContext } from '@/app/interface';
-import { useCustomSSR } from '@/app/custom_hooks copy';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useCustomSSR } from '@/app/custom_hooks';
 
 
 const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
@@ -32,13 +32,12 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
     if (ssrdata?.token) {
         globalThis.location.href = "/staff/login";
     }
-    }, []);
+    }, [ssrdata]);
   
     if (ssrdata?.token) {
       return (
         <ThemeContext.Provider value={{token:token}}>
           <main>
-    
             <div className='flex flex-row'>
               <div className='w-screen'>
                 <div className="flex flex-row">

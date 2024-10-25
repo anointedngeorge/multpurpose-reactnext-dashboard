@@ -9,7 +9,7 @@ import { InputTag, SelectTag } from "@/components/staff/FormElements";
 import { useCustomActionState, useCustomSSR } from "@/app/custom_hooks";
 import { createWarehouse, createbranch, photoform } from "@/app/actions/auth";
 import { Token, externalurls } from "@/app/interface";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CustomTable from "@/components/customTable";
 import { FaEye } from "react-icons/fa6";
 import { ModalProductPopover } from "@/components/globalComponents";
@@ -28,7 +28,7 @@ export default function Home() {
   const [listdata, setListData] = useState<any>()
   const [listdataOnchange, setListOnChnageData] = useState<any>()
   const [listOffSet, setOffSet] = useState<number>(3)
-  let index = 10;
+  let index = useRef(0);
 
 
   const {
@@ -40,8 +40,8 @@ export default function Home() {
   }});
 
   const loadmoredata = useCallback(() => {
-    index += 10;
-    setOffSet(index);
+    index.current += 10;
+    setOffSet(index.current);
   }, [index])
 
 

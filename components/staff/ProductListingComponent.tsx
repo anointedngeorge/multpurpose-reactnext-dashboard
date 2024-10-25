@@ -139,7 +139,7 @@ const ProductList = () => {
         }
         ft();
         }
-  }, [] );
+  }, [Token2] );
 
 
   function popMenuwindow() {

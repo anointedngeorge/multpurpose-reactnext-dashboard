@@ -119,7 +119,7 @@ const CartComponent = (prop:{data?:any}) => {
     setItemData(container);
     setItemTotal(selling_price)
 
-  }, [prop])
+  }, [prop, cartData])
 
 
   

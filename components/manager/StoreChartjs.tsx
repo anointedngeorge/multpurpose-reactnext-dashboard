@@ -60,7 +60,7 @@ const StoreChartjs = ({title, store_id}:{title?:string, store_id?:string}) => {
         chartRef.current.destroy();
       }
     };
-  }, [monthList, amountList]);
+  }, [monthList, amountList, title]);
 
   return (
     <div className='w-full'>

@@ -26,8 +26,7 @@ export default function Home() {
   setDataset(ssrdata?.items)
   }, [ssrdata])
 
-   const makeRequestfun =   useCallback( async (event:React.MouseEvent<HTMLTitleElement>) => {
-    
+   const makeRequestfun = useCallback( async (event:React.MouseEvent<HTMLTitleElement>) => {
       event.preventDefault();
 
       const btnid = event?.currentTarget?.dataset?.btnid;
@@ -48,7 +47,7 @@ export default function Home() {
         alert(m.message);
       })
       
-   }, [])
+   }, [Token2])
 
 
   return (
