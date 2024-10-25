@@ -27,7 +27,9 @@ export default function Home() {
   }, [ssrdata])
 
    const makeRequestfun =   useCallback( async (event:React.MouseEvent<HTMLTitleElement>) => {
+    
       event.preventDefault();
+
       const btnid = event?.currentTarget?.dataset?.btnid;
       const product_id = event?.currentTarget?.dataset?.id;
       const selectid = event?.currentTarget?.dataset?.selectid;

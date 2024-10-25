@@ -12,6 +12,8 @@ import { externalurls } from "../interface";
 import { BsPerson } from "react-icons/bs";
 import { FaWarehouse } from "react-icons/fa6";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { TbCurrencyNaira } from "react-icons/tb";
+import { moneyFormat } from "../utils/utils";
 
 
 interface CardInterface {
@@ -24,17 +26,17 @@ interface CardInterface {
 
 const Card = (prop:CardInterface) => {
     return (
-      <div className="p-8 rounded-2xl drop-shadow-sm  even:bg-warning odd:bg-primary text-white font-bold ">
+      <div className="p-8 rounded-2xl drop-shadow-sm  even:bg-gray-800 odd:bg-red-400 text-white font-bold ">
           <div className="flex flex-col  place-items-center">
                 <div className="flex flex-row font-extrabold space-x-1 items-center">
                     <div>{prop.Icon? (
                       <prop.Icon size={prop.iconsize} color={prop.iconcolor} />
                     ) : ''} </div>
-                    <div className="font-bold text-md">
+                    <div className="font-bold text-md ">
                         {prop?.title}
                     </div>
                 </div>
-                <div className="text-xl font-bold text-black ">
+                <div className="text-xl font-bold text-white ">
                     {prop.value}
                 </div>
           </div>
@@ -67,7 +69,8 @@ export default function Home() {
                               Icon={FaMoneyBill}
                               title="Revenue"
                               iconsize={30}
-                              value={ssrdata?.revenue}
+                              // value={ssrdata?.revenue}
+                              value={moneyFormat({currency:'NGN', country:'en-NG'}).format(ssrdata?.revenue )}
                           />
                           <Card
                               Icon={FaSalesforce}
@@ -106,6 +109,14 @@ export default function Home() {
                               iconsize={30}
                               value={ssrdata?.warehouse}
                           />
+
+                          <Card
+                              Icon={TbCurrencyNaira}
+                              title="Total Cost Price"
+                              iconsize={30}
+                              value={moneyFormat({currency:'NGN', country:'en-NG'}).format(ssrdata?.cost_price )}
+                          />
+                          
                     </div>
                     <div><Chartjs width="100%" /></div>
                   </div>

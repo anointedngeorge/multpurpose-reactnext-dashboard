@@ -150,9 +150,9 @@ const Profile = () => {
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full relative">
           <Image
-            alt="Tailwind CSS Navbar component"
+            alt="..."
             fill={true}
-            src="/images/europe_logo.png"
+            src={"/images/person_avata.jpeg"}
            />
         </div>
       </div>

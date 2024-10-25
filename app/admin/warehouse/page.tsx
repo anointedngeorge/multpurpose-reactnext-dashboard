@@ -8,7 +8,7 @@ import { LineTitle } from "@/components/admin/LineTitle";
 import { InputTag, SelectTag } from "@/components/admin/FormElements";
 import { useCustomActionState, useCustomSSR } from "@/app/custom_hooks";
 import { createWarehouse, createbranch, photoform } from "@/app/actions/auth";
-import { Token, externalurls } from "@/app/interface";
+import { APIBASEURl, Token, externalurls } from "@/app/interface";
 import { useCallback, useEffect, useState } from "react";
 import CustomTable from "@/components/customTable";
 import { FaEye } from "react-icons/fa6";
@@ -80,13 +80,34 @@ export default function Home() {
     }
 }, []);
 
+
+const addCostPrice = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    const productid = event.currentTarget.getAttribute('data-id');
+    // const amount =  prompt("Enter Cost Price")
+
+    const ft = async () => {
+        const f =  await fetch(`${APIBASEURl}/api/v1/products/productlisting/${productid}/item/delete/`, {
+              method:'delete',
+              headers: {
+                  "Content-Type":"application/json",
+                  'Authorization':`Bearer ${Token2}`
+              }
+          });
+          
+          if (f.ok) {
+              globalThis.location.reload();
+          }
+    }
+    ft();
+}, []);
+
   return (
       <LayoutAdmin>
         <main className="lg:p-2">
           <LineTitle heading="Product Warehouse" linkpath="home" />
             <div className="flex flex-row mt-5 lg:space-x-8 max-sm:flex-col">
                 <div className="w-full p-3">
-                      <table className="table">
+                      <table className="table table-xs">
                           <thead className="bg-black text-white font-bold">
                               <tr>
                                   <th>#</th>
@@ -129,6 +150,14 @@ export default function Home() {
                                                           <div>Edit</div>
                                                       </div>
                                                   </Link>
+                                                
+                                                  {/* <button data-id={`${item?.id}`} onClick={addCostPrice}>
+                                                      <div className="flex flex-row space-x-1 items-center">
+                                                          <div><FaPlus color="#DF392F" size={20} /></div>
+                                                          <div>Cost Price</div>
+                                                      </div>
+                                                  </button> */}
+
                                                   <button data-id={`${item?.id}`} onClick={removeProduct}>
                                                       <div className="flex flex-row space-x-1 items-center">
                                                           <div><FaTrash color="#DF392F" size={20} /></div>

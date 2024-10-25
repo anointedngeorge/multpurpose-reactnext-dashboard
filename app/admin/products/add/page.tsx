@@ -122,7 +122,11 @@ export default function Home() {
                                             </div>
 
                                             <div>
-                                                <InputTag  required={true} name={"quantity"} label="Overal Quantity" placeholder={"0"} type={"number"} />
+                                                <InputTag  required={true} name={"quantity"} label="Overal Quantity" placeholder={"0.00"} type={"number"} />
+                                            </div>
+
+                                            <div>
+                                                <InputTag  required={true} name={"cost_price"} label="Cost Price" placeholder={"0"} type={"number"} />
                                             </div>
 
                                       <div>
