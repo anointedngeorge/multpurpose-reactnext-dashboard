@@ -22,12 +22,7 @@ const LayoutAdmin = ({ children,}: Readonly<{ children: React.ReactNode; }>) => 
         "Authorization":`Bearer ${Token2} `
       } });
 
-      // force login if token validate is false
-      useEffect(() => {
-          if (ssrdata?.token) {
-             globalThis.location.href = "/admin/login";
-          }
-      }, [ssrdata]);
+  
     
     if (ssrdata?.token) {
         return (
