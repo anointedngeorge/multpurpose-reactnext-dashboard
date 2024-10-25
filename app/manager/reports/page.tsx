@@ -2,8 +2,8 @@
 "use client"
 
 import Image from "next/image";
-import LayoutAdmin from "@/components/staff/AdminLayout";
-import { LineTitle } from "@/components/staff/LineTitle";
+import LayoutAdmin from "@/components/manager/AdminLayout";
+import { LineTitle } from "@/components/manager/LineTitle";
 import { useEffect, useState } from "react";
 import { externalurls } from "@/app/interface";
 import { useCustomSSR } from "@/app/custom_hooks";
@@ -58,7 +58,7 @@ export default function Home() {
               <div className="w-full max-sm:w-full">
                     <table>
                       <tr>
-                          <td><Link href={'/staff/reports/bymonth/'} className="btn btn-xs btn-warning" >View Monthly Report</Link></td>
+                          <td><Link href={'/manager/reports/bymonth/'} className="btn btn-xs btn-warning" >View Monthly Report</Link></td>
                           {/* <td><Link href={''} className="btn btn-xs btn-info" >View Yearly Report</Link></td> */}
                       </tr>
                     
@@ -84,12 +84,12 @@ export default function Home() {
                                             { 
                                                 name:'Print',
                                                 id:'$id',
-                                                link:'/staff/products/$id/',
+                                                link:'/manager/products/$id/',
                                                 onclick(event:React.MouseEvent<HTMLAnchorElement>) {
                                                       event.preventDefault();
                                                       const ft = async () => {
                                                         const id = event?.currentTarget?.id
-                                                        globalThis.location.href = `/staff/receipt/?id=${id}`
+                                                        globalThis.location.href = `/admin/receipt/?id=${id}`
                                                     }
                                                     ft();
                                                 },

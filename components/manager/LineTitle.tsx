@@ -12,7 +12,7 @@ interface DataInterface {
 }
 
 export const LineTitle: React.FC<DataInterface> = (props) => {
-  const parentUrl = '/staff';
+  const parentUrl = '/manager';
   
   return (
     <div className="flex flex-row place-items-center place-content-between max-w-full max-sm:overflow-auto">

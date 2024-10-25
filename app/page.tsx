@@ -22,6 +22,15 @@ export default function Home() {
                 </div>
               </Link>
             </div>
+
+            <div className="bg-slate-900 px-10 py-8 text-white font-bold rounded-full drop-shadow-md">
+              <Link  href={'/manager/login'}>
+                <div className="flex flex-row space-x-2 items-center">
+                  <div><FaUserFriends size={50} /></div>
+                  <div>Manager Login Page</div>
+                </div>
+              </Link>
+            </div>
            
             <div className="bg-slate-500 px-10 py-8 text-white font-bold rounded-full drop-shadow-md">
               <Link  href={'/staff/login'}>

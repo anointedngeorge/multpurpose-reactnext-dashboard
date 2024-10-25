@@ -138,6 +138,7 @@ const Receipt = () => {
 
     const query = useSearchParams();
     const id = query.get("id")
+
     
     const {
         ssrdata

@@ -14,11 +14,11 @@ import { BsTelephone } from "react-icons/bs";
 
 const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
-const Title = (prop:{title?:string}) => {
+const Title = () => {
     return (
         <div className='flex flex-row p-2 place-content-between bg-gray-900 text-white  rounded-md items-center'>
             <div>
-                <h3 className="font-bold text-2xl">{`${prop.title}`}</h3>
+                <h3 className="font-bold text-2xl">Europe Store Receipt</h3>
             </div>
             <div>
                 <div className=" bg-white  text-center flex items-center place-content-center">
@@ -146,17 +146,12 @@ const Receipt = () => {
     "Authorization":`Bearer ${Token2} `
   } });
 
-  const {ssrdata:settings_data} = useCustomSSR({url:`${APIBASEURl}/api/v1/control/settings/list/`, headers:{
-    "Authorization":`Bearer ${Token2} `
-  }});
-
     return (
         <main className="p-8">
-           {/* {JSON.stringify(settings_data)} */}
-           {settings_data? (
+           
             <div className="mt-10 mx-auto text-xs border-2 border-black flex-col space-y-10 font-bold p-2">
                 <div>
-                    <Title title={`${settings_data?.app_name}`} />
+                    <Title />
                 </div>
                 <div  >
                     <Describe ssrdata={ssrdata} />
@@ -177,28 +172,27 @@ const Receipt = () => {
                     </div>
                     <div className="flex flex-row items-center space-x-2">
                         <div><FaWhatsapp /></div>
-                        <div>{`${settings_data?.whatsapp}`}</div>
+                        <div>+23407065075128</div>
                     </div>
                     <div className="flex flex-row items-center space-x-2">
                         <div><BsTelephone /></div>
-                        <div>{`${settings_data?.app_phone}`}</div>
+                        <div>+2347011856075</div>
                     </div>
                     <div className="flex flex-row items-center space-x-2">
                         <div><FaBell /></div>
-                        <div>{`${settings_data?.telegram}`}</div>
+                        <div>Europe_stores</div>
                     </div>
 
                     <div className="flex flex-row items-center space-x-2">
                         <div><FaInstagramSquare /></div>
-                        <div>{`${settings_data?.instagram}`}</div>
+                        <div>Europe_store.ng</div>
                     </div>
                     <div className="flex flex-row items-center space-x-2">
                         <div>Address:</div>
-                        <div>{`${settings_data?.office_address}`}</div>
+                        <div>FFog/25 Diamond Plaza, Abibu Oki Street, Lagos Island, Nigeria.</div>
                     </div>
                 </div>
             </div>
-            ) : "Loading data ..."}
         </main>
     )
 }

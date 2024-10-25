@@ -7,6 +7,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react'
 import { IconType } from 'react-icons';
 import { FaShopify } from 'react-icons/fa';
 import { FaCodePullRequest } from "react-icons/fa6";
+import { FcSalesPerformance } from 'react-icons/fc';
 import { LuLogOut } from 'react-icons/lu';
 
 
@@ -79,14 +80,23 @@ const Sidebar = () => {
             </div>
 
             <div className="flex flex-col space-y-5">
-              
-
+  
               <SidebarLinks 
                       Icon={FaShopify} 
                       showicon={true} 
                       title='Shop'
                       hovertitle='Shop'
                       link='/staff/shop'
+                      iconclassname='text-lightorange size-4'
+                      textclassname='text-white text-md hover:text-lightorange'
+                />
+
+              <SidebarLinks 
+                      Icon={FcSalesPerformance} 
+                      showicon={true} 
+                      title='Reports'
+                      hovertitle='Reports'
+                      link='/staff/reports'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
                 />

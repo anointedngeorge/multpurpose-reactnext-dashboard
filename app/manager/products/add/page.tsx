@@ -1,9 +1,9 @@
 "use client"
 import Image from "next/image";
-import LayoutAdmin from "@/components/admin/AdminLayout";
-import Chartjs from "@/components/admin/Chartjs";
-import AdminAside from "@/components/admin/AdminAside";
-import { LineTitle } from "@/components/admin/LineTitle";
+import LayoutAdmin from "@/components/manager/AdminLayout";
+import Chartjs from "@/components/manager/Chartjs";
+import AdminAside from "@/components/manager/AdminAside";
+import { LineTitle } from "@/components/manager/LineTitle";
 import { BiSolidDashboard } from "react-icons/bi";
 import Link from "next/link";
 import { MdDelete, MdOpenWith, MdOutlineAddCircle } from "react-icons/md";
@@ -11,7 +11,7 @@ import { FiEdit } from "react-icons/fi";
 import { BsFillEyeFill } from "react-icons/bs";
 import { ChangeEvent, Key, LinkHTMLAttributes, useEffect, useState } from "react";
 import { AppLinks } from "next/dist/lib/metadata/types/extra-types";
-import { InputTag, SelectTag, SingleModelForm } from "@/components/admin/FormElements";
+import { InputTag, SelectTag, SingleModelForm } from "@/components/manager/FormElements";
 import { useCustomActionState, useCustomSSR } from "@/app/custom_hooks";
 import { brand, brandType, productType, product_add, signup } from "@/app/actions/auth";
 import { Token, externalurls } from "@/app/interface";
@@ -56,7 +56,7 @@ export default function Home() {
             <LineTitle heading="Product Section" linkpath="admin/products/New" />
             <div className="flex flex-row mt-5 lg:space-x-8 max-sm:flex-col">
               {/* section */}
-              <div className="w-2/3 max-sm:w-full mb-10">
+              <div className="w-full mb-10">
                   <div className="flex flex-col space-y-5">
                       <div>
                         <form action={brandaction}>
@@ -138,9 +138,9 @@ export default function Home() {
                   </div>
               </div>
               {/* aside */}
-              <div className="w-1/3 max-sm:w-full">
+              {/* <div className="w-1/3 max-sm:w-full">
                 <AdminAside />
-              </div>
+              </div> */}
             </div>
         </main>
       </LayoutAdmin>

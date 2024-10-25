@@ -10,9 +10,6 @@ import { FaListUl, FaShopify } from 'react-icons/fa';
 import { LiaStoreAltSolid } from 'react-icons/lia';
 import { LuLogOut } from 'react-icons/lu';
 import { MdOutlineLocationCity } from 'react-icons/md';
-import { MdOutlineSettingsInputComponent } from "react-icons/md";
-
-
 import { TbPhotoFilled } from 'react-icons/tb';
 
 
@@ -86,7 +83,7 @@ const Sidebar = () => {
             </div>
 
             <div className="flex flex-col space-y-5">
-               <SidebarLinks 
+               {/* <SidebarLinks 
                       Icon={LiaStoreAltSolid} 
                       showicon={true}
                       hovertitle='Stores'
@@ -94,10 +91,10 @@ const Sidebar = () => {
                       link='/admin/store/'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
-                />
+                /> */}
                <SidebarLinks 
                       Icon={TbPhotoFilled}
-                      link='/admin/gallery/'
+                      link='/manager/gallery/'
                       showicon={true} 
                       title='Gallery'
                       hovertitle='Gallery'
@@ -105,7 +102,7 @@ const Sidebar = () => {
                       textclassname='text-white text-md hover:text-lightorange'
                 />
 
-              <SidebarLinks 
+              {/* <SidebarLinks 
                       Icon={MdOutlineLocationCity} 
                       showicon={true} 
                       title='Branch'
@@ -113,17 +110,7 @@ const Sidebar = () => {
                       link='/admin/branch/'
                       iconclassname='text-lightorange size-4'
                       textclassname='text-white text-md hover:text-lightorange'
-                />
-
-                <SidebarLinks 
-                      Icon={MdOutlineSettingsInputComponent} 
-                      showicon={true} 
-                      title='Settings'
-                      hovertitle='Application Settings'
-                      link='/admin/settings/'
-                      iconclassname='text-lightorange size-4'
-                      textclassname='text-white text-md hover:text-lightorange'
-                />
+                /> */}
 
               {/* <SidebarLinks 
                       Icon={FaShopify} 

@@ -2,10 +2,10 @@
 "use client"
 
 import Image from "next/image";
-import LayoutAdmin from "@/components/staff/AdminLayout";
-import { LineTitle } from "@/components/staff/LineTitle";
-import { useEffect, useState } from "react";
-import { externalurls } from "@/app/interface";
+import LayoutAdmin from "@/components/manager/AdminLayout";
+import { LineTitle } from "@/components/manager/LineTitle";
+import { useCallback, useEffect, useState } from "react";
+import { APIBASEURl, externalurls } from "@/app/interface";
 import { useCustomSSR } from "@/app/custom_hooks";
 import CustomTable from "@/components/customTable";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
@@ -15,19 +15,17 @@ import Link from "next/link";
 const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
 
-
-const Photos = (prop:{data?:any}) => {
-    return (
-        <div className="col-span-1 w-full h-52  rounded-lg relative border-4 border-l-fuchsia-800  ">
-            <Image className="image-full rounded-md" src={`${prop?.data?.image}`} fill={true} alt="" />
-        </div>
-    )
-}
-
-
 export default function Home() {
     const [salesreportdata, setsalesreportdata] = useState<any[]>([]);
+    const date =  new Date()
     
+    
+    const months = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+      ]
+
+    const get_current_month = `${months[date.getMonth()]}`.toLowerCase()
 
     const {
             ssrdata:productsrlist, 
@@ -35,31 +33,48 @@ export default function Home() {
             ssrstatus:productsrtatus,
             cssrmutate
         } 
-            = useCustomSSR({url:`${externalurls.salesreportlist}`, headers:{
+            = useCustomSSR({url:`${APIBASEURl}/api/v1/reports/monthly/reports`, headers:{
         "Authorization":`Bearer ${Token2} `
       } });
         
       useEffect(() => {
-          setsalesreportdata(productsrlist)
-        //   cssrmutate()
+        const filtered = productsrlist?.filter((item:{month:string}) => item.month == get_current_month )
+        setsalesreportdata(filtered)
       }, [productsrlist])
 
+  const selectReport = useCallback((event:React.ChangeEvent<HTMLSelectElement>) => {
+      const value = event.currentTarget.value;
+      // alert(value)
+      const filtered = productsrlist?.filter((item:{month:string}) => item.month == value )
+      setsalesreportdata(filtered)
+      
+  }, [productsrlist])
 
 
   return (
       <LayoutAdmin>
         <main className="lg:p-2">
-          <LineTitle heading="Daily Reports" content={[
-            {link:'/products', title:'products'}
-          ]} />
+          <LineTitle heading="Monthly Reports" />
 
             <div className="flex flex-row mt-5 mb-6 lg:space-x-8 max-sm:flex-col">
               {/* section */}
               <div className="w-full max-sm:w-full">
-                    <table>
+                    <table className="table table-xs">
                       <tr>
-                          <td><Link href={'/staff/reports/bymonth/'} className="btn btn-xs btn-warning" >View Monthly Report</Link></td>
-                          {/* <td><Link href={''} className="btn btn-xs btn-info" >View Yearly Report</Link></td> */}
+                          <td><Link href={'/manager/reports'} className="btn btn-xs btn-warning" >View Daily Reports</Link></td>
+                          <td>
+                              <div className="flex flex-col">
+                                  <div><label >Monthly Report</label></div>
+                                  <div>
+                                      <select onChange={selectReport}  className="select select-xs">
+                                        <option value="choose"> Select Date </option>
+                                        {months?.map((item, index) => (
+                                            <option key={`report_${item}_${index}`} value={`${item.toLowerCase()}`} >{`${item}`}</option>
+                                        ))}
+                                      </select>
+                                  </div>
+                              </div>
+                          </td>
                       </tr>
                     
                     </table>
@@ -69,14 +84,14 @@ export default function Home() {
                             <div key={`items${index}`}>
                                 <div className="flex flex-row space-x-3 items-center">
                                     <div><FaArrowRightArrowLeft /></div>
-                                    <div><h3 className="text-2xl">{`${item?.tracker}`}</h3></div>
+                                    <div><h3 className="text-2xl">{`${item?.month}`.toUpperCase()}</h3></div>
                                 </div>
                                 <div className="mt-5">
                                   
                                     {salesreportdata?.length > 0 ? (
                                       <CustomTable
-                                          thead={['id','client','Attendant','Mode', 'Hash', 'On Loan','Amount']}
-                                          mapper={['id','client.full_name','attendant.fullname','mode_of_payment', 'sales_hash', 'on_loan','total_price' ]}
+                                          thead={['client','Attendant','Mode', 'Hash', 'On Loan','Amount']}
+                                          mapper={['client.full_name','attendant.fullname','mode_of_payment', 'sales_hash', 'on_loan','total_price' ]}
                                           tbody={item?.sales_list}
                                           placeholder_values={{'$id':"data.id"}}
 
@@ -84,12 +99,12 @@ export default function Home() {
                                             { 
                                                 name:'Print',
                                                 id:'$id',
-                                                link:'/staff/products/$id/',
+                                                link:'/manager/products/$id/',
                                                 onclick(event:React.MouseEvent<HTMLAnchorElement>) {
                                                       event.preventDefault();
                                                       const ft = async () => {
                                                         const id = event?.currentTarget?.id
-                                                        globalThis.location.href = `/staff/receipt/?id=${id}`
+                                                        globalThis.location.href = `/admin/receipt/?id=${id}`
                                                     }
                                                     ft();
                                                 },

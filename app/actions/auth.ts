@@ -1,7 +1,7 @@
 import { SignupFormSchema, FormState } from '@/app/lib/definitions'
 import { useRouter } from 'next/router';
 import { notify, postdata, postdataWithImage, setupsessiondb } from '../function';
-import {cartStorageName, checkoutStorageName, externalurls, postInterface} from "../interface"
+import {APIBASEURl, cartStorageName, checkoutStorageName, externalurls, postInterface} from "../interface"
 import { getIronSession } from 'iron-session';
 import { FaMdb } from 'react-icons/fa';
 
@@ -100,6 +100,46 @@ export const staffsignup = async (state: FormState, formData: FormData) => {
   
 }
 
+
+export const ManagerSignup = async (state: FormState, formData: FormData) => {
+  // Validate form fields
+  const validatedFields = SignupFormSchema.safeParse({
+    username: formData.get('username'),
+    password: formData.get('password'),
+  })
+
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+        errors: validatedFields.error.flatten().fieldErrors,
+    }
+  }
+
+  const username = formData.get('username');
+  const password = formData.get('password');
+
+  const postRequest:postInterface =  {
+    url:`${externalurls.token}`,
+    headers:{
+      "Content-Type":"application/json",
+    },
+    body: {
+      username,
+      password,
+    }
+  }
+  const req = await postdata(postRequest);
+  
+  if (req?.ok) {
+    const j = await req.json();
+    const token = j['token'];
+    setupsessiondb({name:'apptoken', value:token})
+    globalThis.location.href = "/manager";
+  } else {    
+    globalThis.location.href = "/manager/login";
+  }
+  
+}
 
 export const brand = async (state: FormState, formData: FormData) => {
   const data:any = formprops(formData);
@@ -369,5 +409,31 @@ export const createProductInStore = async (state: FormState, formData: FormData)
 
   const response = await req?.json()
   alert(response?.message)
+  
+}
+
+
+
+export const addSettings = async (state: FormState, formData: FormData) => {
+  const data:any = formprops(formData);
+  // alert(`${APIBASEURl}/api/v1/control/settings/add/`)
+  const postRequest:postInterface =  {
+      url:`${APIBASEURl}/api/v1/control/settings/add/`,
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization": `Bearer ${Token}`
+      },
+      body:data
+  }
+
+  const req = await postdata(postRequest);
+
+  if (req?.ok) {
+      const mes = await req?.json()
+      alert(mes.message);
+  } else {
+      const mes = await req?.json()
+      alert(mes.message);
+  }
   
 }
