@@ -56,7 +56,7 @@ export default function Home() {
             <LineTitle heading="Product Section" linkpath="admin/products/New" />
             <div className="flex flex-row mt-5 lg:space-x-8 max-sm:flex-col">
               {/* section */}
-              <div className="w-2/3 max-sm:w-full mb-10">
+              <div className="w-5/6 max-sm:w-full mb-10">
                   <div className="flex flex-col space-y-5">
                       <div>
                         <form action={brandaction}>
@@ -138,7 +138,7 @@ export default function Home() {
                   </div>
               </div>
               {/* aside */}
-              <div className="w-1/3 max-sm:w-full">
+              <div className="w-1/4 max-sm:w-full">
                 <AdminAside />
               </div>
             </div>
