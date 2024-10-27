@@ -25,7 +25,7 @@ const Homepage = () => {
 
 
 const Home = () => {
-    const [page, setPage] = useState("");
+    const [page, setPage] = useState("/admin/settings/general_settings");
 
     const loadpage = useCallback((event:React.MouseEvent<HTMLAnchorElement>) => {
             event.preventDefault();
