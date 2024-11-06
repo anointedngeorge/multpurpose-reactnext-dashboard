@@ -17,7 +17,8 @@ export interface toastify {
 
 export const escapeSingleQuotes = (text:string) => text.replace(/'/g, "&rsquo;");
 
-export const APIBASEURl = process.env.APIBASEURl;
+export const APIBASEURl = "https://europeapi.sharashellacademy.com";
+// export const APIBASEURl = process.env.APIBASEURl;
 
 export const externalurls = {
     'token':`${APIBASEURl}/api/v1/auth/token`,

@@ -11,14 +11,14 @@ import { useCallback, useEffect, useState } from "react";
 
 export default function Home() {
   const [dataset,setDataset] = useState<any>([])
-  const [pagehref, setPagehref] = useState<string | null>(null)
+  const [page, setPage] = useState<number>(10)
   const Token2 = globalThis?.sessionStorage?.getItem("apptoken")
 
   const {
     ssrdata, 
     ssrerror, 
     ssrstatus,
-    } = useCustomSSR({url:`${APIBASEURl}/api/v1/products/products/productlist/all/`, headers:{
+    } = useCustomSSR({url:`${APIBASEURl}/api/v1/products/products/productlist/all/?limit=${page}&offset=0`, headers:{
     "Authorization":`Bearer ${Token2}`
   }});
 
@@ -50,10 +50,18 @@ export default function Home() {
    }, [Token2])
 
 
+   const loadmoredata = useCallback((event:React.KeyboardEvent<HTMLInputElement> ) => {
+        let data = parseInt(event?.currentTarget?.value);
+        setPage(data)
+   }, [])
+
   return (
       <LayoutAdmin>
+        <label className="mr-5">Number Of Pages: </label> 
+        <input onKeyUp={loadmoredata}  type="number" className="input input-sm border-2 border-black" defaultValue={50} />
+
+        <div className="overflow-auto mt-4">
         
-        <div className="overflow-auto">
         {/* {JSON.stringify(dataset)} */}
           <table className="table table-sm">
               <thead className="bg-red-600 text-white font-bold">
@@ -68,6 +76,7 @@ export default function Home() {
                     <td>...</td>
                   </tr>
               </thead>
+              {dataset? (
               <tbody className="text-black font-bold">
                 {dataset?.map((item:{
                       id:string,
@@ -81,7 +90,7 @@ export default function Home() {
                     <tr className="even:bg-red-200 odd:bg-red-100" key={`product_list_${index}`}>
                       <td>{index + 1}.</td>
                         <td>
-                            <Image src={`${item.image.image}`} className="rounded-md" height={100} width={80} alt="..." />
+                            <Image src={item.image?`${item.image.image}`: '/'} className="rounded-md" height={100} width={80} alt="..." />
                         </td>
                         <td>{`${item?.name}`}</td>
                         <td>{`${item?.product?.name}`}</td>
@@ -116,6 +125,13 @@ export default function Home() {
                     </tr>
                 )) }
               </tbody>
+              ) : (
+                <tbody>
+                  <tr>
+                      <td colSpan={100} rowSpan={100}> Fetching result, please wait. </td>
+                  </tr>
+                </tbody>
+              )}
           </table>
         </div>
       </LayoutAdmin>
